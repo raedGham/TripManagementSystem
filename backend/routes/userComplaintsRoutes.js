@@ -1,0 +1,19 @@
+const express = require("express");
+const router = express.Router();
+const multer = require("multer");
+const upload = multer(); // For parsing multipart/form-data
+const {
+  newComplaint,
+  getComplaints,
+  getComplaint,
+  deleteComplaint,
+  updateComplaint,
+} = require("../controllers/userCompaintsController");
+
+router.post("/new", newComplaint);
+router.get("/", getComplaints);
+router.get("/:id", getComplaint);
+router.delete("/:id", deleteComplaint);
+router.patch("/:id", upload.none(), updateComplaint);
+
+module.exports = router;
