@@ -98,7 +98,7 @@ const loginUser = asyncHandler(async (req, res) => {
   if (user && passwordIsCorrect) {
     // Generate Token
     const token = generateToken(user._id);
-    console.log(token);
+    console.log(user._id);
     // send HTTP-only cookie to the frontend
     res.cookie("token", token, {
       path: "/",

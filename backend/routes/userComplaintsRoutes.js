@@ -8,7 +8,7 @@ const {
   getComplaint,
   deleteComplaint,
   updateComplaint,
-} = require("../controllers/userCompaintsController");
+} = require("../controllers/userComplaintsController");
 
 router.post("/new", newComplaint);
 router.get("/", getComplaints);

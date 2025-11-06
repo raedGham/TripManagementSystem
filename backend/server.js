@@ -6,13 +6,14 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/errorMiddleware");
 const path = require("path");
-const userRoute = require("./routes/userRoutes");
-const clientRoute = require("./routes/clientRoutes");
-const tableRoute = require("./routes/tableRoutes");
-const categoriesRoute = require("./routes/categoriesRoutes");
-const productsRoute = require("./routes/productRoutes");
-const invoiceRoute = require("./routes/invoiceRoutes");
-const dashboardRoute = require("./routes/dashboardRoutes");
+const userRoutes = require("./routes/userRoutes");
+const userFavoritesRoute = require("./routes/userFavoritesRoutes");
+const userComplaintsRoutes = require("./routes/userComplaintsRoutes");
+const tripRoutes = require("./routes/tripRoutes");
+const transportationRoutes = require("./routes/transportationRoutes");
+const reservationRoutes = require("./routes/reservationRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
+const activitiesRoutes = require("./routes/activitiesRoutes");
 
 const crypto = require("crypto");
 const fs = require("fs");
@@ -30,13 +31,14 @@ app.use("uploads", express.static(path.join(__dirname, "uploads")));
 app.use(errorHandler);
 
 // Routes Middleware
-app.use("/api/users", userRoute);
-app.use("/api/clients", clientRoute);
-app.use("/api/tables", tableRoute);
-app.use("/api/categories", categoriesRoute);
-app.use("/api/products", productsRoute);
-app.use("/api/invoices", invoiceRoute);
-app.use("/api/dashboard", dashboardRoute);
+app.use("/api/users", userRoutes);
+app.use("/api/favorites", userFavoritesRoute);
+app.use("/api/complaints", userComplaintsRoutes);
+app.use("/api/trips", tripRoutes);
+app.use("/api/transportation", transportationRoutes);
+app.use("/api/reservation", reservationRoutes);
+app.use("/api/payment", paymentRoutes);
+app.use("/api/activities", activitiesRoutes);
 
 const PORT = process.env.PORT || 5000;
 
