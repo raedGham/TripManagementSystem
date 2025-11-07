@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { loginUser, validateEmail } from '../../services/authService';
 import {SET_LOGIN, SET_NAME} from "../../redux/features/auth/authSlice";
+import logo from "../../assets/Logo.png";
 
 const initialState = {
   name: "",
@@ -51,7 +52,7 @@ function Login() {
 
           await dispatch(SET_LOGIN(true));          
           await dispatch(SET_NAME(data.name));          
-          navigate("/dashboard");
+          navigate("/Main");
           setIsLoading(false)
 
        } catch (error) {
@@ -65,8 +66,8 @@ function Login() {
     <section className="bg-gray-50 dark:bg-gray-900">
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-            RestoPOS 
+          <img className="w-16 h-16 mr-2 rounded-2xl shadow-2xl" src={logo} alt="logo"/>
+            Travel Lebanon 
       </a>
       <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -92,9 +93,9 @@ function Login() {
                             <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                           </div>
                       </div>
-                      <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+                      <a href="#" className="text-sm font-medium text-primary-600 hover:underline text-gray-500 dark:text-gray-300">Forgot password?</a>
                   </div>
-                  <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+                  <button type="submit" className="w-full px-6 py-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg text-lg font-medium shadow-md transition">Sign in</button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don’t have an account yet? <Link to="/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>
                   </p>
