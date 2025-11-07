@@ -1,18 +1,12 @@
 import { Link } from "react-router-dom";
-import heroImg from "../../assets/welcome.jpg";
+
 import raoucheImg from "../../assets/Raouche.jpg";
 
 const Home = () => {
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* Background Image */}
-      <img
-        src={heroImg}
-        alt="Inventory"
-        className="absolute inset-0 w-full h-full object-cover object-center z-0"
-      />
-
-      {/* Gradient Overlay */}
+     <div className="relative w-full h-screen overflow-hidden">
+   
+       
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-black/40 z-10" />
 
       {/* Content */}
@@ -54,7 +48,7 @@ const Home = () => {
         />
 
       </div>
-    </div>
+      </div>  
   );
 };
 

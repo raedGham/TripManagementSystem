@@ -13,7 +13,7 @@ const newTrip = asyncHandler(async (req, res) => {
     startDate,
     endDate,
     pricePerPerson,
-    organiserID,
+    organizerID,
   } = req.body;
 
   // validation
@@ -30,7 +30,7 @@ const newTrip = asyncHandler(async (req, res) => {
     startDate,
     endDate,
     pricePerPerson,
-    organiserID,
+    organizerID,
   });
 
   if (trip) {
@@ -42,7 +42,7 @@ const newTrip = asyncHandler(async (req, res) => {
       startDate,
       endDate,
       pricePerPerson,
-      organiserID,
+      organizerID,
     } = trip;
     res.status(201).json({
       _id,
@@ -52,7 +52,7 @@ const newTrip = asyncHandler(async (req, res) => {
       startDate,
       endDate,
       pricePerPerson,
-      organiserID,
+      organizerID,
     });
   } else {
     response.status(400);
@@ -91,7 +91,7 @@ const updateTrip = asyncHandler(async (req, res) => {
     startDate,
     endDate,
     pricePerPerson,
-    organiserID,
+    organizerID,
   } = req.body;
 
   const trip = await Trip.findById(req.params.id);
@@ -112,7 +112,7 @@ const updateTrip = asyncHandler(async (req, res) => {
       startDate,
       endDate,
       pricePerPerson,
-      organiserID,
+      organizerID,
     },
     {
       new: true,

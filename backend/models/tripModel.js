@@ -32,7 +32,7 @@ const tripSchema = mongoose.Schema(
       default: 0,
     },
 
-    organiserID: {
+    organizerID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

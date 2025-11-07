@@ -63,8 +63,8 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/admin/settings" className="block px-4 py-2 hover:bg-gray-100">
-                    Settings
+                  <Link to="/admin/trips" className="block px-4 py-2 hover:bg-gray-100">
+                    Trips
                   </Link>
                 </li>
                 <li>
