@@ -10,7 +10,7 @@ const {
   updateTrip,
 } = require("../controllers/tripController");
 
-router.post("/new", newTrip);
+router.post("/new", upload.none(), newTrip);
 router.get("/", getTrips);
 router.get("/:id", getTrip);
 router.delete("/:id", deleteTrip);

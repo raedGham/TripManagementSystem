@@ -6,6 +6,7 @@ const { response } = require("express");
 //  N E W   T R I P
 // --------------------------------------------------------------------
 const newTrip = asyncHandler(async (req, res) => {
+  console.log(req.body);
   const {
     title,
     destination,
@@ -64,7 +65,7 @@ const newTrip = asyncHandler(async (req, res) => {
 //  G E T A L L   T R I P S
 // --------------------------------------------------------------------
 const getTrips = asyncHandler(async (req, res) => {
-  const trips = await Trip.find().sort("startDate");
+  const trips = await Trip.find().sort("startDate").populate("organizerID");
   res.status(200).json(trips);
 });
 

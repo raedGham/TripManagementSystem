@@ -4,6 +4,7 @@ const {
   loginUser,
   logoutUser,
   getUser,
+  getUsers,
   loginStatus,
   updateUser,
   changePassword,
@@ -16,6 +17,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/logout", logoutUser);
 router.get("/getuser", getUser);
+router.get("/", getUsers);
 router.get("/loggedin", loginStatus);
 router.patch("/updateuser", protect, updateUser);
 router.patch("/changeAdminPass", protect, changePassword);

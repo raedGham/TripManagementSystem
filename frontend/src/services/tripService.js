@@ -8,7 +8,6 @@ const API_URL = `${BACKEND_URL}/api/trips`;
 //  C R E A T E    N E W   T R I P
 //----------------------------------------------------
 export const registerTrip = async (tripData) => {
-  
   try {
     const formData = new FormData();
     formData.append("title", tripData.title);
@@ -17,9 +16,7 @@ export const registerTrip = async (tripData) => {
     formData.append("startDate", tripData.startDate);
     formData.append("endDate", tripData.endDate);
     formData.append("pricePerPerson", tripData.pricePerPerson);
-    formData.append("organiserID", tripData.organiserID);
-
-    
+    formData.append("organizerID", tripData.organizerID);
 
     const response = await axios.post(
       `${BACKEND_URL}/api/trips/new`,
@@ -77,18 +74,13 @@ export const updateTrip = async (id, tripData) => {
     formData.append("endDate", tripData.endDate);
     formData.append("pricePerPerson", tripData.pricePerPerson);
     formData.append("organiserID", tripData.organiserID);
-    
 
-    const response = await axios.put(
-      `${API_URL}/${id}`,
-      formData,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axios.put(`${API_URL}/${id}`, formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (response.statusText === "OK") {
       toast.success("Trip Updated Successfully");
@@ -102,7 +94,6 @@ export const updateTrip = async (id, tripData) => {
     toast.error(message);
   }
 };
-
 
 const tripService = {
   registerTrip,

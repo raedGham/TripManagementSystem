@@ -1,82 +1,102 @@
-import React from 'react';
-import {useNavigate} from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { registerTrip } from "../../../services/tripService";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import Loader from "../../../components/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import TripForm from './TripForm';
+import TripForm from "./TripForm";
+import { fetchUsers } from "../../../redux/features/auth/authSlice";
 
 const initialState = {
-    title: "",
-    destination: "",
-    demographic: "",
-    startDate: "",
-    endDate: "",
-    pricePerPerson:"",
-    organizerID:""
-  } 
+  title: "",
+  destination: "",
+  demographic: "",
+  startDate: "",
+  endDate: "",
+  pricePerPerson: "",
+  organizerID: "",
+};
 
+const AddTrip = () => {
+  const [formData, setFormData] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    title,
+    destination,
+    demographic,
+    startDate,
+    endDate,
+    pricePerPerson,
+    organizerID,
+  } = formData;
 
-  
-const AddTrip = () => {     
-    const [preview, setPreview] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const users = useSelector((state) => state.auth.users);
+  console.log(users);
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
-    const [formData, setFormData] = useState(initialState)
-    const [isLoading, setIsLoading] = useState(false)
-    const {title, destination, demographic, startDate, endDate, pricePerPerson,organizerID } = formData
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    
+  const addTrip = async (e) => {
+    e.preventDefault();
 
-    const handleInputChange = (e) => {
-        const {name, value} = e.target;
-        setFormData({...formData, [name]:value})
+    // validation
+    if (
+      !title ||
+      !destination ||
+      !demographic ||
+      !startDate ||
+      !endDate ||
+      !pricePerPerson ||
+      !organizerID
+    ) {
+      return toast.error("All fields are required");
+    }
+
+    const tripData = {
+      title,
+      destination,
+      demographic,
+      startDate,
+      endDate,
+      pricePerPerson,
+      organizerID,
     };
-
-     
-
-    const addTrip = async (e) => {
-        e.preventDefault();
-     
-        // validation
-     if (!title|| !destination|| !demographic ||!startDate || !endDate || !pricePerPerson ||!organizerID)  {
-        return toast.error("All fields are required")
-     } 
-
-   
-     const tripData = {title, destination, demographic, startDate, endDate, pricePerPerson,organizerID}
-     setIsLoading(true)
+    setIsLoading(true);
     // attemps to save the new trip
     try {
-        const data = await registerTrip(tripData)     
-        toast.success("Trip Added Sucessfully")
-        navigate("/trips/list");
-        setIsLoading(false)
-     } catch (error) {
-        setIsLoading(false)
-        console.log(error.message)
-     }
-    } 
+      const data = await registerTrip(tripData);
+      toast.success("Trip Added Sucessfully");
+      navigate("/trips/list");
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error.message);
+    }
+  };
 
-    return (
-     <TripForm 
-      title= {title} 
-      destination = {destination}
-      demographic = {demographic}
-      startDate = {startDate}
-      endDate = {endDate}
-      pricePerPerson = {pricePerPerson}
-      organizerID = {organizerID}
-      handleInputChange={handleInputChange}    
-      addTrip={addTrip} 
-      formTitle= {"Add Trip"}       
-      />    
-      
-      )
-  
-}
+  return (
+    <TripForm
+      title={title}
+      destination={destination}
+      demographic={demographic}
+      startDate={startDate}
+      endDate={endDate}
+      pricePerPerson={pricePerPerson}
+      organizerID={organizerID}
+      handleInputChange={handleInputChange}
+      addTrip={addTrip}
+      formTitle={"Add Trip"}
+      users={users}
+    />
+  );
+};
 
 export default AddTrip;

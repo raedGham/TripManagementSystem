@@ -152,6 +152,13 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 // --------------------------------------------------------------------
+//   G E T   U S E R   I N F O
+// --------------------------------------------------------------------
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().sort("name");
+  res.status(200).json(users);
+});
+// --------------------------------------------------------------------
 // L O G I N  S T A T U S
 // --------------------------------------------------------------------
 const loginStatus = asyncHandler(async (req, res) => {
@@ -288,6 +295,7 @@ module.exports = {
   loginUser,
   logoutUser,
   getUser,
+  getUsers,
   loginStatus,
   updateUser,
   changePassword,

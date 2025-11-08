@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import {
   fetchTrips,
-  deleteTrip, 
+  deleteTrip,
 } from "../../../redux/features/trips/tripSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmAlert } from "react-confirm-alert";
@@ -17,26 +17,22 @@ import {
 } from "../../../redux/features/trips/filterSlice";
 import ReactPaginate from "react-paginate";
 
-
-
 const TripsList = () => {
-
   const [search, setSearch] = useState("");
   const filteredTrips = useSelector(selectFilteredTrips);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const delTrip = async (id) => {
     await dispatch(deleteTrip(id));
-   // await dispatch(fetchTrips());
-   navigate("/Main")
+    // await dispatch(fetchTrips());
+    navigate("/Main");
   };
-
 
   const confirmDelete = (id) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" >
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 text-center">
               <h1 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                 Delete Trip
@@ -73,7 +69,6 @@ const TripsList = () => {
     dispatch(fetchTrips());
   }, [dispatch]);
 
-  
   //   Begin Pagination
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -93,7 +88,7 @@ const TripsList = () => {
   //   End Pagination
 
   useEffect(() => {
-    console.log("FROM USEEFFECT:", trips)
+    console.log("FROM USEEFFECT:", trips);
     dispatch(FILTER_TRIPS({ trips, search }));
   }, [trips, search, dispatch]);
 
@@ -113,10 +108,12 @@ const TripsList = () => {
         <Search value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
       <div className="overflow-x-auto">
-     { !trips && <p>Loading...</p>} 
+        {!trips && <p>Loading...</p>}
 
         {trips.length === 0 ? (
-          <p className=" text-gray-400 mt-2">-- No trips found, please add a trip...</p>
+          <p className=" text-gray-400 mt-2">
+            -- No trips found, please add a trip...
+          </p>
         ) : (
           <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-200 mt-2">
             <thead className="text-[11px] uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-200 ">
@@ -152,7 +149,16 @@ const TripsList = () => {
             </thead>
             <tbody>
               {currentItems.map((trip, index) => {
-                const { _id, title, destination, demographic, startDate, endDate, pricePerPerson, organizerID } = trip;               
+                const {
+                  _id,
+                  title,
+                  destination,
+                  demographic,
+                  startDate,
+                  endDate,
+                  pricePerPerson,
+                  organizerID,
+                } = trip;
                 return (
                   <tr
                     key={_id}
@@ -166,7 +172,7 @@ const TripsList = () => {
                     <td className="px-3 py-2">{endDate}</td>
                     <td className="px-3 py-2">{pricePerPerson}</td>
                     <td className="px-3 py-2">{organizerID.name}</td>
-                    
+
                     <td className="px-6 py-4 flex space-x-3">
                       <Link to={`/trip-detail/${_id}`}>
                         <AiOutlineEye
@@ -177,7 +183,8 @@ const TripsList = () => {
                       <Link to={`/trips/${_id}`}>
                         <FaEdit
                           size={20}
-                          className="text-green-600 hover:text-green-800"/>
+                          className="text-green-600 hover:text-green-800"
+                        />
                       </Link>
                       <button
                         onClick={() => {
@@ -189,10 +196,6 @@ const TripsList = () => {
                           className="text-red-600 hover:text-red-800"
                         />
                       </button>
-
-                 
-                   
-
                     </td>
                   </tr>
                 );
@@ -216,7 +219,6 @@ const TripsList = () => {
         nextClassName="px-2 py-0.5 border border-gray-600 rounded text-gray-300 hover:bg-gray-700"
         breakClassName="px-2 py-0.5 text-gray-400"
         disabledClassName="opacity-40 cursor-not-allowed"
-        
       />
     </div>
   );
