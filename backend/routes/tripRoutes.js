@@ -2,12 +2,15 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const upload = multer(); // For parsing multipart/form-data
+const uploadTripImages = require("../middlewares/uploadTripImages");
 const {
   newTrip,
   getTrips,
   getTrip,
   deleteTrip,
   updateTrip,
+  uploadImageCont,
+  deleteImage,
 } = require("../controllers/tripController");
 
 router.post("/new", upload.none(), newTrip);

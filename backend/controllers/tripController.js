@@ -73,7 +73,7 @@ const getTrips = asyncHandler(async (req, res) => {
 //  G E T  S I N G L E   T R I P
 // --------------------------------------------------------------------
 const getTrip = asyncHandler(async (req, res) => {
-  const trip = await Trip.findById(req.params.id);
+  const trip = await Trip.findById(req.params.id).populate("organizerID");
   if (!trip) {
     response.status(400);
     throw new Error("Invalid trip");

@@ -174,7 +174,7 @@ const TripsList = () => {
                     <td className="px-3 py-2">{organizerID.name}</td>
 
                     <td className="px-6 py-4 flex space-x-3">
-                      <Link to={`/trip-detail/${_id}`}>
+                      <Link to={`/admin/trips/trip-info/${_id}`}>
                         <AiOutlineEye
                           size={20}
                           className="text-purple-600 hover:text-purple-800"
