@@ -1,16 +1,51 @@
-import { useParams } from "react-router";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+
 import { getTrip, selectTrip } from "../../../redux/features/trips/tripSlice";
+import {
+  fetchTripImages,
+  uploadTripImages,
+  removeTripImage,
+  selectTripImages,
+  selectTripImagesLoading,
+} from "../../../redux/features/trips/tripImagesSlice";
 
-function TripInfo() {
-  const { id } = useParams();
+import { BACKEND_URL } from "../../../services/tripService";
 
-    const dispatch = useDispatch();
+const TripInfo = () => {
+  const { id } = useParams(); // /trip/:id
+  const dispatch = useDispatch();
+
   const trip = useSelector(selectTrip);
+  const images = useSelector(selectTripImages);
+  const isLoadingImages = useSelector(selectTripImagesLoading);
+
+  const fileInputRef = useRef();
+
   useEffect(() => {
     dispatch(getTrip(id));
+    dispatch(fetchTripImages(id));
   }, [dispatch, id]);
+
+  // Select images to upload
+  const handleSelectImages = (e) => {
+    const files = e.target.files;
+
+    if (!files || files.length === 0) return;
+
+    dispatch(uploadTripImages({ tripId: id, files }));
+    e.target.value = null; // reset input
+  };
+
+  const openFilePicker = () => fileInputRef.current.click();
+
+  const handleDelete = (imageId) => {
+    if (window.confirm("Are you sure you want to delete this image?")) {
+      dispatch(removeTripImage({ tripId: id, imageId }));
+    }
+  };
+
   const {
     title,
     destination,
@@ -22,42 +57,101 @@ function TripInfo() {
   } = trip || {}; // safe destructure
 
   return (
-    <section className="m-12 text-white space-y-10">
-      {trip && (
-        <>
-          {/* Trip Header */}
-          <header className="bg-gray-800/40 p-8 rounded-xl shadow-lg space-y-4">
-            <h1 className="text-3xl font-semibold tracking-wide">{title}</h1>
+    <>
+      <section className="m-12 text-white space-y-10">
+        {trip && (
+          <>
+            {/* Trip Header */}
+            <header className="bg-gray-800/40 p-8 rounded-xl shadow-lg space-y-4">
+              <h1 className="text-3xl font-semibold tracking-wide">{title}</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg">
-              <p>
-                <span className="text-gray-400">Destination:</span>{" "}
-                {destination}
-              </p>
-              <p>
-                <span className="text-gray-400">Demographic:</span>{" "}
-                {demographic}
-              </p>
-              <p>
-                <span className="text-gray-400">Start Date:</span> {startDate}
-              </p>
-              <p>
-                <span className="text-gray-400">End Date:</span> {endDate}
-              </p>
-              <p>
-                <span className="text-gray-400">Price / Person:</span>{" "}
-                {pricePerPerson}
-              </p>
-              <p>
-                <span className="text-gray-400">Organizer:</span>{" "}
-                {organizerID?.name}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg">
+                <p>
+                  <span className="text-gray-400">Destination:</span>{" "}
+                  {destination}
+                </p>
+                <p>
+                  <span className="text-gray-400">Demographic:</span>{" "}
+                  {demographic}
+                </p>
+                <p>
+                  <span className="text-gray-400">Start Date:</span> {startDate}
+                </p>
+                <p>
+                  <span className="text-gray-400">End Date:</span> {endDate}
+                </p>
+                <p>
+                  <span className="text-gray-400">Price / Person:</span>{" "}
+                  {pricePerPerson}
+                </p>
+                <p>
+                  <span className="text-gray-400">Organizer:</span>{" "}
+                  {organizerID?.name}
+                </p>
+              </div>
+            </header>
+          </>
+        )}
+      </section>
+      {/* ------------- images----------------- */}
+      <div className="p-6 max-w-5xl mx-auto">
+        {/* Trip Basic Info */}
+        <h1 className="text-3xl font-bold mb-2">{trip?.title}</h1>
+        <p className="text-gray-600 mb-6"> {trip?.description} </p>
+
+        {/* Add Images Button */}
+        <button
+          onClick={openFilePicker}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        >
+          Add Images
+        </button>
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          accept="image/*"
+          className="hidden"
+          onChange={handleSelectImages}
+        />
+
+        {/* Loading State */}
+        {isLoadingImages && <p className="mt-4 text-sm">Loading images...</p>}
+
+        {/* Image Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+          {images.length === 0 && (
+            <p className="col-span-full text-gray-500">No images yet</p>
+          )}
+
+          {images.map((img) => (
+            <div
+              key={img._id}
+              className="border rounded shadow-sm p-2 bg-white relative"
+            >
+              <img
+                src={`${BACKEND_URL}/${img.path}`}
+                alt={img.path || "trip image"}
+                className="w-full h-32 object-cover rounded"
+              />
+
+              <button
+                onClick={() => handleDelete(img._id)}
+                className="text-xs text-red-600 absolute top-1 right-1 bg-white px-1 rounded"
+              >
+                ✕
+              </button>
+
+              <p className="text-xs text-gray-500 mt-1">
+                {(img.size / 1024).toFixed(1)} KB
               </p>
             </div>
-          </header>
-        </>
-      )}
-    </section>
+          ))}
+        </div>
+      </div>
+    </>
   );
-}
+};
 
 export default TripInfo;
