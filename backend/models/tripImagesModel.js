@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const tripImagesSchema = mongoose.Schema(
+const tripImageSchema = mongoose.Schema(
   {
     tripID: {
       type: mongoose.Schema.Types.ObjectId,
@@ -12,10 +12,12 @@ const tripImagesSchema = mongoose.Schema(
       type: String,
       required: [true, "Please enter image Path"],
     },    
-    
+    originalName: String,
+    mimeType: String,
+    size: Number
   },
   { timestamps: true }
 );
 
-const TripImages = mongoose.model("TripImages", tripImagesSchema);
-module.exports = TripImages;
+const TripImage = mongoose.model("TripImage", tripImageSchema);
+module.exports = TripImage;
