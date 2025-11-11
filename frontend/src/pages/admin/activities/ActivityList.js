@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   fetchActivities,
@@ -17,6 +17,8 @@ import {
 import ReactPaginate from "react-paginate";
 
 const ActivitiesList = () => {
+  const { tripID } = useParams();
+  console.log(tripID);
   const [search, setSearch] = useState("");
   const filteredActivities = useSelector(selectFilteredActivities);
   const dispatch = useDispatch();
@@ -63,9 +65,7 @@ const ActivitiesList = () => {
     });
   };
 
-  const { activities, loading, error } = useSelector(
-    (state) => state.activities
-  );
+  const { activities, loading, error } = useSelector((state) => state.activity);
   useEffect(() => {
     dispatch(fetchActivities());
   }, [dispatch]);
@@ -101,7 +101,7 @@ const ActivitiesList = () => {
           Activities List
         </h1>
         <Link
-          to="/admin/activities/new"
+          to={`/admin/activity/new/${tripID}`}
           className="mt-1 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] activityition duration-200 shadow"
         >
           Add Activity

@@ -3,7 +3,7 @@ import activityService from "../../../services/activityService";
 import { toast } from "react-toastify";
 const initialState = {
   activity: null,
-  Activities: [],
+  activities: [],
   isLoading: false,
   isSuccess: false,
   isError: null,
