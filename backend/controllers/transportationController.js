@@ -15,11 +15,18 @@ const newTransportation = asyncHandler(async (req, res) => {
     duration,
     costPerTrip,
     tripID,
-
   } = req.body;
 
   // validation
-  if (!title || !destination || !demographic || !startDate || !endDate) {
+  if (
+    !type ||
+    !arrivalLocation ||
+    !departureLocation ||
+    !arrivalDate ||
+    !departureDate ||
+    !duration ||
+    !costPerTrip
+  ) {
     res.status(400);
     throw new Error("Please fill all Required Fields");
   }
@@ -48,7 +55,7 @@ const newTransportation = asyncHandler(async (req, res) => {
       costPerTrip,
       tripID,
     } = transportation;
-    
+
     res.status(201).json({
       _id,
       type,
@@ -113,14 +120,14 @@ const updateTransportation = asyncHandler(async (req, res) => {
   const updatedTransportation = await Transportation.findByIdAndUpdate(
     { _id: req.params.id },
     {
-       type,
-       arrivalLocation,
-       departureLocation,
-       arrivalDate,
-       departureDate,
-       duration,
-       costPerTrip,
-       tripID,
+      type,
+      arrivalLocation,
+      departureLocation,
+      arrivalDate,
+      departureDate,
+      duration,
+      costPerTrip,
+      tripID,
     },
     {
       new: true,

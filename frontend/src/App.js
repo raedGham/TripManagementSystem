@@ -10,6 +10,11 @@ import Register from "./pages/auth/register";
 import TripsList from "./pages/admin/trips/TripsList";
 import AddTrip from "./pages/admin/trips/AddTrip";
 import TripInfo from "./pages/admin/trips/TripInfo";
+import AddTrans from "./pages/admin/transportation/AddTrans";
+import TransList from "./pages/admin/transportation/TransList";
+import AddActivity from "./pages/admin/activities/AddActivity";
+import ActivityList from "./pages/admin/activities/ActivityList";
+
 function App() {
   return (
     <BrowserRouter>
@@ -24,6 +29,18 @@ function App() {
           <Route
             path="/admin/trips/trip-info/:id"
             element={<TripInfo />}
+          ></Route>
+
+          <Route path="/admin/trans/new/:tripID" element={<AddTrans />}></Route>
+          <Route path="/admin/trans/:tripID" element={<TransList />}></Route>
+
+          <Route
+            path="/admin/activity/new/:tripID"
+            element={<AddActivity />}
+          ></Route>
+          <Route
+            path="/admin/activity/:tripID"
+            element={<ActivityList />}
           ></Route>
         </Routes>
       </Layout>

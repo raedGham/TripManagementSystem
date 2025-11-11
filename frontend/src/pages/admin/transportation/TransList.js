@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { FaEdit, FaTrashAlt, FaBusAlt, FaUmbrellaBeach } from "react-icons/fa";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { AiOutlinePicture } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import {
-  fetchTrips,
-  deleteTrip,
-} from "../../../redux/features/trips/tripSlice";
+  fetchTranses,
+  deleteTrans,
+} from "../../../redux/features/transes/transSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Search from "../../../components/search/Search";
 import {
-  FILTER_TRIPS,
-  selectFilteredTrips,
-} from "../../../redux/features/trips/filterSlice";
+  FILTER_TRANSES,
+  selectFilteredTranses,
+} from "../../../redux/features/transes/transfilterSlice";
 import ReactPaginate from "react-paginate";
 
-const TripsList = () => {
+const TransesList = () => {
   const [search, setSearch] = useState("");
-  const filteredTrips = useSelector(selectFilteredTrips);
+  const filteredTranses = useSelector(selectFilteredTranses);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const delTrip = async (id) => {
-    await dispatch(deleteTrip(id));
-    // await dispatch(fetchTrips());
+  const delTrans = async (id) => {
+    await dispatch(deleteTrans(id));
+    // await dispatch(fetchTranses());
     navigate("/Main");
   };
 
@@ -35,15 +35,15 @@ const TripsList = () => {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 text-center">
               <h1 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-                Delete Trip
+                Delete Trans
               </h1>
               <p className="text-gray-700 dark:text-gray-300 mb-6">
-                Are you sure you want to delete this Trip?
+                Are you sure you want to delete this Trans?
               </p>
               <div className="flex justify-center gap-4">
                 <button
                   onClick={() => {
-                    delTrip(id);
+                    delTrans(id);
                     onClose();
                   }}
                   className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
@@ -64,9 +64,9 @@ const TripsList = () => {
     });
   };
 
-  const { trips, loading, error } = useSelector((state) => state.trip);
+  const { transes, loading, error } = useSelector((state) => state.trans);
   useEffect(() => {
-    dispatch(fetchTrips());
+    dispatch(fetchTranses());
   }, [dispatch]);
 
   //   Begin Pagination
@@ -77,42 +77,42 @@ const TripsList = () => {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(filteredTrips.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(filteredTrips.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, filteredTrips]);
+    setCurrentItems(filteredTranses.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredTranses.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, filteredTranses]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % filteredTrips.length;
+    const newOffset = (event.selected * itemsPerPage) % filteredTranses.length;
     setItemOffset(newOffset);
   };
   //   End Pagination
 
   useEffect(() => {
-    console.log("FROM USEEFFECT:", trips);
-    dispatch(FILTER_TRIPS({ trips, search }));
-  }, [trips, search, dispatch]);
+    console.log("FROM USEEFFECT:", transes);
+    dispatch(FILTER_TRANSES({ transes, search }));
+  }, [transes, search, dispatch]);
 
   return (
     <div className="w-full rounded-lg shadow  mt-12 p-6">
       <div className="flex">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-2 mr-4 pt-2">
-          Trips List
+          Transportation List
         </h1>
         <Link
-          to="/admin/trips/new"
+          to="/admin/transes/new"
           className="mt-1 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
         >
-          Add Trip
+          Add Trans
         </Link>
 
         <Search value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
       <div className="overflow-x-auto">
-        {!trips && <p>Loading...</p>}
+        {!transes && <p>Loading...</p>}
 
-        {trips.length === 0 ? (
+        {transes.length === 0 ? (
           <p className=" text-gray-400 mt-2">
-            -- No trips found, please add a trip...
+            -- No transportations found, please add a one...
           </p>
         ) : (
           <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-200 mt-2">
@@ -122,26 +122,27 @@ const TripsList = () => {
                   S/N
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Title
+                  Type
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  destination
+                  Arrival Loc
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  demographic
+                  Depart. Loc
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Start Date
+                  Arrival Date
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  End Date
+                  Depart. Date
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Price/Trip
+                  Duration
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Organizer
+                  Cost/Trip
                 </th>
+
                 <th scope="col" className="px-6 py-3">
                   Actions
                 </th>
@@ -151,13 +152,13 @@ const TripsList = () => {
               {currentItems.map((trip, index) => {
                 const {
                   _id,
-                  title,
-                  destination,
-                  demographic,
-                  startDate,
-                  endDate,
-                  pricePerPerson,
-                  organizerID,
+                  type,
+                  arrivalLocation,
+                  departureLocation,
+                  arrivalDate,
+                  departureDate,
+                  duration,
+                  costPerTrip,
                 } = trip;
                 return (
                   <tr
@@ -165,35 +166,22 @@ const TripsList = () => {
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
                   >
                     <td className="px-3 py-2">{index + 1}</td>
-                    <td className="px-3 py-2">{title}</td>
-                    <td className="px-3 py-2">{destination}</td>
-                    <td className="px-3 py-2">{demographic}</td>
-                    <td className="px-3 py-2">{startDate}</td>
-                    <td className="px-3 py-2">{endDate}</td>
-                    <td className="px-3 py-2">{pricePerPerson}</td>
-                    <td className="px-3 py-2">{organizerID.name}</td>
+                    <td className="px-3 py-2">{type}</td>
+                    <td className="px-3 py-2">{arrivalLocation}</td>
+                    <td className="px-3 py-2">{departureLocation}</td>
+                    <td className="px-3 py-2">{arrivalDate}</td>
+                    <td className="px-3 py-2">{departureDate}</td>
+                    <td className="px-3 py-2">{duration}</td>
+                    <td className="px-3 py-2">{costPerTrip}</td>
 
                     <td className="px-6 py-4 flex space-x-3">
-                      <Link to={`/admin/activity/${_id}`}>
-                        <FaUmbrellaBeach
-                          size={20}
-                          className="text-yellow-600 hover:text-yellow-800"
-                        />
-                      </Link>
-
-                      <Link to={`/admin/trans/${_id}`}>
-                        <FaBusAlt
-                          size={20}
-                          className="text-blue-600 hover:text-blue-800"
-                        />
-                      </Link>
-                      <Link to={`/admin/trips/trip-info/${_id}`}>
-                        <AiOutlinePicture
+                      <Link to={`/admin/transes/trip-info/${_id}`}>
+                        <AiOutlineEye
                           size={20}
                           className="text-purple-600 hover:text-purple-800"
                         />
                       </Link>
-                      <Link to={`/trips/${_id}`}>
+                      <Link to={`/transes/${_id}`}>
                         <FaEdit
                           size={20}
                           className="text-green-600 hover:text-green-800"
@@ -237,4 +225,4 @@ const TripsList = () => {
   );
 };
 
-export default TripsList;
+export default TransesList;

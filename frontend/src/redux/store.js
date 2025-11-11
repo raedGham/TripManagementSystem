@@ -3,6 +3,10 @@ import authReducer from "../redux/features/auth/authSlice";
 import tripReducer from "../redux/features/trips/tripSlice";
 import tripFilterReducer from "../redux/features/trips/filterSlice";
 import tripImagesReducer from "./features/trips/tripImagesSlice";
+import transReducer from "./features/transes/transSlice";
+import transFilterReducer from "../redux/features/transes/transfilterSlice";
+import activityReducer from "./features/activity/ActivitySlice";
+import activityFilterReducer from "./features/activity/ActivityFilterSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +14,9 @@ export const store = configureStore({
     trip: tripReducer,
     tripFilter: tripFilterReducer,
     tripImages: tripImagesReducer,
+    trans: transReducer,
+    transFilter: transFilterReducer,
+    activity: activityReducer,
+    activityFilter: activityFilterReducer,
   },
 });
