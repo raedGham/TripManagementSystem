@@ -1,17 +1,16 @@
 import React from "react";
 import logo from "../../../assets/Logo.png";
 
-function TransForm({
-  type,
-  arrivalLocation,
-  arrivalDate,
-  departureLocation,
-  departureDate,
-  duration,
-  costPerTrip,
-  tripID,
+function TripForm({
+  title,
+  destination,
+  demographic,
+  startDate,
+  endDate,
+  pricePerPerson,
+  organizerID,
   handleInputChange,
-  addTrans,
+  addTrip,
   formTitle,
   users,
 }) {
@@ -41,46 +40,22 @@ function TransForm({
             {/* Grid for two columns */}
             <form
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
-              onSubmit={addTrans}
+              onSubmit={addTrip}
             >
-        {/* type dropdown */}
-      <div>
-        <label
-          htmlFor="type"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Type
-        </label>
-        <select
-          id="type"
-          name="type"
-          value={type}
-          onChange={handleInputChange}
-          required
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="">Select Type</option>
-          <option value="car">Car</option>
-          <option value="fairy">Fairy</option>
-          <option value="train">Train</option>
-        </select>
-      </div>
-
-
               <div>
                 <label
-                  htmlFor="arrivalLocation"
+                  htmlFor="title"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Arrival Location
+                  Title
                 </label>
                 <input
                   type="text"
-                  value={arrivalLocation}
+                  value={title}
                   onChange={handleInputChange}
-                  name="arrivalLocation"
-                  id="arrivalLocation"
-                  placeholder="Enter trans arrival Location"
+                  name="title"
+                  id="title"
+                  placeholder="Enter trip title"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
@@ -88,36 +63,18 @@ function TransForm({
 
               <div>
                 <label
-                  htmlFor="arrivalDate"
+                  htmlFor="destination"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Arrival Date
-                </label>
-                <input
-                  type="date"
-                  value={arrivalDate}
-                  onChange={handleInputChange}
-                  name="arrivalDate"
-                  id="arrivalDate"
-                  placeholder="Enter trans arrival Date"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="depatureLocation"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Depature Location
+                  Destination
                 </label>
                 <input
                   type="text"
-                  value={departureLocation}
+                  value={destination}
                   onChange={handleInputChange}
-                  name="departureLocation"
-                  id="departureLocation"
+                  name="destination"
+                  id="destination"
+                  placeholder="Enter trip destination"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
@@ -125,17 +82,36 @@ function TransForm({
 
               <div>
                 <label
-                  htmlFor="departureDate"
+                  htmlFor="demographic"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Departure Date
+                  Demographic
+                </label>
+                <input
+                  type="text"
+                  value={demographic}
+                  onChange={handleInputChange}
+                  name="demographic"
+                  id="demographic"
+                  placeholder="Enter trip demographic"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="startDate"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Start Date
                 </label>
                 <input
                   type="date"
-                  value={departureDate}
+                  value={startDate}
                   onChange={handleInputChange}
-                  name="departureDate"
-                  id="departureDate"
+                  name="startDate"
+                  id="startDate"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
@@ -143,44 +119,60 @@ function TransForm({
 
               <div>
                 <label
-                  htmlFor="duration"
+                  htmlFor="endDate"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Duration
+                  End Date
                 </label>
                 <input
-                  type="number"
-                  value={duration}
+                  type="date"
+                  value={endDate}
                   onChange={handleInputChange}
-                  name="duration"
-                  id="duration"
+                  name="endDate"
+                  id="endDate"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
               </div>
 
-              
               <div>
                 <label
-                  htmlFor="costPerTrip"
+                  htmlFor="pricePerPerson"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Cost/Trip
+                  Price Per Person
                 </label>
                 <input
-                  type="number"
-                  value={costPerTrip}
+                  type="text"
+                  value={pricePerPerson}
                   onChange={handleInputChange}
-                  name="costPerTrip"
-                  id="costPerTrip"
+                  name="pricePerPerson"
+                  id="pricePerPerson"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
               </div>
 
-
               <div>
-               
+                <label
+                  htmlFor="organizer"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Organizer
+                </label>
+                <select
+                  name="organizerID"
+                  value={organizerID}
+                  onChange={handleInputChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option value="">-- Select an Organizer --</option>
+                  {users.map((user) => (
+                    <option key={user._id} value={user._id}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="md:col-span-2">
@@ -188,7 +180,7 @@ function TransForm({
                   type="submit"
                   className="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
-                  {formTitle === "Edit Trans" ? "Submit" : "Add Trans"}
+                  {formTitle === "Edit Trip" ? "Submit" : "Add Trip"}
                 </button>
               </div>
             </form>
@@ -199,4 +191,4 @@ function TransForm({
   );
 }
 
-export default TransForm;
+export default TripForm;

@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API_URL = `${BACKEND_URL}/api/transs`;
+const API_URL = `${BACKEND_URL}/api/transportation`;
 
 //----------------------------------------------------
 //  C R E A T E    N E W   T R A N S
@@ -16,11 +16,11 @@ export const registerTrans = async (transData) => {
     formData.append("arrivalDate", transData.arrivalDate);
     formData.append("departureDate", transData.departureDate);
     formData.append("duration", transData.duration);
-    formData.append("duration", transData.costPerTrip);
+    formData.append("costPerTrip", transData.costPerTrip);
     formData.append("tripID", transData.tripID);
 
     const response = await axios.post(
-      `${BACKEND_URL}/api/transs/new`,
+      `${BACKEND_URL}/api/transportation/new`,
       formData,
       { withCredentials: true }
     );
@@ -38,10 +38,11 @@ export const registerTrans = async (transData) => {
 };
 
 //----------------------------------------------------
-//    G E T  A L L   T R A N S S
+//    G E T  A L L   T R A N S E S
 //----------------------------------------------------
 const getTranses = async () => {
   const reponse = await axios.get(API_URL);
+  console.log(reponse.data)
   return reponse.data;
 };
 

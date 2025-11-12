@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import TripHeader from "../../../components/trip/TripHeader";
 import {
   fetchActivities,
   deleteActivity,
@@ -70,6 +71,7 @@ const ActivitiesList = () => {
     dispatch(fetchActivities());
   }, [dispatch]);
 
+
   //   Begin Pagination
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -95,7 +97,9 @@ const ActivitiesList = () => {
   }, [activities, search, dispatch]);
 
   return (
-    <div className="w-full rounded-lg shadow  mt-12 p-6">
+    <>
+    <TripHeader  tripID = {tripID}/>
+    <div className="w-full rounded-lg shadow  p-14">
       <div className="flex">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-2 mr-4 pt-2">
           Activities List
@@ -213,6 +217,7 @@ const ActivitiesList = () => {
         disabledClassName="opacity-40 cursor-not-allowed"
       />
     </div>
+    </>
   );
 };
 

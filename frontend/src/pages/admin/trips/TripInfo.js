@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { getTrip, selectTrip } from "../../../redux/features/trips/tripSlice";
+import TripHeader from "../../../components/trip/TripHeader";
 import {
   fetchTripImages,
   uploadTripImages,
@@ -17,7 +18,7 @@ const TripInfo = () => {
   const { id } = useParams(); // /trip/:id
   const dispatch = useDispatch();
 
-  const trip = useSelector(selectTrip);
+//  const trip = useSelector(selectTrip);
   const images = useSelector(selectTripImages);
   const isLoadingImages = useSelector(selectTripImagesLoading);
 
@@ -46,58 +47,13 @@ const TripInfo = () => {
     }
   };
 
-  const {
-    title,
-    destination,
-    demographic,
-    startDate,
-    endDate,
-    pricePerPerson,
-    organizerID,
-  } = trip || {}; // safe destructure
 
   return (
     <>
-      <section className="m-12 text-white space-y-10">
-        {trip && (
-          <>
-            {/* Trip Header */}
-            <header className="bg-gray-800/40 p-8 rounded-xl shadow-lg space-y-4">
-              <h1 className="text-3xl font-semibold tracking-wide">{title}</h1>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg">
-                <p>
-                  <span className="text-gray-400">Destination:</span>{" "}
-                  {destination}
-                </p>
-                <p>
-                  <span className="text-gray-400">Demographic:</span>{" "}
-                  {demographic}
-                </p>
-                <p>
-                  <span className="text-gray-400">Start Date:</span> {startDate}
-                </p>
-                <p>
-                  <span className="text-gray-400">End Date:</span> {endDate}
-                </p>
-                <p>
-                  <span className="text-gray-400">Price / Person:</span>{" "}
-                  {pricePerPerson}
-                </p>
-                <p>
-                  <span className="text-gray-400">Organizer:</span>{" "}
-                  {organizerID?.name}
-                </p>
-              </div>
-            </header>
-          </>
-        )}
-      </section>
+      <TripHeader  tripID = {id}/>
       {/* ------------- images----------------- */}
       <div className="p-6 max-w-5xl mx-auto">
-        {/* Trip Basic Info */}
-        <h1 className="text-3xl font-bold mb-2">{trip?.title}</h1>
-        <p className="text-gray-600 mb-6"> {trip?.description} </p>
+      
 
         {/* Add Images Button */}
         <button

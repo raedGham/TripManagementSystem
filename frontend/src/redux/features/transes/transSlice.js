@@ -15,7 +15,7 @@ export const fetchTranses = createAsyncThunk(
   "transes/getAll",
   async (_, thunkAPI) => {
     try {
-      return await transService.getTranss();
+      return await transService.getTranses();
     } catch (error) {
       const message =
         (error.response &&

@@ -9,10 +9,10 @@ const transFilterSlice = createSlice({
   initialState,
   reducers: {
     FILTER_TRANSES(state, action) {
-      console.log("FROM FILTER SLICE:", action.payload);
+      
       const { transes, search } = action.payload;
       const tempTranses = transes.filter((trans) =>
-        trans.title.toLowerCase().includes(search.toLowerCase())
+        trans.type.toLowerCase().includes(search.toLowerCase())
       );
 
       console.log("temptranses:", tempTranses);

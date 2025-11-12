@@ -6,9 +6,12 @@ const { response } = require("express");
 //  N E W   A C T I V I T Y
 // --------------------------------------------------------------------
 const newActivity = asyncHandler(async (req, res) => {
+
   const {
-    name, description,startDate, finishDate, capacity, tripID, costPerPerson,
+    name, description,startDate, finishDate, capacity,costPerPerson,tripID
   } = req.body;
+
+  console.log("tripID:", tripID)
 
   // validation
   if (!name || !description || !startDate || !finishDate || !capacity || !tripID || !costPerPerson) {
@@ -38,8 +41,9 @@ const newActivity = asyncHandler(async (req, res) => {
 //  G E T A L L   A C T I V I T Y S
 // --------------------------------------------------------------------
 const getActivities = asyncHandler(async (req, res) => {
-  const activitys = await Activity.find().sort("startDate");
-  res.status(200).json(activitys);
+  console.log("GET ACTIVITIES CONTROLLER")
+  const activities = await Activity.find().sort("startDate");
+  res.status(200).json(activities);
 });
 
 // --------------------------------------------------------------------

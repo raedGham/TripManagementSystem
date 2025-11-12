@@ -17,7 +17,9 @@ export const fetchActivities = createAsyncThunk(
     try {
       return await activityService.getActivities();
     } catch (error) {
+    
       const message =
+      
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
@@ -119,7 +121,7 @@ const activitySlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         console.log(action.payload);
-        state.Activities = action.payload;
+        state.activities = action.payload;
       })
       //  error getting Activities case
       .addCase(fetchActivities.rejected, (state, action) => {
@@ -177,7 +179,7 @@ const activitySlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.Activities = state.Activities.filter(
+        state.activities = state.activities.filter(
           (activity) => activity._id !== action.payload._id
         );
         toast.success("Activity Deleted Sucessfully");

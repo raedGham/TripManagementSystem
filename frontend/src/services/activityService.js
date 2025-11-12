@@ -8,6 +8,7 @@ const API_URL = `${BACKEND_URL}/api/activities`;
 //  C R E A T E    N E W   A C T I V I T Y
 //----------------------------------------------------
 export const registerActivity = async (activityData) => {
+ 
   try {
     const formData = new FormData();
     formData.append("name", activityData.name);
@@ -40,7 +41,7 @@ export const registerActivity = async (activityData) => {
 //    G E T  A L L   A C T I V I T I E S
 //----------------------------------------------------
 const getActivities = async () => {
-  const reponse = await axios.get(API_URL);
+  const reponse = await axios.get(API_URL);  
   return reponse.data;
 };
 

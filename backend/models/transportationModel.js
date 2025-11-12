@@ -23,7 +23,7 @@ const transportationSchema = mongoose.Schema(
       required: [true, "Please enter arrival date"],
     },
 
-    depatureDate: {
+    departureDate: {
       type: Date,
       required: [true, "Please enter departure date"],
     },

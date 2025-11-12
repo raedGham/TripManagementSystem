@@ -10,7 +10,7 @@ const {
   updateTransportation,
 } = require("../controllers/transportationController");
 
-router.post("/new", newTransportation);
+router.post("/new", upload.none(), newTransportation);
 router.get("/", getTransportations);
 router.get("/:id", getTransportation);
 router.delete("/:id", deleteTransportation);

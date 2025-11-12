@@ -10,7 +10,7 @@ const {
   updateActivity,
 } = require("../controllers/activitiesController");
 
-router.post("/new", newActivity);
+router.post("/new", upload.none(), newActivity);
 router.get("/", getActivities);
 router.get("/:id", getActivity);
 router.delete("/:id", deleteActivity);

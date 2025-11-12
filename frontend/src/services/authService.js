@@ -100,3 +100,53 @@ export const getUsers = async () => {
   const reponse = await axios.get(`${BACKEND_URL}/api/users/`);
   return reponse.data;
 };
+
+
+
+//----------------------------------------------------
+//    G E T  S I N G L E   U S E R
+//----------------------------------------------------
+export const getUser = async (id) => {
+  const reponse = await axios.get(`${BACKEND_URL}/api/users/${id}`);
+  return reponse.data;
+};
+
+//----------------------------------------------------
+//    D E L E T E    U S E R
+//----------------------------------------------------
+export const DeleteUser = async (id) => {
+  const reponse = await axios.delete(`${BACKEND_URL}/api/users/${id}`);
+  return reponse.data;
+};
+
+//----------------------------------------------------
+//    U P D A T E   U S E R
+//----------------------------------------------------
+
+export const UpdateUser = async (id, userData) => {
+  try {
+    const formData = new FormData();
+    formData.append("name", userData.title);
+    formData.append("email", userData.destination);
+    formData.append("type", userData.demographic);
+ 
+
+    const response = await axios.put(`${BACKEND_URL}/api/users/${id}`, formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (response.statusText === "OK") {
+      toast.success("User Updated Successfully");
+    }
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
