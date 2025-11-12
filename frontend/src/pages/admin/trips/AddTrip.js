@@ -16,6 +16,7 @@ const initialState = {
   endDate: "",
   pricePerPerson: "",
   organizerID: "",
+  thumbnail: "",
 };
 
 const AddTrip = () => {
@@ -29,8 +30,10 @@ const AddTrip = () => {
     endDate,
     pricePerPerson,
     organizerID,
+    thumbnail,
   } = formData;
 
+  const [preview, setPreview] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const users = useSelector((state) => state.auth.users);
@@ -42,6 +45,14 @@ const AddTrip = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleThumbnailChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, thumbnail: file });
+      setPreview(URL.createObjectURL(file)); // preview the image
+    }
   };
 
   const addTrip = async (e) => {
@@ -68,6 +79,7 @@ const AddTrip = () => {
       endDate,
       pricePerPerson,
       organizerID,
+      thumbnail,
     };
     setIsLoading(true);
     // attemps to save the new trip
@@ -95,6 +107,8 @@ const AddTrip = () => {
       addTrip={addTrip}
       formTitle={"Add Trip"}
       users={users}
+      handleThumbnailChange={handleThumbnailChange}
+      preview={preview}
     />
   );
 };

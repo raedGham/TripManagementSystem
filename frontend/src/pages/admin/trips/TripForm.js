@@ -13,6 +13,8 @@ function TripForm({
   addTrip,
   formTitle,
   users,
+  handleThumbnailChange,
+  preview,
 }) {
   return (
     <section className="">
@@ -174,6 +176,28 @@ function TripForm({
                   ))}
                 </select>
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-900">
+                  Thumbnail
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleThumbnailChange}
+                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
+                />
+              </div>
+
+              {preview && (
+                <div className="mt-4">
+                  <img
+                    src={preview}
+                    alt="Thumbnail Preview"
+                    className="w-48 h-32 object-cover rounded-lg shadow-md"
+                  />
+                </div>
+              )}
 
               <div className="md:col-span-2">
                 <button

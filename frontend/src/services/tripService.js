@@ -17,10 +17,13 @@ export const registerTrip = async (tripData) => {
     formData.append("endDate", tripData.endDate);
     formData.append("pricePerPerson", tripData.pricePerPerson);
     formData.append("organizerID", tripData.organizerID);
-
+    if (tripData.thumbnail) formData.append("thumbnail", tripData.thumbnail);
     const response = await axios.post(
       `${BACKEND_URL}/api/trips/new`,
       formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
       { withCredentials: true }
     );
     if (response.statusText === "OK") {
@@ -74,7 +77,7 @@ export const updateTrip = async (id, tripData) => {
     formData.append("endDate", tripData.endDate);
     formData.append("pricePerPerson", tripData.pricePerPerson);
     formData.append("organiserID", tripData.organiserID);
-
+    if (tripData.thumbnail) formData.append("thumbnail", tripData.thumbnail);
     const response = await axios.put(`${API_URL}/${id}`, formData, {
       withCredentials: true,
       headers: {
