@@ -1,188 +1,137 @@
 import React from "react";
 import logo from "../../../assets/Logo.png";
 
-function TripForm({
-  title,
-  destination,
-  demographic,
-  startDate,
-  endDate,
-  pricePerPerson,
-  organizerID,
+function UserForm({
+  name,
+  email,
+  type,
+  password,
+  password2,
   handleInputChange,
-  addTrip,
+  addUser,
   formTitle,
-  users,
 }) {
   return (
-    <section className="">
-      <div className="flex flex-col items-center justify-center px-6 md:h-screen lg:py-0">
+    <section>
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
         >
           <img
-            className="w-12 h-12 mr-2 rounded-2xl shadow-2xl"
+            className="w-16 h-16 mr-2 rounded-2xl shadow-2xl mr-2"
             src={logo}
             alt="logo"
           />
           Travel Lebanon
         </a>
-
-        {/* Increased max width to lg:max-w-4xl for a wider window */}
-
-        <div className="w-full rounded-lg shadow dark:border md:mt-0 lg:max-w-4xl xl:p-0 bg-white/60 dark:bg-gray-800/60 dark:border-gray-700">
+        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              {formTitle}
+              Add New User
             </h1>
 
-            {/* Grid for two columns */}
-            <form
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
-              onSubmit={addTrip}
-            >
+            <form className="space-y-4 md:space-y-6" onSubmit={addUser}>
               <div>
                 <label
-                  htmlFor="title"
+                  htmlFor="name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Title
+                  Name
                 </label>
                 <input
                   type="text"
-                  value={title}
+                  value={name}
                   onChange={handleInputChange}
-                  name="title"
-                  id="title"
-                  placeholder="Enter trip title"
+                  name="name"
+                  id="name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
+                  placeholder="enter username"
+                  required=""
                 />
               </div>
-
               <div>
                 <label
-                  htmlFor="destination"
+                  htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Destination
+                  Email
                 </label>
                 <input
-                  type="text"
-                  value={destination}
+                  type="email"
+                  value={email}
                   onChange={handleInputChange}
-                  name="destination"
-                  id="destination"
-                  placeholder="Enter trip destination"
+                  name="email"
+                  id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
+                  placeholder="name@company.com"
+                  required=""
                 />
               </div>
 
               <div>
                 <label
-                  htmlFor="demographic"
+                  htmlFor="type"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Demographic
-                </label>
-                <input
-                  type="text"
-                  value={demographic}
-                  onChange={handleInputChange}
-                  name="demographic"
-                  id="demographic"
-                  placeholder="Enter trip demographic"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="startDate"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Start Date
-                </label>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={handleInputChange}
-                  name="startDate"
-                  id="startDate"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="endDate"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  End Date
-                </label>
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={handleInputChange}
-                  name="endDate"
-                  id="endDate"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="pricePerPerson"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Price Per Person
-                </label>
-                <input
-                  type="text"
-                  value={pricePerPerson}
-                  onChange={handleInputChange}
-                  name="pricePerPerson"
-                  id="pricePerPerson"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="organizer"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Organizer
+                  Type
                 </label>
                 <select
-                  name="organizerID"
-                  value={organizerID}
+                  id="type"
+                  name="type"
+                  value={type}
                   onChange={handleInputChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white"
                 >
-                  <option value="">-- Select an Organizer --</option>
-                  {users.map((user) => (
-                    <option key={user._id} value={user._id}>
-                      {user.name}
-                    </option>
-                  ))}
+                  <option value="">Select Type</option>
+                  <option value="normal">normal</option>
+                  <option value="organizer">organizer</option>
+                  <option value="superuser">superuser</option>
                 </select>
               </div>
 
-              <div className="md:col-span-2">
-                <button
-                  type="submit"
-                  className="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  {formTitle === "Edit Trip" ? "Submit" : "Add Trip"}
-                </button>
+                  Password
+                </label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={handleInputChange}
+                  name="password"
+                  id="password"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required=""
+                />
               </div>
+              <div>
+                <label
+                  htmlFor="password2"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  value={password2}
+                  onChange={handleInputChange}
+                  name="password2"
+                  id="password2"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required=""
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full px-6 py-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg text-lg font-medium shadow-md transition"
+              >
+                {formTitle === "Edit User" ? "Submit" : "Add User"}
+              </button>
             </form>
           </div>
         </div>
@@ -191,4 +140,4 @@ function TripForm({
   );
 }
 
-export default TripForm;
+export default UserForm;

@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {
-  fetchUsers,
-  deleteUser,
-} from "../../../redux/features/auth/authSlice";
+import { fetchUsers, deleteUser } from "../../../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -137,12 +134,7 @@ const UsersList = () => {
             </thead>
             <tbody>
               {currentItems.map((user, index) => {
-                const {
-                  _id,
-                  name,
-                  email,
-                  type,                  
-                } = user;
+                const { _id, name, email, type } = user;
                 return (
                   <tr
                     key={_id}
@@ -152,25 +144,24 @@ const UsersList = () => {
                     <td className="px-3 py-2">{name}</td>
                     <td className="px-3 py-2">{email}</td>
                     <td className="px-3 py-2">{type}</td>
-                    <td className="px-6 py-4 flex space-x-3">                     
-
-                      <Link to={`/users/${_id}`}>
-                        <FaEdit
-                          size={20}
-                          className="text-green-600 hover:text-green-800"
-                        />
-                      </Link>
-                      <button
-                        onClick={() => {
-                          confirmDelete(_id);
-                        }}
-                      >
-                        <FaTrashAlt
-                          size={18}
-                          className="text-red-600 hover:text-red-800"
-                        />
-                      </button>
-                    </td>
+                    {name !== "admin" ? (
+                      <td className="px-6 py-4 flex space-x-3">
+                        <Link to={`/users/${_id}`}>
+                          <FaEdit
+                            size={20}
+                            className="text-green-600 hover:text-green-800"
+                          />
+                        </Link>
+                        <button onClick={() => confirmDelete(_id)}>
+                          <FaTrashAlt
+                            size={18}
+                            className="text-red-600 hover:text-red-800"
+                          />
+                        </button>
+                      </td>
+                    ) : (
+                      <td></td>
+                    )}
                   </tr>
                 );
               })}

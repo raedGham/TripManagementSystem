@@ -4,6 +4,7 @@ const {
   loginUser,
   logoutUser,
   getUser,
+  deleteUser,
   getUsers,
   loginStatus,
   updateUser,
@@ -22,5 +23,6 @@ router.get("/loggedin", loginStatus);
 router.patch("/updateuser", protect, updateUser);
 router.patch("/changeAdminPass", protect, changePassword);
 router.post("/forgotpassword", forgotPassword);
+router.delete("/:id", deleteUser);
 
 module.exports = router;

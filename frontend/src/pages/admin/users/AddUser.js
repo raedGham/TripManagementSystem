@@ -1,80 +1,61 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { registerTrip } from "../../../services/tripService";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import Loader from "../../../components/loader/Loader";
-import { useDispatch, useSelector } from "react-redux";
-import TripForm from "./UserForm";
-import { fetchUsers } from "../../../redux/features/auth/authSlice";
+import { validateEmail, registerUser } from "../../../services/authService";
+import UserForm from "./UserForm";
+import { useDispatch } from "react-redux";
 
+import Loader from "../../../components/loader/Loader";
+import logo from "../../../assets/Logo.png";
 const initialState = {
-  title: "",
-  destination: "",
-  demographic: "",
-  startDate: "",
-  endDate: "",
-  pricePerPerson: "",
-  organizerID: "",
+  name: "",
+  email: "",
+  type: "",
+  password: "",
+  password2: "",
 };
 
-const AddTrip = () => {
+function AddUser() {
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    title,
-    destination,
-    demographic,
-    startDate,
-    endDate,
-    pricePerPerson,
-    organizerID,
-  } = formData;
-
+  const { name, email, password, password2, type } = formData;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const users = useSelector((state) => state.auth.users);
-  console.log(users);
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const addTrip = async (e) => {
+  const addUser = async (e) => {
     e.preventDefault();
 
     // validation
-    if (
-      !title ||
-      !destination ||
-      !demographic ||
-      !startDate ||
-      !endDate ||
-      !pricePerPerson ||
-      !organizerID
-    ) {
+    if (!name || !email || !password || !type) {
       return toast.error("All fields are required");
     }
 
-    const tripData = {
-      title,
-      destination,
-      demographic,
-      startDate,
-      endDate,
-      pricePerPerson,
-      organizerID,
-    };
+    if (password.length < 6) {
+      return toast.error("Password must be at least 6 chars ");
+    }
+
+    if (!validateEmail(email)) {
+      return toast.error("Please Enter a valid Email");
+    }
+
+    if (password !== password2) {
+      return toast.error("Passwords do not match");
+    }
+
+    const userData = { name, email, password, type };
     setIsLoading(true);
-    // attemps to save the new trip
+
+    // attemps to add the user
     try {
-      const data = await registerTrip(tripData);
-      toast.success("Trip Added Sucessfully");
-      navigate("/trips/list");
+      const data = await registerUser(userData);
+      // console.log(data)
+
+      navigate("/main");
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -83,20 +64,17 @@ const AddTrip = () => {
   };
 
   return (
-    <TripForm
-      title={title}
-      destination={destination}
-      demographic={demographic}
-      startDate={startDate}
-      endDate={endDate}
-      pricePerPerson={pricePerPerson}
-      organizerID={organizerID}
+    <UserForm
+      name={name}
+      email={email}
+      password={password}
+      password2={password2}
+      type={type}
       handleInputChange={handleInputChange}
-      addTrip={addTrip}
-      formTitle={"Add Trip"}
-      users={users}
+      addUser={addUser}
+      formTitle={"Add User"}
     />
   );
-};
+}
 
-export default AddTrip;
+export default AddUser;

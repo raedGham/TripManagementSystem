@@ -152,7 +152,7 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 // --------------------------------------------------------------------
-//   G E T   U S E R   I N F O
+//   G E T   U S E R S   I N F O
 // --------------------------------------------------------------------
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find().sort("name");
@@ -176,6 +176,18 @@ const loginStatus = asyncHandler(async (req, res) => {
   }
 
   return res.json(false);
+});
+
+// --------------------------------------------------------------------
+//  D E L E T E    U S E R
+// --------------------------------------------------------------------
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+  if (!user) {
+    response.status(400);
+    throw new Error("Invalid user");
+  }
+  res.status(200).json(user);
 });
 
 // --------------------------------------------------------------------
@@ -295,6 +307,7 @@ module.exports = {
   loginUser,
   logoutUser,
   getUser,
+  deleteUser,
   getUsers,
   loginStatus,
   updateUser,

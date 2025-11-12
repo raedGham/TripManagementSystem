@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["normal", "organiser", "superuser"],
+      enum: ["normal", "organizer", "superuser"],
       default: "normal",
     },
     password: {
