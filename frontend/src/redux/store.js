@@ -7,10 +7,11 @@ import transReducer from "./features/transes/transSlice";
 import transFilterReducer from "../redux/features/transes/transfilterSlice";
 import activityReducer from "./features/activity/ActivitySlice";
 import activityFilterReducer from "./features/activity/ActivityFilterSlice";
-
+import userFilterReducer from "./features/auth/UserFilterSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    userFilter: userFilterReducer,
     trip: tripReducer,
     tripFilter: tripFilterReducer,
     tripImages: tripImagesReducer,

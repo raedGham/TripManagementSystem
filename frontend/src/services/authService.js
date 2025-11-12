@@ -106,7 +106,7 @@ export const getUsers = async () => {
 //----------------------------------------------------
 //    G E T  S I N G L E   U S E R
 //----------------------------------------------------
-export const getUser = async (id) => {
+export const GetUser = async (id) => {
   const reponse = await axios.get(`${BACKEND_URL}/api/users/${id}`);
   return reponse.data;
 };

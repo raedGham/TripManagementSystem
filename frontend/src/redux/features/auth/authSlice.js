@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {toast} from "react-toastify"
 
-import { getLoginStatus, getUsers , getUser , UpdateUser, DeleteUser } from "../../../services/authService";
+import { getLoginStatus, getUsers , GetUser , UpdateUser, DeleteUser } from "../../../services/authService";
 
 const name = JSON.parse(localStorage.getItem("name"));
 const initialState = {
@@ -51,11 +51,11 @@ export const checkLoginStatus = createAsyncThunk(
 );
 
 // get a single USER
-export const getActivity = createAsyncThunk(
+export const getUser = createAsyncThunk(
   "Users/getUser",
   async (id, thunkAPI) => {
     try {
-      return await getUser(id);
+      return await GetUser(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -154,8 +154,6 @@ const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-
-
 
        // getuser  in progress case
       .addCase(getUser.pending, (state) => {

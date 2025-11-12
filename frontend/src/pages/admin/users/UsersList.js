@@ -24,7 +24,7 @@ const UsersList = () => {
   const delUser = async (id) => {
     await dispatch(deleteUser(id));
     // await dispatch(fetchUsers());
-    navigate("/Main");
+    navigate("/admin/users");
   };
 
   const confirmDelete = (id) => {
@@ -63,7 +63,7 @@ const UsersList = () => {
     });
   };
 
-  const { users, loading, error } = useSelector((state) => state.user);
+  const { users, loading, error } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);

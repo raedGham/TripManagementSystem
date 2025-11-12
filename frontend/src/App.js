@@ -14,6 +14,8 @@ import AddTrans from "./pages/admin/transportation/AddTrans";
 import TransList from "./pages/admin/transportation/TransList";
 import AddActivity from "./pages/admin/activities/AddActivity";
 import ActivityList from "./pages/admin/activities/ActivityList";
+import UsersList from "./pages/admin/users/UsersList";
+
 
 function App() {
   return (
@@ -22,7 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
+          <Route path="/register" element={<Register />}></Route>          
           <Route path="/main" element={<Main />}></Route>
           <Route path="/admin/trips/new" element={<AddTrip />}></Route>
           <Route path="/admin/trips" element={<TripsList />}></Route>
@@ -41,6 +43,11 @@ function App() {
           <Route
             path="/admin/activity/:tripID"
             element={<ActivityList />}
+          ></Route>
+
+           <Route
+            path="/admin/users"
+            element={<UsersList />}
           ></Route>
         </Routes>
       </Layout>

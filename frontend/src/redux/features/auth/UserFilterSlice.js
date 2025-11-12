@@ -1,30 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  filteredActivities: [],
+  filteredUsers: [],
 };
 
-const activityFilterSlice = createSlice({
+const userFilterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    FILTER_ACTIVITIES(state, action) {
+    FILTER_USERS(state, action) {
      
-      const { activities, search } = action.payload;
-      const tempActivities = activities.filter((activity) =>
-        activity.name.toLowerCase().includes(search.toLowerCase())
+      const { users, search } = action.payload;
+      const tempUsers = users.filter((user) =>
+        user.name.toLowerCase().includes(search.toLowerCase())
       );
 
-      console.log("tempactivities:", tempActivities);
+      
 
-      state.filteredActivities = tempActivities;
+      state.filteredUsers = tempUsers;
     },
   },
 });
 
-export const { FILTER_ACTIVITIES } = activityFilterSlice.actions;
+export const { FILTER_USERS } = userFilterSlice.actions;
 
-export const selectFilteredActivities = (state) =>
-  state.activityFilter.filteredActivities;
+export const selectFilteredUsers = (state) =>
+  state.userFilter.filteredUsers;
 
-export default activityFilterSlice.reducer;
+export default userFilterSlice.reducer;
