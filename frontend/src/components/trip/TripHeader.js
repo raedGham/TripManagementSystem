@@ -56,7 +56,7 @@ function TripHeader({ tripID }) {
               </div>
 
               {/* Third column: thumbnail */}
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center">                
                 <img
                   src={`${BACKEND_URL}/${thumbnail}`}
                   alt="Thumbnail"

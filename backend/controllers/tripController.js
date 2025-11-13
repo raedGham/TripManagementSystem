@@ -18,6 +18,7 @@ const newTrip = asyncHandler(async (req, res) => {
     endDate,
     pricePerPerson,
     organizerID,
+    thumbnail,
   } = req.body;
 
   // validation
@@ -35,6 +36,7 @@ const newTrip = asyncHandler(async (req, res) => {
     endDate,
     pricePerPerson,
     organizerID,
+    thumbnail: path.join("uploads", "thumbs", req.file.filename),
   });
 
   if (trip) {
@@ -47,6 +49,7 @@ const newTrip = asyncHandler(async (req, res) => {
       endDate,
       pricePerPerson,
       organizerID,
+      thumbnail,
     } = trip;
     res.status(201).json({
       _id,
@@ -57,6 +60,7 @@ const newTrip = asyncHandler(async (req, res) => {
       endDate,
       pricePerPerson,
       organizerID,
+      thumbnail,
     });
   } else {
     response.status(400);

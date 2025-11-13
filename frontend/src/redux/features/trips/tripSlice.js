@@ -104,6 +104,7 @@ const tripSlice = createSlice({
       state.trip.endDate        = profile.endDate;
       state.trip.pricePerPerson = profile.pricePerPerson;
       state.trip.organiserID    = profile.organiserID;
+      state.trip.thumbnail      = profile.thumbnail;
     },
   },
 

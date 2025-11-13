@@ -14,7 +14,7 @@ function TripForm({
   formTitle,
   users,
   handleThumbnailChange,
-  preview,
+  preview,  
 }) {
   return (
     <section className="">

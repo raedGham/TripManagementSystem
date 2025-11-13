@@ -18,6 +18,11 @@ export const registerTrip = async (tripData) => {
     formData.append("pricePerPerson", tripData.pricePerPerson);
     formData.append("organizerID", tripData.organizerID);
     if (tripData.thumbnail) formData.append("thumbnail", tripData.thumbnail);
+
+       for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
     const response = await axios.post(
       `${BACKEND_URL}/api/trips/new`,
       formData,

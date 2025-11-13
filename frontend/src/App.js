@@ -16,6 +16,9 @@ import AddActivity from "./pages/admin/activities/AddActivity";
 import ActivityList from "./pages/admin/activities/ActivityList";
 import UsersList from "./pages/admin/users/UsersList";
 import AddUser from "./pages/admin/users/AddUser";
+import Destination from "./pages/Destination/Destination";
+import Reservation from "./pages/Reservation/Reservation";
+import Payment from "./pages/Payment/Payment";
 
 function App() {
   return (
@@ -47,6 +50,12 @@ function App() {
 
           <Route path="/admin/users" element={<UsersList />}></Route>
           <Route path="/admin/users/new" element={<AddUser />}></Route>
+
+          <Route path="/destination" element={<Destination />}></Route>
+          <Route path="/reservation" element={<Reservation />}></Route>
+          <Route path="/payment" element={<Payment />}></Route>
+
+
         </Routes>
       </Layout>
       <ToastContainer />

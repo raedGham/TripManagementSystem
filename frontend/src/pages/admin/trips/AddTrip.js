@@ -81,12 +81,14 @@ const AddTrip = () => {
       organizerID,
       thumbnail,
     };
+    console.log(tripData);
+
     setIsLoading(true);
     // attemps to save the new trip
     try {
       const data = await registerTrip(tripData);
       toast.success("Trip Added Sucessfully");
-      navigate("/trips/list");
+      navigate("/trips");
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

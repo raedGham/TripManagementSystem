@@ -37,6 +37,11 @@ const tripSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
+
+      thumbnail: {
+      type: String,      
+      required: true,
+    },
   },
   { timestamps: true }
 );
