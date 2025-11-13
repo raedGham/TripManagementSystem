@@ -88,7 +88,7 @@ const AddTrip = () => {
     try {
       const data = await registerTrip(tripData);
       toast.success("Trip Added Sucessfully");
-      navigate("/trips");
+      navigate("/admin/trips");
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

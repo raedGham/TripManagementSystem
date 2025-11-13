@@ -17,6 +17,7 @@ import ActivityList from "./pages/admin/activities/ActivityList";
 import UsersList from "./pages/admin/users/UsersList";
 import AddUser from "./pages/admin/users/AddUser";
 import Destination from "./pages/Destination/Destination";
+import TripDetails from "./pages/Destination/TripDetails";
 import Reservation from "./pages/Reservation/Reservation";
 import Payment from "./pages/Payment/Payment";
 
@@ -52,6 +53,7 @@ function App() {
           <Route path="/admin/users/new" element={<AddUser />}></Route>
 
           <Route path="/destination" element={<Destination />}></Route>
+          <Route path="/details/:id" element={<TripDetails />}></Route>
           <Route path="/reservation" element={<Reservation />}></Route>
           <Route path="/payment" element={<Payment />}></Route>
 
