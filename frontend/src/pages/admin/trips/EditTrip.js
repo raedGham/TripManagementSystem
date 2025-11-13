@@ -1,65 +1,85 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { updateProduct , getProduct} from "../../../services/products/productService"; // Your editProduct API function
+import { updateTrip, getTrip } from "../../../services/tripService"; // Your editTrip API function
 import { toast } from "react-toastify";
-import {fetchCatgs} from "../../../redux/features/categories/catgSlice";
 import { useDispatch, useSelector } from "react-redux";
-import ProductForm from '../../../components/products/ProductForm';
+import TripForm from "../../../pages/admin/trips/TripForm";
+import { fetchUsers } from "../../../redux/features/auth/authSlice";
 
-const  EditProduct = () => {
-  const { id } = useParams(); // product ID from route
+const EditTrip = () => {
+  const { id } = useParams(); // trip ID from route
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
+  const users = useSelector((state) => state.auth.users);
+  const [title, setTitle] = useState("");
+  const [destination, setDestination] = useState("");
+  const [demographic, setDemographic] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [pricePerPerson, setPricePerPerson] = useState("");
+  const [organizerID, setOrganizerID] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [formData, setFormData] = useState("")
 
-  const { catgs } = useSelector((state) => state.catg);
+  const [formData, setFormData] = useState("");
+
   useEffect(() => {
-   dispatch(fetchCatgs());
-}, [dispatch]);
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
-  // Load product details
+  // Load trip details
   useEffect(() => {
     async function fetchData() {
       try {
-        const product = await getProduct(id);
-        setName(product.name);
-        setCategory(product.category);
-        setPrice(product.price);
-        setPreview(product.thumbnail?.url || null); // Show existing image
+        const trip = await getTrip(id);
+        setTitle(trip.title);
+        setDestination(trip.destination);
+        setDemographic(trip.demographic);
+        setStartDate(trip.startDate);
+        setEndDate(trip.endDate);
+        setPricePerPerson(trip.pricePerPerson);
+
+        setPreview(trip.thumbnail?.url || null); // Show existing image
+
+        // Only set organizer after trip loads
+        setOrganizerID(trip.organizerID?._id || trip.organizerID || "");
       } catch (err) {
-        toast.error("Failed to load product details");
+        toast.error("Failed to load trip details");
       }
     }
     fetchData();
   }, [id]);
 
   const handleInputChange = (e) => {
-    const {name, value} = e.target;
-    
+    const { name, value } = e.target;
+
     switch (name) {
-      case "name":
-        setName(value)
+      case "title":
+        setTitle(value);
         break;
-      case "category":
-        setCategory(value)
+      case "destination":
+        setDestination(value);
         break;
-      case "price":
-          setPrice(value)
-          break;  
-
-
+      case "demographic":
+        setDemographic(value);
+        break;
+      case "startDate":
+        setStartDate(value);
+        break;
+      case "endDate":
+        setEndDate(value);
+        break;
+      case "pricePerPerson":
+        setPricePerPerson(value);
+        break;
+      case "organizerID":
+        setOrganizerID(value);
+        break;
     }
-  
-};
+  };
 
   // Handle image selection
-  const handleImageChange = (e) => {
+  const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setThumbnail(file);
@@ -69,35 +89,41 @@ const  EditProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const productData = {
-      name,
-      category,
-      price,
+    const tripData = {
+      title,
+      destination,
+      demographic,
+      startDate,
+      endDate,
+      pricePerPerson,
+      organizerID,
       thumbnail, // File or null
     };
     try {
-      await updateProduct(id, productData);
-      navigate("/products/list"); // Go back to list
+      await updateTrip(id, tripData);
+      navigate("/admin/trips"); // Go back to list
     } catch (err) {
-      toast.error("Failed to update product");
+      toast.error("Failed to update trip");
     }
   };
 
   return (
-    
-    <ProductForm 
-    name={name} 
-    category={category} 
-    price={price} 
-    thumbnail={thumbnail} 
-    handleInputChange={handleInputChange} 
-    handleImageChange={handleImageChange}  
-    addProduct={handleSubmit} 
-    title= {"Edit Product"} 
-    categories={catgs}
-    preview= {preview}/>      
-    
+    <TripForm
+      title={title}
+      destination={destination}
+      demographic={demographic}
+      startDate={startDate}
+      endDate={endDate}
+      pricePerPerson={pricePerPerson}
+      organizerID={organizerID}
+      handleInputChange={handleInputChange}
+      addTrip={handleSubmit}
+      formTitle={"Edit Trip"}
+      users={users}
+      handleThumbnailChange={handleThumbnailChange}
+      preview={preview}
+    />
   );
-}
+};
 
-export default EditProduct;
+export default EditTrip;

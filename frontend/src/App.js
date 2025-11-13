@@ -9,6 +9,7 @@ import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import TripsList from "./pages/admin/trips/TripsList";
 import AddTrip from "./pages/admin/trips/AddTrip";
+import EditTrip from "./pages/admin/trips/EditTrip";
 import TripInfo from "./pages/admin/trips/TripInfo";
 import AddTrans from "./pages/admin/transportation/AddTrans";
 import TransList from "./pages/admin/transportation/TransList";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/main" element={<Main />}></Route>
           <Route path="/admin/trips/new" element={<AddTrip />}></Route>
+          <Route path="/admin/trips/:id" element={<EditTrip />}></Route>
           <Route path="/admin/trips" element={<TripsList />}></Route>
           <Route
             path="/admin/trips/trip-info/:id"
@@ -56,8 +58,6 @@ function App() {
           <Route path="/details/:id" element={<TripDetails />}></Route>
           <Route path="/reservation" element={<Reservation />}></Route>
           <Route path="/payment" element={<Payment />}></Route>
-
-
         </Routes>
       </Layout>
       <ToastContainer />
