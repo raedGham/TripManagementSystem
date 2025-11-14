@@ -3,8 +3,8 @@ import {Link, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { loginUser, validateEmail } from '../../services/authService';
-import {SET_LOGIN, SET_NAME} from "../../redux/features/auth/authSlice";
+import { validateEmail , loginUser} from '../../services/authService';
+import {SET_LOGIN, SET_NAME, SET_EMAIL} from "../../redux/features/auth/authSlice";
 import logo from "../../assets/Logo.png";
 
 const initialState = {
@@ -52,6 +52,7 @@ function Login() {
 
           await dispatch(SET_LOGIN(true));          
           await dispatch(SET_NAME(data.name));          
+          await dispatch(SET_EMAIL(data.email));  
           navigate("/Main");
           setIsLoading(false)
 

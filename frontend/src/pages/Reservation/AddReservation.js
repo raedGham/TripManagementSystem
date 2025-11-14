@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { registerReserv } from "../../../services/ReservService";
+import { useState , useEffect} from "react";
+import { registerReserv } from "../../services/reservationService";
 import { toast } from "react-toastify";
-import Loader from "../../../components/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import ReservForm from "./ReserveForm";
+import ReservationForm from "./ReservationForm";
 
 import { selectUser } from '../../redux/features/auth/authSlice';
+import { getTrip } from "../../redux/features/trips/tripSlice";
 
 const initialState = {
   numberOfPeople: "",
@@ -18,7 +18,8 @@ const initialState = {
 const AddReservation = () => {
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-  tripID = useParams()
+  const  tripID = useParams()
+
   const {
    numberOfPeople,
    status,   
@@ -28,7 +29,14 @@ const AddReservation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  console.log(user);
+
+  useEffect(() => {
+  if (tripID) {
+    dispatch(getTrip(tripID));
+  }
+}, [dispatch, tripID]);
+
+const { trip } = useSelector((state) => state.trip);
 
 
   const handleInputChange = (e) => {
@@ -49,7 +57,7 @@ const AddReservation = () => {
     const ReservData = {
       numberOfPeople,
       status,
-      tripID: {tripID},
+      tripID: trip._id,
       userID: user._id,      
     };
     console.log(ReservData);
@@ -68,10 +76,11 @@ const AddReservation = () => {
   };
 
   return (
-    <ReservForm
+    <ReservationForm
       numberOfPeople={numberOfPeople}
       status={status}
-      userID={user._id}
+      trip={trip}
+      userID = {user._id}      
       handleInputChange={handleInputChange}
       addReserv={addReserv}
       formTitle={"Add Reservation"}

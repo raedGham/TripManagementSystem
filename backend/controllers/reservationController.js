@@ -14,7 +14,7 @@ const newReservation = asyncHandler(async (req, res) => {
   } = req.body;
 
   // validation
-  if (!title || !destination || !demographic || !startDate || !endDate) {
+  if (!numberOfPeople || !status ) {
     res.status(400);
     throw new Error("Please fill all Required Fields");
   }

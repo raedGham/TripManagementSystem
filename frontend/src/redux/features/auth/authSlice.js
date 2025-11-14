@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {toast} from "react-toastify"
 
-import { getLoginStatus, getUsers , GetUser , UpdateUser, DeleteUser } from "../../../services/authService";
+import { getLoginStatus, getUsers , GetUser , UpdateUser, DeleteUser, loginUserService } from "../../../services/authService";
 
 const name = JSON.parse(localStorage.getItem("name"));
 const initialState = {
@@ -123,12 +123,16 @@ const authSlice = createSlice({
       localStorage.setItem("name", JSON.stringify(action.payload));
       state.name = action.payload;
     },
+    SET_EMAIL(state, action) {
+      localStorage.setItem("email", JSON.stringify(action.payload));
+      state.email = action.payload;
+    },
     SAVE_USER(state, action) {
       const profile = action.payload;
       state.user.name = profile.name;
       state.user.email = profile.email;
       state.user.type = profile.type;
-    },
+    }
   },
 
   extraReducers: (builder) => {
@@ -216,10 +220,11 @@ const authSlice = createSlice({
         toast.error(action.payload);        
       });
 
+
   },
 });
 
-export const { SET_LOGIN, SET_NAME, SAVE_USER } = authSlice.actions;
+export const { SET_LOGIN, SET_NAME, SAVE_USER, SET_EMAIL } = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectName = (state) => state.auth.name;
