@@ -18,8 +18,8 @@ import ActivityList from "./pages/admin/activities/ActivityList";
 import UsersList from "./pages/admin/users/UsersList";
 import AddUser from "./pages/admin/users/AddUser";
 import Destination from "./pages/Destination/Destination";
-import TripDetails from "./pages/Destination/TripDetails";
-import Reservation from "./pages/Reservation/Reservation";
+import TripDetails from "./pages/Destination/TripDetails/TripDetails";
+import AddReservation from "./pages/Reservation/AddReservation";
 import Payment from "./pages/Payment/Payment";
 
 function App() {
@@ -56,7 +56,7 @@ function App() {
 
           <Route path="/destination" element={<Destination />}></Route>
           <Route path="/details/:id" element={<TripDetails />}></Route>
-          <Route path="/reservation" element={<Reservation />}></Route>
+          <Route path="/reservation/:tripID" element={<AddReservation />}></Route>
           <Route path="/payment" element={<Payment />}></Route>
         </Routes>
       </Layout>

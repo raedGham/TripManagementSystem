@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getTrip } from "../../redux/features/trips/tripSlice";
-import { BACKEND_URL } from "../../services/tripService";
+import { getTrip } from "../../../redux/features/trips/tripSlice";
+import { fetchTranses } from "../../../redux/features/transes/transSlice";
+import { fetchActivities } from "../../../redux/features/activity/ActivitySlice";
+import { BACKEND_URL } from "../../../services/tripService";
+import DetailActivities from "../TripDetails/DetailActivities";
+import DetailTransportation from "../TripDetails/DetailTransportation";
 
 function TripDetails() {
   const { id } = useParams();
@@ -11,10 +16,21 @@ function TripDetails() {
   const { trip, isLoading, isError, message } = useSelector(
     (state) => state.trip
   );
+  const { transes } = useSelector((state) => state.trans);
+  const tripTranses = transes.filter(t => t.tripID === id);
+
+  const { activities } = useSelector((state) => state.activity);
+  const tripActivities = activities.filter(t => t.tripID === trip._id);
 
   useEffect(() => {
     dispatch(getTrip(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(fetchTranses());
+    dispatch(fetchActivities());
+  }, [dispatch]);
+
 
   if (isLoading) {
     return (
@@ -85,30 +101,18 @@ function TripDetails() {
     </div>
 
     {/* Activities Section */}
-    <div>
-      <h3 className="text-3xl font-semibold mb-6">Activities</h3>
-      <ul className="list-disc ml-8 text-gray-300 text-lg leading-8 space-y-2">
-        {trip.activities && trip.activities.length > 0 ? (
-          trip.activities.map((activity, index) => (
-            <li key={index}>{activity}</li>
-          ))
-        ) : (
-          <li>No activities listed.</li>
-        )}
-      </ul>
-    </div>
+   
+     <DetailActivities tripActivities={tripActivities}/>
 
     {/* Transportation Section */}
-    <div className="mt-16">
-      <h3 className="text-3xl font-semibold mb-6">Transportation</h3>
-      <ul className="list-disc ml-8 text-gray-300 text-lg leading-8 space-y-2">
-        {trip.transportation && trip.transportation.length > 0 ? (
-          trip.transportation.map((t, index) => <li key={index}>{t}</li>)
-        ) : (
-          <li>No transportation info available.</li>
-        )}
-      </ul>
-    </div>
+      <DetailTransportation tripTranses={tripTranses}/>
+
+        <Link
+          to={`/reservation/${trip._id}`}
+          className="mt-1 ml-12 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
+        >
+          Reserve Trip
+        </Link>         
   </div>
 );
 

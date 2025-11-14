@@ -1,23 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import transService from "../../../services/transService";
+import reservService from "../../../services/reservService";
 import { toast } from "react-toastify";
 const initialState = {
-  trans: null,
-  transes: [],
+  reserv: null,
+  reserves: [],
   isLoading: false,
   isSuccess: false,
   isError: null,
   message: "",
 };
 
-// GET ALL TRANSES
-export const fetchTranses = createAsyncThunk(
-  "transes/getAll",
+// GET ALL TRIPS
+export const fetchReservs = createAsyncThunk(
+  "Reservs/getAll",
   async (_, thunkAPI) => {
     try {
-      return await transService.getTranses();
+      return await reservService.getReservs();
     } catch (error) {
+    
       const message =
+      
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
@@ -29,14 +31,14 @@ export const fetchTranses = createAsyncThunk(
   }
 );
 
-// DELETE A TRANS
+// DELETE A TRIP
 
-export const deleteTrans = createAsyncThunk(
-  "transes/delete",
+export const deleteReserv = createAsyncThunk(
+  "Reservs/delete",
   async (id, thunkAPI) => {
     try {
-      console.log("deleteTrans Slice :", id);
-      return await transService.deleteTrans(id);
+      console.log("deleteReserv Slice :", id);
+      return await reservService.deleteReserv(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -50,12 +52,12 @@ export const deleteTrans = createAsyncThunk(
   }
 );
 
-// get a single trans
-export const getTrans = createAsyncThunk(
-  "transes/getTrans",
+// get a single reserv
+export const getReserv = createAsyncThunk(
+  "Reservs/getReserv",
   async (id, thunkAPI) => {
     try {
-      return await transService.getTrans(id);
+      return await reservService.getReserv(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -69,14 +71,13 @@ export const getTrans = createAsyncThunk(
   }
 );
 
+// UPDATE A TRIP
 
-// UPDATE A TRANS
-
-export const updateTrans = createAsyncThunk(
-  "transes/updateTrans",
+export const updateReserv = createAsyncThunk(
+  "Reservs/updateReserv",
   async ({ id, formData }, thunkAPI) => {
     try {
-      return await transService.updateTrans(id, formData);
+      return await reservService.updateReserv(id, formData);
     } catch (error) {
       const message =
         (error.response &&
@@ -90,20 +91,17 @@ export const updateTrans = createAsyncThunk(
   }
 );
 
-const transSlice = createSlice({
-  name: "trans",
+const reservSlice = createSlice({
+  name: "reserv",
   initialState,
   reducers: {
-    SAVE_TRANS(state, action) {
+    SAVE_RESERVE(state, action) {
       const profile = action.payload;
-      state.trans.type = profile.type;
-      state.trans.arrivalLocation = profile.arrivalLocation;
-      state.trans.departureLocation = profile.departureLocation;
-      state.trans.arrivaltDate = profile.arrivaltDate;
-      state.trans.departureDate = profile.departureDate;
-      state.trans.duration = profile.duration;
-      state.trans.cosPerTrip = profile.cosPerTrip;
-      state.trans.tripID = profile.tripID;
+      state.reserv.numberOfPeople = profile.numberOfPeople;
+      state.reserv.status = profile.status
+      state.reserv.tripID = profile.tripID;
+      state.reserv.userID = profile.userID;
+      
     },
   },
 
@@ -111,81 +109,81 @@ const transSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      // gettranses  in progress case
-      .addCase(fetchTranses.pending, (state) => {
+      // getReservs  in progress case
+      .addCase(fetchReservs.pending, (state) => {
         state.isLoading = true;
       })
-      // get transes sucessfull  case
-      .addCase(fetchTranses.fulfilled, (state, action) => {
+      // get Reservs sucessfull  case
+      .addCase(fetchReservs.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
         console.log(action.payload);
-        state.transes = action.payload;
+        state.activities = action.payload;
       })
-      //  error getting transes case
-      .addCase(fetchTranses.rejected, (state, action) => {
+      //  error getting Reservs case
+      .addCase(fetchReservs.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
 
-      // gettrans  in progress case
-      .addCase(getTrans.pending, (state) => {
+      // getreserv  in progress case
+      .addCase(getReserv.pending, (state) => {
         state.isLoading = true;
       })
-      // get trans sucessfull  case
-      .addCase(getTrans.fulfilled, (state, action) => {
+      // get reserv sucessfull  case
+      .addCase(getReserv.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.trans = action.payload;
+        state.reserv = action.payload;
       })
-      //  error getting trans case
-      .addCase(getTrans.rejected, (state, action) => {
+      //  error getting reserv case
+      .addCase(getReserv.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
 
-      // update trans  in progress case
-      .addCase(updateTrans.pending, (state) => {
+      // update reserv  in progress case
+      .addCase(updateReserv.pending, (state) => {
         state.isLoading = true;
       })
-      // update trans sucessfull  case
-      .addCase(updateTrans.fulfilled, (state, action) => {
+      // update reserv sucessfull  case
+      .addCase(updateReserv.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
         console.log(action.payload);
-        state.trans = action.payload;
+        state.reserv = action.payload;
       })
-      //  error updating trans case
-      .addCase(updateTrans.rejected, (state, action) => {
+      //  error updating reserv case
+      .addCase(updateReserv.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
 
-      // delete trans  in progress case
-      .addCase(deleteTrans.pending, (state) => {
+      // delete reserv  in progress case
+      .addCase(deleteReserv.pending, (state) => {
         state.isLoading = true;
       })
-      // delete transes sucessfull  case
-      .addCase(deleteTrans.fulfilled, (state, action) => {
+      // delete Reservs sucessfull  case
+      .addCase(deleteReserv.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.transes = state.transes.filter(
-          (trans) => trans._id !== action.payload._id
+        state.activities = state.activities.filter(
+          (reserv) => reserv._id !== action.payload._id
         );
-        toast.success("Trans Deleted Sucessfully");
+        toast.success("Reserv Deleted Sucessfully");
       })
-      //  error deleting trans case
-      .addCase(deleteTrans.rejected, (state, action) => {
+      //  error deleting reserv case
+      .addCase(deleteReserv.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -194,9 +192,9 @@ const transSlice = createSlice({
   },
 });
 
-export const selectIsLoading = (state) => state.trans.isLoading;
-export const selectTrans = (state) => state.trans.trans;
+export const selectIsLoading = (state) => state.reserv.isLoading;
+export const selectReserv = (state) => state.reserv.reserv;
 
-export const { SAVE_TRANS } = transSlice.actions;
+export const { SAVE_ACTIVITY } = reservSlice.actions;
 
-export default transSlice.reducer;
+export default reservSlice.reducer;
