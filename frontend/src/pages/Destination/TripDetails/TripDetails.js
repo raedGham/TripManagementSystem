@@ -17,10 +17,10 @@ function TripDetails() {
     (state) => state.trip
   );
   const { transes } = useSelector((state) => state.trans);
-  const tripTranses = transes.filter(t => t.tripID === id);
+  const tripTranses = transes.filter((t) => t.tripID === id);
 
   const { activities } = useSelector((state) => state.activity);
-  const tripActivities = activities.filter(t => t.tripID === trip._id);
+  const tripActivities = activities.filter((t) => t.tripID === trip._id);
 
   useEffect(() => {
     dispatch(getTrip(id));
@@ -30,7 +30,6 @@ function TripDetails() {
     dispatch(fetchTranses());
     dispatch(fetchActivities());
   }, [dispatch]);
-
 
   if (isLoading) {
     return (
@@ -48,74 +47,78 @@ function TripDetails() {
     );
   }
 
- return (
-  <div className="max-w-7xl mx-auto mt-[20px] px-6 py-12 text-gray-900 dark:text-white">
-    {/* Header */}
-    <p className="text-4xl font-bold mb-8">Your Journey Starts Here</p>
+  return (
+    <div className="max-w-7xl mx-auto mt-[20px] px-6 py-12 text-gray-900 dark:text-white">
+      {/* Header */}
+      <p className="text-4xl font-bold mb-8">Your Journey Starts Here</p>
 
-  
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-  
-      {/* Left side (trip info) */}
-      <div className="md:col-span-1 space-y-8 leading-relaxed">
-        <h1 className="text-4xl font-bold mt-[40px]">{trip.title}</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+        {/* Left side (trip info) */}
+        <div className="md:col-span-1 space-y-8 leading-relaxed">
+          <h1 className="text-4xl font-bold mt-[40px]">{trip.title}</h1>
 
-        <p className="text-gray-300 text-lg leading-8">{trip.details}</p>
+          <p className="text-gray-300 text-lg leading-8">{trip.details}</p>
 
-        <div className="mt-6 space-y-3 text-lg">
-  <div className="flex">
-    <span className="text-gray-500 w-40">Destination:</span>
-    <span>{trip.destination}</span>
-  </div>
-  <div className="flex">
-    <span className="text-gray-500 w-40">Demographic:</span>
-    <span>{trip.demographic}</span>
-  </div>
-  {trip.startDate && (
-    <div className="flex">
-      <span className="text-gray-500 w-40">Start Date:</span>
-      <span>{new Date(trip.startDate).toLocaleDateString()}</span>
-    </div>
-  )}
-  {trip.endDate && (
-    <div className="flex">
-      <span className="text-gray-500 w-40">End Date:</span>
-      <span>{new Date(trip.endDate).toLocaleDateString()}</span>
-    </div>
-  )}
-  <div className="flex">
-    <span className="text-gray-500 w-40">Price/Person:</span>
-    <span>${trip.pricePerPerson}</span>
-  </div>
-</div>
+          <div className="mt-6 space-y-3 text-lg">
+            <div className="flex">
+              <span className="text-gray-500 w-40">Destination:</span>
+              <span>{trip.destination}</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 w-40">Demographic:</span>
+              <span>{trip.demographic}</span>
+            </div>
+            {trip.startDate && (
+              <div className="flex">
+                <span className="text-gray-500 w-40">Start Date:</span>
+                <span>{new Date(trip.startDate).toLocaleDateString()}</span>
+              </div>
+            )}
+            {trip.endDate && (
+              <div className="flex">
+                <span className="text-gray-500 w-40">End Date:</span>
+                <span>{new Date(trip.endDate).toLocaleDateString()}</span>
+              </div>
+            )}
+            <div className="flex">
+              <span className="text-gray-500 w-40">Price/Person:</span>
+              <span>${trip.pricePerPerson}</span>
+            </div>
+          </div>
+          <div className="mt-10">
+            <Link
+              to={`/trip/images/${trip._id}`}
+              className="mt-12 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] activityition duration-200 shadow"
+            >
+              view Images
+            </Link>
+          </div>
+        </div>
+
+        <div className="md:col-span-2">
+          <img
+            src={`${BACKEND_URL}/${trip.thumbnail}`}
+            alt={trip.title}
+            className="w-full h-[500px] rounded-2xl shadow-xl object-cover"
+          />
+        </div>
       </div>
 
-  
-      <div className="md:col-span-2">
-        <img
-          src={`${BACKEND_URL}/${trip.thumbnail}`}
-          alt={trip.title}
-          className="w-full h-[500px] rounded-2xl shadow-xl object-cover"
-        />
-      </div>
+      {/* Activities Section */}
+
+      <DetailActivities tripActivities={tripActivities} />
+
+      {/* Transportation Section */}
+      <DetailTransportation tripTranses={tripTranses} />
+
+      <Link
+        to={`/reservation/${trip._id}`}
+        className="mt-1 ml-12 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
+      >
+        Reserve Trip
+      </Link>
     </div>
-
-    {/* Activities Section */}
-   
-     <DetailActivities tripActivities={tripActivities}/>
-
-    {/* Transportation Section */}
-      <DetailTransportation tripTranses={tripTranses}/>
-
-        <Link
-          to={`/reservation/${trip._id}`}
-          className="mt-1 ml-12 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
-        >
-          Reserve Trip
-        </Link>         
-  </div>
-);
-
+  );
 }
 
 export default TripDetails;

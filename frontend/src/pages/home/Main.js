@@ -1,12 +1,10 @@
-import React from 'react'
-
+import React from "react";
 
 const Main = () => {
-  return (
+  const x = 1;
+  x = x + 1;
 
-     <h1 className='text-white mt-[4rem]'>Main component</h1>
-    
-  )
-}
+  return <h1 className="text-white mt-[4rem]">Main component</h1>;
+};
 
-export default Main
+export default Main;

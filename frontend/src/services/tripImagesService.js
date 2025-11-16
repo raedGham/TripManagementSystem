@@ -7,6 +7,7 @@ const API_URL = `${BACKEND_URL}/api/trips`;
 //  F E T C H   I M A G E S   F O R   A   T R I P
 //----------------------------------------------------
 const getTripImages = async (tripId) => {
+  console.log("reached here");
   const response = await axios.get(`${API_URL}/images/${tripId}`);
   return response.data;
 };

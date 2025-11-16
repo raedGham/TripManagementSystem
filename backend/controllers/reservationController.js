@@ -6,15 +6,10 @@ const { response } = require("express");
 //  N E W   R E S E R V A T I O N
 // --------------------------------------------------------------------
 const newReservation = asyncHandler(async (req, res) => {
-  const {
-    numberOfPeople,
-    status,
-    tripID,
-    userID,
-  } = req.body;
+  const { numberOfPeople, status, tripID, userID } = req.body;
 
   // validation
-  if (!numberOfPeople || !status ) {
+  if (!numberOfPeople || !status) {
     res.status(400);
     throw new Error("Please fill all Required Fields");
   }
@@ -28,14 +23,8 @@ const newReservation = asyncHandler(async (req, res) => {
   });
 
   if (reservation) {
-    const {
-      _id,
-      numberOfPeople,
-      status,
-      tripID,
-      userID,
-    } = reservation;
-    
+    const { _id, numberOfPeople, status, tripID, userID } = reservation;
+
     res.status(201).json({
       _id,
       numberOfPeople,
@@ -73,12 +62,7 @@ const getReservation = asyncHandler(async (req, res) => {
 //  U P D A T E   R E S E R V A T I O N
 // --------------------------------------------------------------------
 const updateReservation = asyncHandler(async (req, res) => {
-  const {
-      numberOfPeople,
-      status,
-      tripID,
-      userID,
-  } = req.body;
+  const { numberOfPeople, status, tripID, userID } = req.body;
 
   const reservation = await Reservation.findById(req.params.id);
 

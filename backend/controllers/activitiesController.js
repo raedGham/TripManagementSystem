@@ -6,30 +6,63 @@ const { response } = require("express");
 //  N E W   A C T I V I T Y
 // --------------------------------------------------------------------
 const newActivity = asyncHandler(async (req, res) => {
-
   const {
-    name, description,startDate, finishDate, capacity,costPerPerson,tripID
+    name,
+    description,
+    startDate,
+    finishDate,
+    capacity,
+    costPerPerson,
+    tripID,
   } = req.body;
 
-  console.log("tripID:", tripID)
+  console.log("tripID:", tripID);
 
   // validation
-  if (!name || !description || !startDate || !finishDate || !capacity || !tripID || !costPerPerson) {
+  if (
+    !name ||
+    !description ||
+    !startDate ||
+    !finishDate ||
+    !capacity ||
+    !tripID ||
+    !costPerPerson
+  ) {
     res.status(400);
     throw new Error("Please fill all Required Fields");
   }
 
   // create new activity
   const activity = await Activity.create({
-     name, description,startDate, finishDate, capacity, tripID, costPerPerson,
+    name,
+    description,
+    startDate,
+    finishDate,
+    capacity,
+    tripID,
+    costPerPerson,
   });
 
   if (activity) {
     const {
-      _id,name, description,startDate, finishDate, capacity, tripID, costPerPerson,
+      _id,
+      name,
+      description,
+      startDate,
+      finishDate,
+      capacity,
+      tripID,
+      costPerPerson,
     } = activity;
     res.status(201).json({
-      _id, name, description,startDate, finishDate, capacity, tripID, costPerPerson,
+      _id,
+      name,
+      description,
+      startDate,
+      finishDate,
+      capacity,
+      tripID,
+      costPerPerson,
     });
   } else {
     response.status(400);
@@ -41,7 +74,6 @@ const newActivity = asyncHandler(async (req, res) => {
 //  G E T A L L   A C T I V I T Y S
 // --------------------------------------------------------------------
 const getActivities = asyncHandler(async (req, res) => {
-  console.log("GET ACTIVITIES CONTROLLER")
   const activities = await Activity.find().sort("startDate");
   res.status(200).json(activities);
 });
@@ -63,7 +95,13 @@ const getActivity = asyncHandler(async (req, res) => {
 // --------------------------------------------------------------------
 const updateActivity = asyncHandler(async (req, res) => {
   const {
-    name, description,startDate, finishDate, capacity, tripID, costPerPerson,
+    name,
+    description,
+    startDate,
+    finishDate,
+    capacity,
+    tripID,
+    costPerPerson,
   } = req.body;
 
   const activity = await Activity.findById(req.params.id);
@@ -78,7 +116,13 @@ const updateActivity = asyncHandler(async (req, res) => {
   const updatedActivity = await Activity.findByIdAndUpdate(
     { _id: req.params.id },
     {
-      name, description,startDate, finishDate, capacity, tripID, costPerPerson,
+      name,
+      description,
+      startDate,
+      finishDate,
+      capacity,
+      tripID,
+      costPerPerson,
     },
     {
       new: true,

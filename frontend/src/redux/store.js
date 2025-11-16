@@ -8,6 +8,7 @@ import transFilterReducer from "../redux/features/transes/transfilterSlice";
 import activityReducer from "./features/activity/ActivitySlice";
 import activityFilterReducer from "./features/activity/ActivityFilterSlice";
 import userFilterReducer from "./features/auth/UserFilterSlice";
+import resevationReducer from "./features/reservation/ReservationSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -19,5 +20,6 @@ export const store = configureStore({
     transFilter: transFilterReducer,
     activity: activityReducer,
     activityFilter: activityFilterReducer,
+    reservation: resevationReducer,
   },
 });

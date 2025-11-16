@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import reservService from "../../../services/reservService";
+import reservService from "../../../services/reservationService";
 import { toast } from "react-toastify";
 const initialState = {
   reserv: null,
@@ -10,16 +10,14 @@ const initialState = {
   message: "",
 };
 
-// GET ALL TRIPS
+// GET ALL RESERVATIONS
 export const fetchReservs = createAsyncThunk(
   "Reservs/getAll",
   async (_, thunkAPI) => {
     try {
       return await reservService.getReservs();
     } catch (error) {
-    
       const message =
-      
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
@@ -31,7 +29,7 @@ export const fetchReservs = createAsyncThunk(
   }
 );
 
-// DELETE A TRIP
+// DELETE A RESERVATION
 
 export const deleteReserv = createAsyncThunk(
   "Reservs/delete",
@@ -52,7 +50,7 @@ export const deleteReserv = createAsyncThunk(
   }
 );
 
-// get a single reserv
+// get a single reservation
 export const getReserv = createAsyncThunk(
   "Reservs/getReserv",
   async (id, thunkAPI) => {
@@ -71,7 +69,7 @@ export const getReserv = createAsyncThunk(
   }
 );
 
-// UPDATE A TRIP
+// UPDATE A RESERVATION
 
 export const updateReserv = createAsyncThunk(
   "Reservs/updateReserv",
@@ -91,17 +89,16 @@ export const updateReserv = createAsyncThunk(
   }
 );
 
-const reservSlice = createSlice({
+const reservationSlice = createSlice({
   name: "reserv",
   initialState,
   reducers: {
     SAVE_RESERVE(state, action) {
       const profile = action.payload;
       state.reserv.numberOfPeople = profile.numberOfPeople;
-      state.reserv.status = profile.status
+      state.reserv.status = profile.status;
       state.reserv.tripID = profile.tripID;
       state.reserv.userID = profile.userID;
-      
     },
   },
 
@@ -119,7 +116,7 @@ const reservSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         console.log(action.payload);
-        state.activities = action.payload;
+        state.reserves = action.payload;
       })
       //  error getting Reservs case
       .addCase(fetchReservs.rejected, (state, action) => {
@@ -177,7 +174,7 @@ const reservSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.activities = state.activities.filter(
+        state.reserves = state.reserves.filter(
           (reserv) => reserv._id !== action.payload._id
         );
         toast.success("Reserv Deleted Sucessfully");
@@ -195,6 +192,6 @@ const reservSlice = createSlice({
 export const selectIsLoading = (state) => state.reserv.isLoading;
 export const selectReserv = (state) => state.reserv.reserv;
 
-export const { SAVE_ACTIVITY } = reservSlice.actions;
+export const { SAVE_ACTIVITY } = reservationSlice.actions;
 
-export default reservSlice.reducer;
+export default reservationSlice.reducer;

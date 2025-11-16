@@ -21,6 +21,8 @@ import Destination from "./pages/Destination/Destination";
 import TripDetails from "./pages/Destination/TripDetails/TripDetails";
 import AddReservation from "./pages/Reservation/AddReservation";
 import Payment from "./pages/Payment/Payment";
+import TripImages from "./pages/Destination/TripDetails/TripImages";
+import UserReservationList from "./pages/Reservation/UserReservationList";
 
 function App() {
   return (
@@ -56,7 +58,17 @@ function App() {
 
           <Route path="/destination" element={<Destination />}></Route>
           <Route path="/details/:id" element={<TripDetails />}></Route>
-          <Route path="/reservation/:tripID" element={<AddReservation />}></Route>
+          <Route path="/trip/images/:tripId" element={<TripImages />}></Route>
+          <Route
+            path="/reservation/:tripID"
+            element={<AddReservation />}
+          ></Route>
+
+          <Route
+            path="/userreservation"
+            element={<UserReservationList />}
+          ></Route>
+
           <Route path="/payment" element={<Payment />}></Route>
         </Routes>
       </Layout>

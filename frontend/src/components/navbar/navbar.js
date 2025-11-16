@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { logoutUser } from "../../services/authService";
-import { SET_LOGIN, selectName, selectIsLoggedIn } from "../../redux/features/auth/authSlice";
+import {
+  SET_LOGIN,
+  selectName,
+  selectIsLoggedIn,
+} from "../../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Navbar() {
@@ -59,7 +63,7 @@ export default function Navbar() {
           </li>
 
           <li>
-            <Link to="/reservation" className="hover:text-gray-300">
+            <Link to="/userreservation" className="hover:text-gray-300">
               Reservation
             </Link>
           </li>

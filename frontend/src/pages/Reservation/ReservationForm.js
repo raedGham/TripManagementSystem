@@ -1,28 +1,23 @@
-
 import logo from "../../assets/Logo.png";
-import { selectName , selectUser} from "../../redux/features/auth/authSlice";
+import { selectName, selectUser } from "../../redux/features/auth/authSlice";
 import { useSelector } from "react-redux";
-import {getTrip} from "../../redux/features/trips/tripSlice";
+import { getTrip } from "../../redux/features/trips/tripSlice";
 import { useEffect } from "react";
 
 function ReservationForm({
   numberOfPeople,
-  status,
   trip,
-  userID,
   handleInputChange,
   addReserv,
-  formTitle
+  formTitle,
 }) {
-  console.log("Trip:", trip)
- 
+  console.log("Trip:", trip);
+
   const namewithquotes = localStorage.getItem("name");
   const name = namewithquotes.replace(/"/g, "");
   const emailWithQuotes = localStorage.getItem("email");
   const email = emailWithQuotes.replace(/"/g, "");
 
- 
-  
   return (
     <section className="">
       <div className="flex flex-col items-center justify-center px-6 md:h-screen lg:py-0">
@@ -45,12 +40,34 @@ function ReservationForm({
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               {formTitle}
             </h1>
-          <div className="leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-            <p>Name:    {name}</p>
-            <h1>Email: {email}</h1>
-            <p>Trip: {trip.title}</p>
-          
-          </div>  
+            <div className="mt-6 p-4 rounded-lg bg-white/40 dark:bg-gray-700/40 shadow-md space-y-4">
+              {/* Row 1 – Name + Email */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                  <span className="font-semibold text-indigo-700 dark:text-indigo-300">
+                    Name:
+                  </span>{" "}
+                  {name}
+                </p>
+
+                <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                  <span className="font-semibold text-indigo-700 dark:text-indigo-300">
+                    Email:
+                  </span>{" "}
+                  {email}
+                </p>
+              </div>
+
+              {/* Row 2 – Trip */}
+              <div>
+                <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                  <span className="font-semibold text-indigo-700 dark:text-indigo-300">
+                    Trip:
+                  </span>{" "}
+                  {trip.title}
+                </p>
+              </div>
+            </div>
             {/* Grid for two columns */}
             <form
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
@@ -75,35 +92,14 @@ function ReservationForm({
                 />
               </div>
 
-      <div>
-        <label
-          htmlFor="status"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Type
-        </label>
-        <select
-          id="status"
-          name="status"
-          value={status}
-          onChange={handleInputChange}
-          required
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="">Select Type</option>
-          <option value="active">Active</option>
-          <option value="cancelled">Cancelled</option>
-          <option value="confirmed">Confirmed</option>
-          <option value="completed">Completed</option>
-        </select>
-      </div>
-
-             <div className="md:col-span-2">
+              <div className="md:col-span-2">
                 <button
                   type="submit"
                   className="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
-                  {formTitle === "Edit Reservation" ? "Submit" : "Add Reservation"}
+                  {formTitle === "Edit Reservation"
+                    ? "Submit"
+                    : "Add Reservation"}
                 </button>
               </div>
             </form>

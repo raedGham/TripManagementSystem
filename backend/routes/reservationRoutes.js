@@ -10,7 +10,7 @@ const {
   updateReservation,
 } = require("../controllers/reservationController");
 
-router.post("/new", newReservation);
+router.post("/new", upload.none(), newReservation);
 router.get("/", getReservations);
 router.get("/:id", getReservation);
 router.delete("/:id", deleteReservation);

@@ -1,7 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 
-import { getLoginStatus, getUsers , GetUser , UpdateUser, DeleteUser, loginUserService } from "../../../services/authService";
+import {
+  getLoginStatus,
+  getUsers,
+  GetUser,
+  UpdateUser,
+  DeleteUser,
+  loginUserService,
+} from "../../../services/authService";
 
 const name = JSON.parse(localStorage.getItem("name"));
 const initialState = {
@@ -15,8 +22,6 @@ const initialState = {
   users: [],
   userID: "",
 };
-
-
 
 // GET ALL USERS
 export const fetchUsers = createAsyncThunk(
@@ -69,7 +74,6 @@ export const getUser = createAsyncThunk(
   }
 );
 
-
 // UPDATE A USER
 
 export const updateUser = createAsyncThunk(
@@ -90,14 +94,12 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-
 // DELETE A USER
 
 export const deleteUser = createAsyncThunk(
   "Users/delete",
   async (id, thunkAPI) => {
     try {
-      
       return await DeleteUser(id);
     } catch (error) {
       const message =
@@ -127,12 +129,15 @@ const authSlice = createSlice({
       localStorage.setItem("email", JSON.stringify(action.payload));
       state.email = action.payload;
     },
+    SET_ID(state, action) {
+      state.userID = action.payload;
+    },
     SAVE_USER(state, action) {
       const profile = action.payload;
       state.user.name = profile.name;
       state.user.email = profile.email;
       state.user.type = profile.type;
-    }
+    },
   },
 
   extraReducers: (builder) => {
@@ -159,7 +164,7 @@ const authSlice = createSlice({
         state.message = action.payload;
       })
 
-       // getuser  in progress case
+      // getuser  in progress case
       .addCase(getUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -167,7 +172,7 @@ const authSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.isError = false;        
+        state.isError = false;
         state.user = action.payload;
       })
       //  error getting user case
@@ -217,17 +222,17 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        toast.error(action.payload);        
+        toast.error(action.payload);
       });
-
-
   },
 });
 
-export const { SET_LOGIN, SET_NAME, SAVE_USER, SET_EMAIL } = authSlice.actions;
+export const { SET_LOGIN, SET_NAME, SAVE_USER, SET_EMAIL, SET_ID } =
+  authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectName = (state) => state.auth.name;
 export const selectUser = (state) => state.auth.user;
+export const selectUserID = (state) => state.auth.userID;
 
 export default authSlice.reducer;

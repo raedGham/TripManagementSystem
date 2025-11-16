@@ -2,10 +2,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API_URL = `${BACKEND_URL}/api/reservs`;
+const API_URL = `${BACKEND_URL}/api/reservation`;
 
 //----------------------------------------------------
-//  C R E A T E    N E W   T R I P
+//  C R E A T E    N E W   R E S E R V A T I O N
 //----------------------------------------------------
 export const registerReserv = async (reservData) => {
   try {
@@ -13,11 +13,10 @@ export const registerReserv = async (reservData) => {
     formData.append("numberOfPeople", reservData.numberOfPeople);
     formData.append("status", reservData.status);
     formData.append("tripID", reservData.tripID);
-    formData.append("userID", reservData.userID); 
-      
+    formData.append("userID", reservData.userID);
 
     const response = await axios.post(
-      `${BACKEND_URL}/api/reservs/new`,
+      `${BACKEND_URL}/api/reservation/new`,
       formData,
       { withCredentials: true }
     );
@@ -35,7 +34,7 @@ export const registerReserv = async (reservData) => {
 };
 
 //----------------------------------------------------
-//    G E T  A L L   T R I P S
+//    G E T  A L L   R E S E R V A T I O N S
 //----------------------------------------------------
 const getReservs = async () => {
   const reponse = await axios.get(API_URL);
@@ -43,7 +42,7 @@ const getReservs = async () => {
 };
 
 //----------------------------------------------------
-//    G E T  S I N G L E   T R I P
+//    G E T  S I N G L E   R E S E R V A T I O N
 //----------------------------------------------------
 export const getReserv = async (id) => {
   const reponse = await axios.get(API_URL + "/" + id);
@@ -51,7 +50,7 @@ export const getReserv = async (id) => {
 };
 
 //----------------------------------------------------
-//    D E L E T E    T R I P
+//    D E L E T E    R E S E R V A T I O N
 //----------------------------------------------------
 const deleteReserv = async (id) => {
   const reponse = await axios.delete(API_URL + "/" + id);
@@ -68,11 +67,10 @@ export const updateReserv = async (id, reservData) => {
     formData.append("numberOfPeople", reservData.numberOfPeople);
     formData.append("status", reservData.status);
     formData.append("tripID", reservData.tripID);
-    formData.append("userID", reservData.userID); 
-    
-      const response = await axios.put(`${API_URL}/${id}`, formData, {
+    formData.append("userID", reservData.userID);
+
+    const response = await axios.put(`${API_URL}/${id}`, formData, {
       withCredentials: true,
-      
     });
 
     if (response.statusText === "OK") {
