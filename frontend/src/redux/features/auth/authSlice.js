@@ -232,7 +232,7 @@ export const { SET_LOGIN, SET_NAME, SAVE_USER, SET_EMAIL, SET_ID } =
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectName = (state) => state.auth.name;
-export const selectUser = (state) => state.auth.user;
+export const selectEmail = (state) => state.auth.email;
 export const selectUserID = (state) => state.auth.userID;
 
 export default authSlice.reducer;

@@ -11,8 +11,9 @@ const reservationSchema = mongoose.Schema(
       type: String,
       enum: ["active", "cancelled", "confirmed", "completed"],
       required: [true, "Please select Status"],
-    },     
-    
+      default: "active",
+    },
+
     tripID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Trip",
@@ -24,7 +25,6 @@ const reservationSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
-
   },
   { timestamps: true }
 );

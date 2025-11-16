@@ -135,12 +135,12 @@ const logoutUser = asyncHandler(async (req, res) => {
 //   G E T   U S E R   I N F O
 // --------------------------------------------------------------------
 const getUser = asyncHandler(async (req, res) => {
-  const user = User.findById(req.user._id);
+  const user = User.findById(req.params.id);
 
   if (user) {
-    const { _id, name, email, type } = user;
+    const { id, name, email, type } = user;
     res.status(200).json({
-      _id,
+      id,
       name,
       email,
       type,
@@ -219,9 +219,9 @@ const updateUser = asyncHandler(async (req, res) => {
 // C H A N G E   P A S S W O R D
 // --------------------------------------------------------------------
 const changePassword = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-
-  const { oldPassword, password } = req.body;
+  const { oldPassword, newPassword, userID } = req.body;
+  const user = await User.findById(userID);
+  console.log("WE ARE IN CHANGE PASSWORD CRL");
 
   if (!user) {
     res.status(400);
@@ -229,7 +229,7 @@ const changePassword = asyncHandler(async (req, res) => {
   }
 
   // Validate
-  if (!oldPassword || !password) {
+  if (!oldPassword || !newPassword) {
     res.status(400);
     throw new Error("Please Add old and new password");
   }
@@ -238,7 +238,7 @@ const changePassword = asyncHandler(async (req, res) => {
 
   // save new Password to database
   if (user && passwordIsCorrect) {
-    user.password = password;
+    user.password = newPassword;
     await user.save();
     res.status(200).send("Password changed sucessfully");
   } else {

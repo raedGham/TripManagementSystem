@@ -23,6 +23,7 @@ import AddReservation from "./pages/Reservation/AddReservation";
 import Payment from "./pages/Payment/Payment";
 import TripImages from "./pages/Destination/TripDetails/TripImages";
 import UserReservationList from "./pages/Reservation/UserReservationList";
+import ChangePass from "./pages/auth/changepass";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/changepassword" element={<ChangePass />}></Route>
           <Route path="/main" element={<Main />}></Route>
           <Route path="/admin/trips/new" element={<AddTrip />}></Route>
           <Route path="/admin/trips/:id" element={<EditTrip />}></Route>

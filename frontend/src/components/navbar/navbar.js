@@ -4,6 +4,7 @@ import { logoutUser } from "../../services/authService";
 import {
   SET_LOGIN,
   selectName,
+  selectEmail,
   selectIsLoggedIn,
 } from "../../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +16,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const name = useSelector(selectName);
-  const email = useSelector((state) => state.auth.user?.email);
+  const email = useSelector(selectEmail);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const adminRef = useRef(null);
@@ -143,6 +144,12 @@ export default function Navbar() {
                       <p className="font-semibold">{name}</p>
                       <p className="text-sm text-gray-500">{email}</p>
                     </div>
+                    <Link
+                      to="/changepassword"
+                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                    >
+                      Change Password
+                    </Link>
                     <button
                       onClick={() => {
                         logout();

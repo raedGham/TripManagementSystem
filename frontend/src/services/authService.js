@@ -101,8 +101,6 @@ export const getUsers = async () => {
   return reponse.data;
 };
 
-
-
 //----------------------------------------------------
 //    G E T  S I N G L E   U S E R
 //----------------------------------------------------
@@ -129,14 +127,17 @@ export const UpdateUser = async (id, userData) => {
     formData.append("name", userData.title);
     formData.append("email", userData.destination);
     formData.append("type", userData.demographic);
- 
 
-    const response = await axios.put(`${BACKEND_URL}/api/users/${id}`, formData, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.put(
+      `${BACKEND_URL}/api/users/${id}`,
+      formData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     if (response.statusText === "OK") {
       toast.success("User Updated Successfully");
@@ -149,4 +150,18 @@ export const UpdateUser = async (id, userData) => {
       error.toString();
     toast.error(message);
   }
+};
+
+//----------------------------------------------------
+//    C H A N G E  P A S S W O R D
+//----------------------------------------------------
+export const ChangePassword = async (userData) => {
+  const reponse = await axios.patch(
+    `${BACKEND_URL}/api/users/changepass`,
+    userData,
+    {
+      withCredentials: true,
+    }
+  );
+  return reponse.data;
 };
