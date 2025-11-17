@@ -1,22 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import reservService from "../../../services/reservationService";
+import paymentService from "../../../services/paymentService";
 import { toast } from "react-toastify";
 const initialState = {
-  reservationDate: null,
-  reserv: null,
-  reserves: [],
+  payment: null,
+  payments: [],
   isLoading: false,
   isSuccess: false,
   isError: null,
   message: "",
 };
 
-// GET ALL RESERVATIONS
-export const fetchReservs = createAsyncThunk(
-  "Reservs/getAll",
+// GET ALL PAYMENTS
+export const fetchPayments = createAsyncThunk(
+  "Payments/getAll",
   async (_, thunkAPI) => {
     try {
-      return await reservService.getReservs();
+      return await paymentService.getPayments();
     } catch (error) {
       const message =
         (error.response &&
@@ -30,14 +29,14 @@ export const fetchReservs = createAsyncThunk(
   }
 );
 
-// DELETE A RESERVATION
+// DELETE A PAYMENT
 
-export const deleteReserv = createAsyncThunk(
-  "Reservs/delete",
+export const deletePayment = createAsyncThunk(
+  "Payments/delete",
   async (id, thunkAPI) => {
     try {
-      console.log("deleteReserv Slice :", id);
-      return await reservService.deleteReserv(id);
+      console.log("deletePayment Slice :", id);
+      return await paymentService.deletePayment(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -51,12 +50,12 @@ export const deleteReserv = createAsyncThunk(
   }
 );
 
-// get a single reservation
-export const getReserv = createAsyncThunk(
-  "Reservs/getReserv",
+// get a single paymentation
+export const getPayment = createAsyncThunk(
+  "Payments/getPayment",
   async (id, thunkAPI) => {
     try {
-      return await reservService.getReserv(id);
+      return await paymentService.getPayment(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -70,13 +69,13 @@ export const getReserv = createAsyncThunk(
   }
 );
 
-// UPDATE A RESERVATION
+// UPDATE A PAYMENT
 
-export const updateReserv = createAsyncThunk(
-  "Reservs/updateReserv",
+export const updatePayment = createAsyncThunk(
+  "Payments/updatePayment",
   async ({ id, formData }, thunkAPI) => {
     try {
-      return await reservService.updateReserv(id, formData);
+      return await paymentService.updatePayment(id, formData);
     } catch (error) {
       const message =
         (error.response &&
@@ -90,17 +89,16 @@ export const updateReserv = createAsyncThunk(
   }
 );
 
-const reservationSlice = createSlice({
-  name: "reserv",
+const paymentSlice = createSlice({
+  name: "payment",
   initialState,
   reducers: {
-    SAVE_RESERVE(state, action) {
+    SAVE_PAYMENT(state, action) {
       const profile = action.payload;
-      state.reserv.reservationDate= profile.reservationDate
-      state.reserv.numberOfPeople = profile.numberOfPeople;
-      state.reserv.status = profile.status;
-      state.reserv.tripID = profile.tripID;
-      state.reserv.userID = profile.userID;
+      state.payment.paymentDate = profile.paymentDate;
+      state.payment.amount = profile.amount;
+      state.payment.paymentMethod = profile.paymentMethod;
+      state.payment.reservationID = profile.reservationID;
     },
   },
 
@@ -108,81 +106,81 @@ const reservationSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      // getReservs  in progress case
-      .addCase(fetchReservs.pending, (state) => {
+      // getPayments  in progress case
+      .addCase(fetchPayments.pending, (state) => {
         state.isLoading = true;
       })
-      // get Reservs sucessfull  case
-      .addCase(fetchReservs.fulfilled, (state, action) => {
+      // get Payments sucessfull  case
+      .addCase(fetchPayments.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
         console.log(action.payload);
-        state.reserves = action.payload;
+        state.payments = action.payload;
       })
-      //  error getting Reservs case
-      .addCase(fetchReservs.rejected, (state, action) => {
+      //  error getting Payments case
+      .addCase(fetchPayments.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
 
-      // getreserv  in progress case
-      .addCase(getReserv.pending, (state) => {
+      // getpayment  in progress case
+      .addCase(getPayment.pending, (state) => {
         state.isLoading = true;
       })
-      // get reserv sucessfull  case
-      .addCase(getReserv.fulfilled, (state, action) => {
+      // get payment sucessfull  case
+      .addCase(getPayment.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.reserv = action.payload;
+        state.payment = action.payload;
       })
-      //  error getting reserv case
-      .addCase(getReserv.rejected, (state, action) => {
+      //  error getting payment case
+      .addCase(getPayment.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
 
-      // update reserv  in progress case
-      .addCase(updateReserv.pending, (state) => {
+      // update payment  in progress case
+      .addCase(updatePayment.pending, (state) => {
         state.isLoading = true;
       })
-      // update reserv sucessfull  case
-      .addCase(updateReserv.fulfilled, (state, action) => {
+      // update payment sucessfull  case
+      .addCase(updatePayment.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
         console.log(action.payload);
-        state.reserv = action.payload;
+        state.payment = action.payload;
       })
-      //  error updating reserv case
-      .addCase(updateReserv.rejected, (state, action) => {
+      //  error updating payment case
+      .addCase(updatePayment.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
 
-      // delete reserv  in progress case
-      .addCase(deleteReserv.pending, (state) => {
+      // delete payment  in progress case
+      .addCase(deletePayment.pending, (state) => {
         state.isLoading = true;
       })
-      // delete Reservs sucessfull  case
-      .addCase(deleteReserv.fulfilled, (state, action) => {
+      // delete Payments sucessfull  case
+      .addCase(deletePayment.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.reserves = state.reserves.filter(
-          (reserv) => reserv._id !== action.payload._id
+        state.payments = state.payments.filter(
+          (payment) => payment._id !== action.payload._id
         );
-        toast.success("Reserv Deleted Sucessfully");
+        toast.success("Payment Deleted Sucessfully");
       })
-      //  error deleting reserv case
-      .addCase(deleteReserv.rejected, (state, action) => {
+      //  error deleting payment case
+      .addCase(deletePayment.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -191,9 +189,9 @@ const reservationSlice = createSlice({
   },
 });
 
-export const selectIsLoading = (state) => state.reserv.isLoading;
-export const selectReserv = (state) => state.reserv.reserv;
+export const selectIsLoading = (state) => state.payment.isLoading;
+export const selectPayment = (state) => state.payment.payment;
 
-export const { SAVE_RESERVE } = reservationSlice.actions;
+export const { SAVE_PAYMENT } = paymentSlice.actions;
 
-export default reservationSlice.reducer;
+export default paymentSlice.reducer;

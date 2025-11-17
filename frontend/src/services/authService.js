@@ -156,6 +156,7 @@ export const UpdateUser = async (id, userData) => {
 //    C H A N G E  P A S S W O R D
 //----------------------------------------------------
 export const ChangePassword = async (userData) => {
+  console.log(userData)
   const reponse = await axios.patch(
     `${BACKEND_URL}/api/users/changepass`,
     userData,

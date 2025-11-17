@@ -20,7 +20,7 @@ import AddUser from "./pages/admin/users/AddUser";
 import Destination from "./pages/Destination/Destination";
 import TripDetails from "./pages/Destination/TripDetails/TripDetails";
 import AddReservation from "./pages/Reservation/AddReservation";
-import Payment from "./pages/Payment/Payment";
+import AddPayment from "./pages/Payment/AddPayment";
 import TripImages from "./pages/Destination/TripDetails/TripImages";
 import UserReservationList from "./pages/Reservation/UserReservationList";
 import ChangePass from "./pages/auth/changepass";
@@ -71,7 +71,7 @@ function App() {
             element={<UserReservationList />}
           ></Route>
 
-          <Route path="/payment" element={<Payment />}></Route>
+          <Route path="/payment/new/:reservationID" element={<AddPayment />}></Route>
         </Routes>
       </Layout>
       <ToastContainer />

@@ -19,7 +19,7 @@ const AddReservation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { tripID } = useParams();
 
-  const { numberOfPeople, status } = formData;
+  const { reservationDate, numberOfPeople, status } = formData;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,6 +47,7 @@ const AddReservation = () => {
     }
 
     const ReservData = {
+      reservationDate:new Date().toISOString().split("T")[0], 
       numberOfPeople: Number(numberOfPeople),
       status: "active",
       tripID: trip._id,
@@ -69,6 +70,7 @@ const AddReservation = () => {
 
   return (
     <ReservationForm
+      reservationDate = {new Date().toISOString().split("T")[0]}
       numberOfPeople={numberOfPeople}
       trip={trip}
       handleInputChange={handleInputChange}

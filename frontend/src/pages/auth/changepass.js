@@ -56,12 +56,13 @@ function ChangePass() {
     // attemps to login the user
     try {
       const data = await ChangePassword(userData);
-
+      toast.success("Password Sucessfully changed");   
       navigate("/main");
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log(error.message);
+      toast.error(error.response.data.message);
+     
     }
   };
 

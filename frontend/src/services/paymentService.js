@@ -2,27 +2,26 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API_URL = `${BACKEND_URL}/api/reservation`;
+const API_URL = `${BACKEND_URL}/api/payment`;
 
 //----------------------------------------------------
-//  C R E A T E    N E W   R E S E R V A T I O N
+//  C R E A T E    N E W   P A Y M E N T
 //----------------------------------------------------
-export const registerReserv = async (reservData) => {
+export const registerPayment = async (paymentData) => {
   try {
     const formData = new FormData();
-    formData.append("reservationDate", reservData.reservationDate);
-    formData.append("numberOfPeople", reservData.numberOfPeople);
-    formData.append("status", reservData.status);
-    formData.append("tripID", reservData.tripID);
-    formData.append("userID", reservData.userID);
+    formData.append("paymentDate", paymentData.paymentDate);
+    formData.append("amount", paymentData.amount);
+    formData.append("payementMethod", paymentData.payementMethod);
+    formData.append("reservationID", paymentData.reservationID);
 
     const response = await axios.post(
-      `${BACKEND_URL}/api/reservation/new`,
+      `${BACKEND_URL}/api/payment/new`,
       formData,
       { withCredentials: true }
     );
     if (response.statusText === "OK") {
-      toast.success("Reservation Created Sucessfully");
+      toast.success("Paymentation Created Sucessfully");
     }
     return response.data;
   } catch (error) {
@@ -35,48 +34,47 @@ export const registerReserv = async (reservData) => {
 };
 
 //----------------------------------------------------
-//    G E T  A L L   R E S E R V A T I O N S
+//    G E T  A L L   P A Y M E N T S
 //----------------------------------------------------
-const getReservs = async () => {
+const getPayments = async () => {
   const reponse = await axios.get(API_URL);
   return reponse.data;
 };
 
 //----------------------------------------------------
-//    G E T  S I N G L E   R E S E R V A T I O N
+//    G E T  S I N G L E   P A Y M E N T
 //----------------------------------------------------
-export const getReserv = async (id) => {
+export const getPayment = async (id) => {
   const reponse = await axios.get(API_URL + "/" + id);
   return reponse.data;
 };
 
 //----------------------------------------------------
-//    D E L E T E    R E S E R V A T I O N
+//    D E L E T E    P A Y M E N T
 //----------------------------------------------------
-const deleteReserv = async (id) => {
+const deletePayment = async (id) => {
   const reponse = await axios.delete(API_URL + "/" + id);
   return reponse.data;
 };
 
 //----------------------------------------------------
-//    U P D A T E   R E S E R V A T I O N
+//    U P D A T E   P A Y M E N T
 //----------------------------------------------------
 
-export const updateReserv = async (id, reservData) => {
+export const updatePayment = async (id, paymentData) => {
   try {
     const formData = new FormData();
-    formData.append("reservationDate", reservData.reservationDate);
-    formData.append("numberOfPeople", reservData.numberOfPeople);
-    formData.append("status", reservData.status);
-    formData.append("tripID", reservData.tripID);
-    formData.append("userID", reservData.userID);
+   formData.append("paymentDate", paymentData.paymentDate);
+    formData.append("amount", paymentData.amount);
+    formData.append("payementMethod", paymentData.payementMethod);
+    formData.append("reservationID", paymentData.reservationID);
 
     const response = await axios.put(`${API_URL}/${id}`, formData, {
       withCredentials: true,
     });
 
     if (response.statusText === "OK") {
-      toast.success("Reservation Updated Successfully");
+      toast.success("Payment Updated Successfully");
     }
     return response.data;
   } catch (error) {
@@ -88,12 +86,12 @@ export const updateReserv = async (id, reservData) => {
   }
 };
 
-const reservService = {
-  registerReserv,
-  getReservs,
-  getReserv,
-  deleteReserv,
-  updateReserv,
+const paymentService = {
+  registerPayment,
+  getPayments,
+  getPayment,
+  deletePayment,
+  updatePayment,
 };
 
-export default reservService;
+export default paymentService;

@@ -8,11 +8,12 @@ import { fetchActivities } from "../../../redux/features/activity/ActivitySlice"
 import { BACKEND_URL } from "../../../services/tripService";
 import DetailActivities from "../TripDetails/DetailActivities";
 import DetailTransportation from "../TripDetails/DetailTransportation";
+import { selectIsLoggedIn } from "../../../redux/features/auth/authSlice";
 
 function TripDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
-
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const { trip, isLoading, isError, message } = useSelector(
     (state) => state.trip
   );
@@ -110,13 +111,15 @@ function TripDetails() {
 
       {/* Transportation Section */}
       <DetailTransportation tripTranses={tripTranses} />
-
+{ isLoggedIn && (
       <Link
         to={`/reservation/${trip._id}`}
         className="mt-1 ml-12 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
       >
         Reserve Trip
-      </Link>
+      </Link> )
+}      
+
     </div>
   );
 }
