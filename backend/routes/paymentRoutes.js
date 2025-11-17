@@ -10,7 +10,7 @@ const {
   updatePayment,
 } = require("../controllers/paymentController");
 
-router.post("/new", newPayment);
+router.post("/new/:reservationID", newPayment);
 router.get("/", getPayments);
 router.get("/:id", getPayment);
 router.delete("/:id", deletePayment);

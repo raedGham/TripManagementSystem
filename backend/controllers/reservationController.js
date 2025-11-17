@@ -6,7 +6,7 @@ const { response } = require("express");
 //  N E W   R E S E R V A T I O N
 // --------------------------------------------------------------------
 const newReservation = asyncHandler(async (req, res) => {
-  const { numberOfPeople, status, tripID, userID } = req.body;
+  const { reservationDate, numberOfPeople, status, tripID, userID } = req.body;
 
   // validation
   if (!numberOfPeople || !status) {
@@ -16,6 +16,7 @@ const newReservation = asyncHandler(async (req, res) => {
 
   // create new reservation
   const reservation = await Reservation.create({
+    reservationDate,
     numberOfPeople,
     status,
     tripID,
@@ -27,6 +28,7 @@ const newReservation = asyncHandler(async (req, res) => {
 
     res.status(201).json({
       _id,
+      reservationDate,
       numberOfPeople,
       status,
       tripID,
@@ -42,7 +44,7 @@ const newReservation = asyncHandler(async (req, res) => {
 //  G E T A L L   R E S E R V A T I O N S
 // --------------------------------------------------------------------
 const getReservations = asyncHandler(async (req, res) => {
-  const reservations = await Reservation.find().sort("startDate");
+  const reservations = await Reservation.find().populate("tripID");
   res.status(200).json(reservations);
 });
 
@@ -50,7 +52,7 @@ const getReservations = asyncHandler(async (req, res) => {
 //  G E T  S I N G L E   R E S E R V A T I O N
 // --------------------------------------------------------------------
 const getReservation = asyncHandler(async (req, res) => {
-  const reservation = await Reservation.findById(req.params.id);
+  const reservation = await Reservation.findById(req.params.id).populate("tripID");
   if (!reservation) {
     response.status(400);
     throw new Error("Invalid reservation");
@@ -76,6 +78,7 @@ const updateReservation = asyncHandler(async (req, res) => {
   const updatedReservation = await Reservation.findByIdAndUpdate(
     { _id: req.params.id },
     {
+      reservationDate,
       numberOfPeople,
       status,
       tripID,

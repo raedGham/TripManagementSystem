@@ -219,7 +219,7 @@ const updateUser = asyncHandler(async (req, res) => {
 // C H A N G E   P A S S W O R D
 // --------------------------------------------------------------------
 const changePassword = asyncHandler(async (req, res) => {
-  const { oldPassword, newPassword, userID } = req.body;
+  const { currentPassword, newPassword, userID } = req.body;
   const user = await User.findById(userID);
   console.log("WE ARE IN CHANGE PASSWORD CRL");
 
@@ -229,12 +229,12 @@ const changePassword = asyncHandler(async (req, res) => {
   }
 
   // Validate
-  if (!oldPassword || !newPassword) {
+  if (!currentPassword || !newPassword) {
     res.status(400);
     throw new Error("Please Add old and new password");
   }
   // check if old password is correct (= pass in db)
-  const passwordIsCorrect = await bcrypt.compare(oldPassword, user.password);
+  const passwordIsCorrect = await bcrypt.compare(currentPassword, user.password);
 
   // save new Password to database
   if (user && passwordIsCorrect) {
@@ -242,8 +242,7 @@ const changePassword = asyncHandler(async (req, res) => {
     await user.save();
     res.status(200).send("Password changed sucessfully");
   } else {
-    res.status(400);
-    throw new Error("Old Password is incorrect");
+    return res.status(400).json({ message: "Current Password is incorrect" });    
   }
 });
 

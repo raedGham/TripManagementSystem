@@ -6,11 +6,12 @@ const { response } = require("express");
 //  N E W   P A Y M E N T
 // --------------------------------------------------------------------
 const newPayment = asyncHandler(async (req, res) => {
+  const {reservationID}  = req.params
+  
   const {
     paymentDate,
     amount,
-    paymentMethod,
-    reservationID,
+    paymentMethod,  
   } = req.body;
 
   // validation

@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const reservationSchema = mongoose.Schema(
   {
+     reservationDate: {
+      type: Date,
+      required: [true, "Please enter Reservation date"],
+      default: Date.now,
+    },
+    
     numberOfPeople: {
       type: Number,
       default: 1,
