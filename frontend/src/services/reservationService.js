@@ -46,6 +46,7 @@ const getReservs = async () => {
 //    G E T  S I N G L E   R E S E R V A T I O N
 //----------------------------------------------------
 export const getReserv = async (id) => {
+  console.log(`${API_URL}/${id}`);
   const reponse = await axios.get(API_URL + "/" + id);
   return reponse.data;
 };

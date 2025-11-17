@@ -6,36 +6,24 @@ const { response } = require("express");
 //  N E W   F A V O R I T E
 // --------------------------------------------------------------------
 const newFavorite = asyncHandler(async (req, res) => {
-  const {
-    tripID,
-    userID,
-  } = req.body;
-
-  // validation
-  if (!userID || !tripID ) {
-    res.status(400);
-    throw new Error("Please fill all Required Fields");
-  }
+  const { tripID, userID, rating } = req.body;
 
   // create new favorite
   const favorite = await Favorite.create({
     tripID,
-    userID,    
+    userID,
+    rating,
   });
 
   if (favorite) {
-    const {
-      _id,
-      tripID,
-      userID,      
-    } = favorite;
+    const { _id, tripID, userID, rating } = favorite;
 
     res.status(201).json({
       _id,
       tripID,
-      userID,      
+      userID,
+      rating,
     });
-
   } else {
     response.status(400);
     throw new Error("Invalid favorite data");
@@ -66,10 +54,7 @@ const getFavorite = asyncHandler(async (req, res) => {
 //  U P D A T E   F A V O R I T E
 // --------------------------------------------------------------------
 const updateFavorite = asyncHandler(async (req, res) => {
-  const {
-    tripID,
-    userID,   
-  } = req.body;
+  const { tripID, userID } = req.body;
 
   const favorite = await Favorite.findById(req.params.id);
 
@@ -84,7 +69,7 @@ const updateFavorite = asyncHandler(async (req, res) => {
     { _id: req.params.id },
     {
       tripID,
-      userID,      
+      userID,
     },
     {
       new: true,
@@ -112,10 +97,35 @@ const deleteFavorite = asyncHandler(async (req, res) => {
   res.status(200).json(favorite);
 });
 
+// --------------------------------------------------------------------
+//  RATE TRIP
+// --------------------------------------------------------------------
+const rateTrip = asyncHandler(async (req, res) => {
+  const { tripID, userID, rating } = req.body;
+
+  if (!rating || rating < 1 || rating > 5) {
+    res.status(400);
+    throw new Error("Rating must be between 1 and 5");
+  }
+
+  // Find existing favorite
+  let favorite = await Favorite.findOne({ tripID, userID });
+
+  if (favorite) {
+    favorite.rating = rating;
+    await favorite.save();
+  } else {
+    favorite = await Favorite.create({ tripID, userID, rating });
+  }
+
+  res.status(200).json(favorite);
+});
+
 module.exports = {
   newFavorite,
   getFavorites,
   deleteFavorite,
   updateFavorite,
   getFavorite,
+  rateTrip,
 };

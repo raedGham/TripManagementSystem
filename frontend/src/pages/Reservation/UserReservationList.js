@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserID, selectIsLoggedIn } from "../../redux/features/auth/authSlice";
+import {
+  selectUserID,
+  selectIsLoggedIn,
+} from "../../redux/features/auth/authSlice";
 import { fetchReservs } from "../../redux/features/reservation/ReservationSlice";
 import { BACKEND_URL } from "../../services/tripService";
 
@@ -38,7 +41,7 @@ function UserReservationList() {
               <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-200 mt-2">
                 <thead className="text-[11px] uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-200">
                   <tr>
-                    <th className="px-6 py-3">S/N</th>                    
+                    <th className="px-6 py-3">S/N</th>
                     <th className="px-6 py-3">Trip Title</th>
                     <th className="px-6 py-3">Reservation Date</th>
                     <th className="px-6 py-3">Start Date</th>
@@ -54,14 +57,20 @@ function UserReservationList() {
 
                 <tbody>
                   {userReserves.map((Reserv, index) => {
-                    const { _id, tripID, numberOfPeople, status , reservationDate} = Reserv;
+                    const {
+                      _id,
+                      tripID,
+                      numberOfPeople,
+                      status,
+                      reservationDate,
+                    } = Reserv;
 
                     return (
                       <tr
                         key={_id}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
                       >
-                        <td className="px-3 py-2">{index + 1}</td>                        
+                        <td className="px-3 py-2">{index + 1}</td>
                         <td className="px-3 py-2">{tripID.title}</td>
                         <td className="px-3 py-2">{reservationDate}</td>
                         <td className="px-3 py-2">{tripID.startDate}</td>
@@ -80,18 +89,16 @@ function UserReservationList() {
                               className="w-auto h-32 object-cover rounded"
                             />
                           </div>
-                          <div className="rounded shadow-sm p-0 relative">
-                             
-                          </div>
+                          <div className="rounded shadow-sm p-0 relative"></div>
                         </td>
-                          <td> 
+                        <td>
                           <Link
-                              to={`/payment/new/${_id}`}
-                              className="mt-1 ml-12 px-12 py-2   bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
-                            >
-                              Pay
-                            </Link>
-                            </td>            
+                            to={`/payment/new/${_id}`}
+                            className="mt-1 ml-12 px-12 py-2   bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
+                          >
+                            Pay
+                          </Link>
+                        </td>
                       </tr>
                     );
                   })}
@@ -110,4 +117,3 @@ function UserReservationList() {
 }
 
 export default UserReservationList;
-

@@ -12,10 +12,7 @@ function PaymentForm({
   handleInputChange,
   addPayment,
   formTitle,
- 
 }) {
-
-
   const namewithquotes = localStorage.getItem("name");
   const name = namewithquotes.replace(/"/g, "");
   const emailWithQuotes = localStorage.getItem("email");
@@ -65,16 +62,16 @@ function PaymentForm({
               <div>
                 <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
                   <span className="font-semibold text-indigo-700 dark:text-indigo-300">
-                    Trip: 
+                    Trip:
                   </span>{" "}
                   {reserv.tripID.title}
                 </p>
               </div>
 
-               <div>
+              <div>
                 <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
                   <span className="font-semibold text-indigo-700 dark:text-indigo-300">
-                    Reservation Date: 
+                    Reservation Date:
                   </span>{" "}
                   {reserv.reservationDate}
                 </p>
@@ -82,7 +79,7 @@ function PaymentForm({
               <div>
                 <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
                   <span className="font-semibold text-indigo-700 dark:text-indigo-300">
-                    No of People: 
+                    No of People:
                   </span>{" "}
                   {reserv.numberOfPeople}
                 </p>
@@ -90,12 +87,11 @@ function PaymentForm({
               <div>
                 <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
                   <span className="font-semibold text-indigo-700 dark:text-indigo-300">
-                    No of People: 
+                    Trip price/Person:
                   </span>{" "}
-                  {reserv.numberOfPeople}
+                  {reserv.tripID.pricePerPerson} USD
                 </p>
               </div>
-
             </div>
             {/* Grid for two columns */}
             <form
@@ -121,7 +117,7 @@ function PaymentForm({
                 />
               </div>
 
-               <div>
+              <div>
                 <label
                   htmlFor="amount"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -141,36 +137,34 @@ function PaymentForm({
               </div>
 
               {/* type dropdown */}
-                <div>
-                  <label
-                    htmlFor="paymentMethod"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Type
-                  </label>
-                  <select
-                    id="paymentMethod"
-                    name="paymentMethod"
-                    value={paymentMethod}
-                    onChange={handleInputChange}
-                    required
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white"
-                  >
-                    <option value="">Select Payment Method</option>
-                    <option value="cash">Cash</option>
-                    <option value="check">Check</option>
-                    <option value="credit card">Credit Card</option>
-                  </select>
-                </div>
+              <div>
+                <label
+                  htmlFor="paymentMethod"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Type
+                </label>
+                <select
+                  id="paymentMethod"
+                  name="paymentMethod"
+                  value={paymentMethod}
+                  onChange={handleInputChange}
+                  required
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="">Select Payment Method</option>
+                  <option value="cash">Cash</option>
+                  <option value="check">Check</option>
+                  <option value="credit card">Credit Card</option>
+                </select>
+              </div>
 
               <div className="md:col-span-2">
                 <button
                   type="submit"
                   className="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-12 py-2.5 text-center"
                 >
-                  {formTitle === "Edit Payment"
-                    ? "Submit"
-                    : "Pay"}
+                  {formTitle === "Edit Payment" ? "Submit" : "Pay"}
                 </button>
               </div>
             </form>

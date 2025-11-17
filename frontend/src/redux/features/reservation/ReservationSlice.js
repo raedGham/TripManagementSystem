@@ -13,7 +13,7 @@ const initialState = {
 
 // GET ALL RESERVATIONS
 export const fetchReservs = createAsyncThunk(
-  "Reservs/getAll",
+  "reservation/getAll",
   async (_, thunkAPI) => {
     try {
       return await reservService.getReservs();
@@ -33,7 +33,7 @@ export const fetchReservs = createAsyncThunk(
 // DELETE A RESERVATION
 
 export const deleteReserv = createAsyncThunk(
-  "Reservs/delete",
+  "reservation/delete",
   async (id, thunkAPI) => {
     try {
       console.log("deleteReserv Slice :", id);
@@ -53,10 +53,11 @@ export const deleteReserv = createAsyncThunk(
 
 // get a single reservation
 export const getReserv = createAsyncThunk(
-  "Reservs/getReserv",
-  async (id, thunkAPI) => {
+  "reservation/getReserv",
+  async (reservationID, thunkAPI) => {
     try {
-      return await reservService.getReserv(id);
+      console.log("IN SLICE");
+      return await reservService.getReserv(reservationID);
     } catch (error) {
       const message =
         (error.response &&
@@ -73,7 +74,7 @@ export const getReserv = createAsyncThunk(
 // UPDATE A RESERVATION
 
 export const updateReserv = createAsyncThunk(
-  "Reservs/updateReserv",
+  "reservation/updateReserv",
   async ({ id, formData }, thunkAPI) => {
     try {
       return await reservService.updateReserv(id, formData);
@@ -91,12 +92,12 @@ export const updateReserv = createAsyncThunk(
 );
 
 const reservationSlice = createSlice({
-  name: "reserv",
+  name: "reservation",
   initialState,
   reducers: {
     SAVE_RESERVE(state, action) {
       const profile = action.payload;
-      state.reserv.reservationDate= profile.reservationDate
+      state.reserv.reservationDate = profile.reservationDate;
       state.reserv.numberOfPeople = profile.numberOfPeople;
       state.reserv.status = profile.status;
       state.reserv.tripID = profile.tripID;
@@ -131,6 +132,7 @@ const reservationSlice = createSlice({
       // getreserv  in progress case
       .addCase(getReserv.pending, (state) => {
         state.isLoading = true;
+        console.log("IN SLICE PENDING");
       })
       // get reserv sucessfull  case
       .addCase(getReserv.fulfilled, (state, action) => {
@@ -138,6 +140,7 @@ const reservationSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.reserv = action.payload;
+        console.log("IN SLICE FULFIL");
       })
       //  error getting reserv case
       .addCase(getReserv.rejected, (state, action) => {
@@ -145,6 +148,7 @@ const reservationSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
+        console.log("IN SLICE REJECTED");
       })
 
       // update reserv  in progress case
@@ -191,8 +195,8 @@ const reservationSlice = createSlice({
   },
 });
 
-export const selectIsLoading = (state) => state.reserv.isLoading;
-export const selectReserv = (state) => state.reserv.reserv;
+export const selectIsLoading = (state) => state.reservation.isLoading;
+export const selectReserv = (state) => state.reservation.reserv;
 
 export const { SAVE_RESERVE } = reservationSlice.actions;
 

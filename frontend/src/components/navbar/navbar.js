@@ -70,7 +70,7 @@ export default function Navbar() {
           </li>
 
           <li>
-            <Link to="/payment" className="hover:text-gray-300">
+            <Link to="/paymentsList" className="hover:text-gray-300">
               Payments
             </Link>
           </li>

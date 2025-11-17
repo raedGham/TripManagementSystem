@@ -21,6 +21,7 @@ import Destination from "./pages/Destination/Destination";
 import TripDetails from "./pages/Destination/TripDetails/TripDetails";
 import AddReservation from "./pages/Reservation/AddReservation";
 import AddPayment from "./pages/Payment/AddPayment";
+import PaymentsList from "./pages/Payment/PaymentsList";
 import TripImages from "./pages/Destination/TripDetails/TripImages";
 import UserReservationList from "./pages/Reservation/UserReservationList";
 import ChangePass from "./pages/auth/changepass";
@@ -71,7 +72,11 @@ function App() {
             element={<UserReservationList />}
           ></Route>
 
-          <Route path="/payment/new/:reservationID" element={<AddPayment />}></Route>
+          <Route
+            path="/payment/new/:reservationID"
+            element={<AddPayment />}
+          ></Route>
+          <Route path="/paymentsList" element={<PaymentsList />}></Route>
         </Routes>
       </Layout>
       <ToastContainer />
