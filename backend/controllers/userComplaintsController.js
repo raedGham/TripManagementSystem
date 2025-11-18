@@ -45,7 +45,7 @@ const newComplaint = asyncHandler(async (req, res) => {
 //  G E T A L L   C O M P L A I N T S
 // --------------------------------------------------------------------
 const getComplaints = asyncHandler(async (req, res) => {
-  const complaints = await Complaint.find();
+  const complaints = await Complaint.find().populate("userID");
   res.status(200).json(complaints);
 });
 
@@ -53,7 +53,7 @@ const getComplaints = asyncHandler(async (req, res) => {
 //  G E T  S I N G L E   C O M P L A I N T
 // --------------------------------------------------------------------
 const getComplaint = asyncHandler(async (req, res) => {
-  const complaint = await Complaint.findById(req.params.id);
+  const complaint = await Complaint.findById(req.params.id).populate("userID");
   if (!complaint) {
     response.status(400);
     throw new Error("Invalid complaint");

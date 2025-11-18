@@ -5,10 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import Search from "../../../components/search/Search";
 
 import { fetchComplaints } from "../../../redux/features/complaint/complaintSlice";
+import {
+  FILTER_COMPLAINTS,
+  selectFilteredComplaints,
+} from "../../../redux/features/complaint/ComplaintFilterSlice";
 
 function ComplaintsList() {
   const [search, setSearch] = useState("");
-
+  const filteredComplaints = useSelector(selectFilteredComplaints);
   const dispatch = useDispatch();
 
   const { complaints, isLoading, isError } = useSelector(
@@ -19,6 +23,9 @@ function ComplaintsList() {
     dispatch(fetchComplaints());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(FILTER_COMPLAINTS({ complaints, search }));
+  }, [complaints, search, dispatch]);
   return (
     <div className="">
       <div className="w-full rounded-lg shadow  p-14">
@@ -31,9 +38,9 @@ function ComplaintsList() {
         </div>
       </div>
       <div className="overflow-x-auto">
-        {!complaints && <p>Loading...</p>}
+        {!filteredComplaints && <p>Loading...</p>}
 
-        {complaints.length === 0 ? (
+        {filteredComplaints.length === 0 ? (
           <p className=" text-gray-400 mt-2">-- No Complaints Found ...</p>
         ) : (
           <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-200 mt-2">
@@ -63,7 +70,7 @@ function ComplaintsList() {
               </tr>
             </thead>
             <tbody>
-              {complaints.map((complaint, index) => {
+              {filteredComplaints.map((complaint, index) => {
                 const {
                   _id,
                   userID,
@@ -82,7 +89,7 @@ function ComplaintsList() {
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       <td className="px-3 py-2">{index + 1}</td>
-                      <td className="px-3 py-2">{userID}</td>
+                      <td className="px-3 py-2">{userID.name}</td>
                       <td className="px-3 py-2">{category}</td>
                       <td className="px-3 py-2">{status}</td>
                       <td className="px-3 py-2">{dateFiled}</td>
