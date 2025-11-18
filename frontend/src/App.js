@@ -25,6 +25,7 @@ import PaymentsList from "./pages/Payment/PaymentsList";
 import TripImages from "./pages/Destination/TripDetails/TripImages";
 import UserReservationList from "./pages/Reservation/UserReservationList";
 import ChangePass from "./pages/auth/changepass";
+import ComplaintsList from "./pages/Complaints/ComplaintsList";
 
 function App() {
   return (
@@ -77,7 +78,12 @@ function App() {
             element={<AddPayment />}
           ></Route>
           <Route path="/paymentsList" element={<PaymentsList />}></Route>
+
+          <Route path="/complaintsList" element={<ComplaintsList />}></Route>
+          <Route path="/complaint/:userID" element={<AddComplaint/>}></Route>
         </Routes>
+
+        
       </Layout>
       <ToastContainer />
     </BrowserRouter>
