@@ -1,65 +1,38 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { registerComplaint } from "../../services/paymentService";
+import { registerComplaint } from "../../services/complaintService";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import ComplaintForm from "./ComplaintForm";
 
-import { selectUserID } from "../../redux/features/auth/authSlice";
 import {
-  getReserv,
+  getComplaint,
   selectIsLoading,
-  selectReserv,
-} from "../../redux/features/reservation/ReservationSlice";
+  selectComplaint,
+} from "../../redux/features/complaint/complaintSlice";
 
 const initialState = {
-  paymentDate: "",
-  amount: "",
-  paymentMethod: "",
-  reservationID: "",
+  status: "",
+  complaintText: "",
+  category: "",
+  DateFiled: "",
 };
 
 const AddComplaint = () => {
   const [formData, setFormData] = useState(initialState);
   const [isComplaintLoading, setIsComplaintLoading] = useState(false);
 
-  const { reservationID } = useParams();
+  const { category, status, complaintText, dateFiled } = formData;
 
-  const { paymentDate, amount, paymentMethod } = formData;
-
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userID = useSelector(selectUserID);
+  const { userID } = useParams();
 
   // Use the selector you exported from the slice
-  const reserv = useSelector(selectReserv);
-  const isLoadingReserv = useSelector(selectIsLoading);
 
-  console.log("reserv:", reserv);
-  console.log("reservationID:", reservationID);
-  console.log("isLoadingReserv:", isLoadingReserv);
+  const isLoadingComplaint = useSelector(selectIsLoading);
 
-  useEffect(() => {
-    if (reservationID) {
-      console.log("Dispatching getReserv with ID:", reservationID);
-      dispatch(getReserv(reservationID));
-    }
-  }, [dispatch, reservationID]);
-
-  // to calculate total price
-  useEffect(() => {
-    console.log("reserv changed:", reserv);
-    if (reserv && reserv.tripID) {
-      const total = reserv.tripID.pricePerPerson * reserv.numberOfPeople || 0;
-      console.log("Calculated total:", total);
-
-      setFormData((prev) => ({
-        ...prev,
-        amount: total,
-      }));
-    }
-  }, [reserv]);
+  console.log("userid:", userID);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -70,23 +43,24 @@ const AddComplaint = () => {
     e.preventDefault();
 
     // validation
-    if (!paymentDate) {
-      return toast.error("Please Specify Complaint Date");
+    if (!dateFiled || !status || !category || !complaintText) {
+      return toast.error("Missing Fields");
     }
 
-    const paymentData = {
-      paymentDate: paymentDate,
-      amount: amount,
-      paymentMethod: paymentMethod,
-      reservationID,
+    const complaintData = {
+      userID,
+      category,
+      status,
+      complaintText,
+      dateFiled,
     };
 
-    console.log("ComplaintData:", paymentData);
+    console.log("ComplaintData:", complaintData);
 
     setIsComplaintLoading(true);
     // attempts to save the new trip
     try {
-      const data = await registerComplaint(paymentData);
+      const data = await registerComplaint(complaintData);
       toast.success("Complaint Added Successfully");
       navigate(-1);
       setIsComplaintLoading(false);
@@ -99,15 +73,15 @@ const AddComplaint = () => {
 
   return (
     <ComplaintForm
-      paymentDate={paymentDate}
-      amount={amount}
-      paymentMethod={paymentMethod}
-      reserv={reserv}
+      status={status}
+      complaintText={complaintText}
+      category={category}
+      dateFiled={dateFiled}
       handleInputChange={handleInputChange}
       addComplaint={addComplaint}
       formTitle={"Add Complaint"}
       isLoading={isComplaintLoading}
-      isLoadingReserv={isLoadingReserv}
+      isLoadingComplaint={isLoadingComplaint}
     />
   );
 };

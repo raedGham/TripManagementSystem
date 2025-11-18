@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 
 const complaintSchema = mongoose.Schema(
-  { 
-   
-    supervisorID: {
+  {
+    userID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    supervisorID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
     },
 
     category: {
@@ -18,11 +22,14 @@ const complaintSchema = mongoose.Schema(
       type: String,
       required: [true, "Please enter status"],
     },
-  
+    complaintText: {
+      type: String,
+      required: [true, "What is your complaint..."],
+    },
     dateFiled: {
       type: Date,
       default: Date.now,
-    },   
+    },
 
     dateReviewed: {
       type: Date,
@@ -31,9 +38,8 @@ const complaintSchema = mongoose.Schema(
 
     _response: {
       type: String,
-      required: [true, "Please enter response"],
+      required: [false, "Please enter response"],
     },
-
   },
   { timestamps: true }
 );

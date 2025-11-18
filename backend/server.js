@@ -34,7 +34,7 @@ app.use(errorHandler);
 // Routes Middleware
 app.use("/api/users", userRoutes);
 app.use("/api/favorites", userFavoritesRoute);
-app.use("/api/complaints", userComplaintsRoutes);
+app.use("/api/complaint", userComplaintsRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/transportation", transportationRoutes);
 app.use("/api/reservation", reservationRoutes);

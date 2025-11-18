@@ -10,7 +10,7 @@ const {
   updateComplaint,
 } = require("../controllers/userComplaintsController");
 
-router.post("/new", newComplaint);
+router.post("/new", upload.none(), newComplaint);
 router.get("/", getComplaints);
 router.get("/:id", getComplaint);
 router.delete("/:id", deleteComplaint);

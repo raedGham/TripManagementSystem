@@ -110,11 +110,11 @@ export default function Navbar() {
                   </li>
                   <li>
                     <Link
-                      to="/admin/reports"
+                      to="/admin/complaints"
                       className="block px-4 py-2 hover:bg-gray-100"
                       onClick={() => setOpenAdmin(false)}
                     >
-                      Reports (future use)
+                      Complaint Reponses
                     </Link>
                   </li>
                 </ul>
@@ -139,41 +139,40 @@ export default function Navbar() {
 
                 {/* Dropdown */}
                 {openUserMenu && (
-                 <div className="absolute right-0 mt-2 w-56 bg-white text-black rounded-lg shadow-lg py-3 z-50">
-                {/* User Info */}
-                <div className="px-4 pb-3 border-b border-gray-200">
-                  <p className="font-semibold">{name}</p>
-                  <p className="text-sm text-gray-500">{email}</p>
-                </div>
+                  <div className="absolute right-0 mt-2 w-56 bg-white text-black rounded-lg shadow-lg py-3 z-50">
+                    {/* User Info */}
+                    <div className="px-4 pb-3 border-b border-gray-200">
+                      <p className="font-semibold">{name}</p>
+                      <p className="text-sm text-gray-500">{email}</p>
+                    </div>
 
-                {/* Menu Items */}
-                <div className="flex flex-col mt-2">
-                  <Link
-                    to="/complaintsList"
-                    className="px-4 py-2 hover:bg-gray-100 transition rounded-md"
-                  >
-                    User Complaints
-                  </Link>
+                    {/* Menu Items */}
+                    <div className="flex flex-col mt-2">
+                      <Link
+                        to="/complaintsList"
+                        className="px-4 py-2 hover:bg-gray-100 transition rounded-md"
+                      >
+                        User Complaints
+                      </Link>
 
-                  <Link
-                    to="/changepassword"
-                    className="px-4 py-2 hover:bg-gray-100 transition rounded-md"
-                  >
-                    Change Password
-                  </Link>
+                      <Link
+                        to="/changepassword"
+                        className="px-4 py-2 hover:bg-gray-100 transition rounded-md"
+                      >
+                        Change Password
+                      </Link>
 
-                  <button
-                    onClick={() => {
-                      logout();
-                      setOpenUserMenu(false);
-                    }}
-                    className="px-4 py-2 text-red-600 hover:bg-gray-100 transition text-left rounded-md"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              </div>
-
+                      <button
+                        onClick={() => {
+                          logout();
+                          setOpenUserMenu(false);
+                        }}
+                        className="px-4 py-2 text-red-600 hover:bg-gray-100 transition text-left rounded-md"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
                 )}
               </>
             ) : (

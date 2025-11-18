@@ -26,7 +26,9 @@ import TripImages from "./pages/Destination/TripDetails/TripImages";
 import UserReservationList from "./pages/Reservation/UserReservationList";
 import ChangePass from "./pages/auth/changepass";
 import ComplaintsList from "./pages/Complaints/ComplaintsList";
-
+import AddComplaint from "./pages/Complaints/AddComplaint";
+import AdminComplaintList from "./pages/admin/complaintResponse/AdminComplaintsList";
+import AddResponse from "./pages/admin/complaintResponse/AddResponse";
 function App() {
   return (
     <BrowserRouter>
@@ -44,10 +46,8 @@ function App() {
             path="/admin/trips/trip-info/:id"
             element={<TripInfo />}
           ></Route>
-
           <Route path="/admin/trans/new/:tripID" element={<AddTrans />}></Route>
           <Route path="/admin/trans/:tripID" element={<TransList />}></Route>
-
           <Route
             path="/admin/activity/new/:tripID"
             element={<AddActivity />}
@@ -56,10 +56,16 @@ function App() {
             path="/admin/activity/:tripID"
             element={<ActivityList />}
           ></Route>
-
           <Route path="/admin/users" element={<UsersList />}></Route>
           <Route path="/admin/users/new" element={<AddUser />}></Route>
-
+          <Route
+            path="/admin/complaints"
+            element={<AdminComplaintList />}
+          ></Route>
+          <Route
+            path="/admin/complaints/response/:id"
+            element={<AddResponse />}
+          ></Route>
           <Route path="/destination" element={<Destination />}></Route>
           <Route path="/details/:id" element={<TripDetails />}></Route>
           <Route path="/trip/images/:tripId" element={<TripImages />}></Route>
@@ -67,23 +73,22 @@ function App() {
             path="/reservation/:tripID"
             element={<AddReservation />}
           ></Route>
-
           <Route
             path="/userreservation"
             element={<UserReservationList />}
           ></Route>
-
           <Route
             path="/payment/new/:reservationID"
             element={<AddPayment />}
           ></Route>
           <Route path="/paymentsList" element={<PaymentsList />}></Route>
-
           <Route path="/complaintsList" element={<ComplaintsList />}></Route>
-          <Route path="/complaint/:userID" element={<AddComplaint/>}></Route>
+          <Route
+            path="/complaint/new/:userID"
+            element={<AddComplaint />}
+          ></Route>
+          ;
         </Routes>
-
-        
       </Layout>
       <ToastContainer />
     </BrowserRouter>

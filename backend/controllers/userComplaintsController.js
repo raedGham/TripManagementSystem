@@ -6,49 +6,34 @@ const { response } = require("express");
 //  N E W   C O M P L A I N T
 // --------------------------------------------------------------------
 const newComplaint = asyncHandler(async (req, res) => {
-  const {    
-    supervisorID,
-    category,
-    status,
-    dateFiled,
-    dateReviewed,
-    _response,
-  } = req.body;
+  console.log(req.body);
+  const { userID, category, status, complaintText, dateFiled } = req.body;
 
   // validation
-  if (!supervisorID || !category || !status || !dateFiled || !_response ) {
+  if (!userID || !category || !status || !dateFiled || !complaintText) {
     res.status(400);
     throw new Error("Please fill all Required Fields");
   }
 
   // create new complaint
   const complaint = await Complaint.create({
-    supervisorID,
+    userID,
     category,
     status,
+    complaintText,
     dateFiled,
-    dateReviewed,
-    _response,
   });
 
   if (complaint) {
-    const {
-      _id,
-      supervisorID,
-      category,
-      status,
-      dateFiled,
-      dateReviewed,
-      _response,
-    } = complaint;
+    const { _id, userID, category, status, complaintText, dateFiled } =
+      complaint;
     res.status(201).json({
       _id,
-      supervisorID,
+      userID,
       category,
       status,
+      complaintText,
       dateFiled,
-      dateReviewed,
-      _response,  
     });
   } else {
     response.status(400);
@@ -81,6 +66,7 @@ const getComplaint = asyncHandler(async (req, res) => {
 // --------------------------------------------------------------------
 const updateComplaint = asyncHandler(async (req, res) => {
   const {
+    userID,
     supervisorID,
     category,
     status,
@@ -101,12 +87,14 @@ const updateComplaint = asyncHandler(async (req, res) => {
   const updatedComplaint = await Complaint.findByIdAndUpdate(
     { _id: req.params.id },
     {
-     supervisorID,
-     category,
-     status,
-     dateFiled,
-     dateReviewed,
-     _response,
+      userID,
+      supervisorID,
+      category,
+      status,
+      complaintText,
+      dateFiled,
+      dateReviewed,
+      _response,
     },
     {
       new: true,

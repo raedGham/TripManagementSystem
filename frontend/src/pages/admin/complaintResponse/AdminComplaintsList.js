@@ -1,96 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUserID } from "../../redux/features/auth/authSlice";
-import Search from "../../components/search/Search";
-import { confirmAlert } from "react-confirm-alert";
 
-import {
-  deleteComplaint,
-  fetchComplaints,
-} from "../../redux/features/complaint/complaintSlice";
+import Search from "../../../components/search/Search";
+
+import { fetchComplaints } from "../../../redux/features/complaint/complaintSlice";
 
 function ComplaintsList() {
   const [search, setSearch] = useState("");
-  const userID = useSelector(selectUserID);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const { complaints, isLoading, isError } = useSelector(
     (state) => state.complaint
-  );
-  // Filter
-
-  const userComplaints = complaints.filter(
-    (complaint) => complaint.userID === userID
   );
 
   useEffect(() => {
     dispatch(fetchComplaints());
   }, [dispatch]);
 
-  const delCompl = async (id) => {
-    await dispatch(deleteComplaint(id));
-    //  navigate(-1);
-  };
-  const confirmDelete = (id) => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 text-center">
-              <h1 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-                Delete Complaint
-              </h1>
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
-                Are you sure you want to delete this Complaint?
-              </p>
-              <div className="flex justify-center gap-4">
-                <button
-                  onClick={() => {
-                    delCompl(id);
-                    onClose();
-                  }}
-                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-                >
-                  Delete
-                </button>
-                <button
-                  onClick={onClose}
-                  className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400 transition"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-      },
-    });
-  };
   return (
     <div className="">
       <div className="w-full rounded-lg shadow  p-14">
         <div className="flex">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-2 mr-4 pt-2">
-            User Complaints
+            Complaints Responses
           </h1>
-          <Link
-            to={`/complaint/new/${userID}`}
-            className="mt-1 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
-          >
-            Add a Complaint
-          </Link>
 
           <Search value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
       </div>
       <div className="overflow-x-auto">
-        {!userComplaints && <p>Loading...</p>}
+        {!complaints && <p>Loading...</p>}
 
-        {userComplaints.length === 0 ? (
+        {complaints.length === 0 ? (
           <p className=" text-gray-400 mt-2">-- No Complaints Found ...</p>
         ) : (
           <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-200 mt-2">
@@ -98,6 +41,9 @@ function ComplaintsList() {
               <tr>
                 <th scope="col" className="px-6 py-3">
                   S/N
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  User
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Category
@@ -117,9 +63,10 @@ function ComplaintsList() {
               </tr>
             </thead>
             <tbody>
-              {userComplaints.map((complaint, index) => {
+              {complaints.map((complaint, index) => {
                 const {
                   _id,
+                  userID,
                   category,
                   status,
                   complaintText,
@@ -135,23 +82,18 @@ function ComplaintsList() {
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       <td className="px-3 py-2">{index + 1}</td>
+                      <td className="px-3 py-2">{userID}</td>
                       <td className="px-3 py-2">{category}</td>
                       <td className="px-3 py-2">{status}</td>
                       <td className="px-3 py-2">{dateFiled}</td>
                       <td className="px-3 py-2">{dateReviewed}</td>
                       <td className="px-6 py-4 flex space-x-3">
-                        <Link to={`/complaints/${_id}`}>
-                          <FaEdit
-                            size={20}
-                            className="text-green-600 hover:text-green-800"
-                          />
+                        <Link
+                          to={`/admin/complaints/respond/${_id}`}
+                          className="mt-1 ml-12 px-12 py-2   bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
+                        >
+                          Respond
                         </Link>
-                        <button onClick={() => confirmDelete(_id)}>
-                          <FaTrashAlt
-                            size={18}
-                            className="text-red-600 hover:text-red-800"
-                          />
-                        </button>
                       </td>
                     </tr>
 
