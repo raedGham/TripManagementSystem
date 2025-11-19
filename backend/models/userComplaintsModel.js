@@ -36,7 +36,7 @@ const complaintSchema = mongoose.Schema(
       default: Date.now,
     },
 
-    _response: {
+    responseText: {
       type: String,
       required: [false, "Please enter response"],
     },

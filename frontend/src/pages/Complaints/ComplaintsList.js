@@ -22,10 +22,14 @@ function ComplaintsList() {
     (state) => state.complaint
   );
   // Filter
+ console.log(userID)
 
   const userComplaints = complaints.filter(
-    (complaint) => complaint.userID === userID
+    (complaint) => complaint.userID?._id.toString() === userID?.toString()
   );
+  console.log(userID)
+  console.log("userComplaints:", userComplaints);
+
 
   useEffect(() => {
     dispatch(fetchComplaints());

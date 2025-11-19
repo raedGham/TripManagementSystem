@@ -101,7 +101,7 @@ const complaintSlice = createSlice({
       state.complaint.complaintText = profile.complaintText;
       state.complaint.dateFiled = profile.dateFiled;
       state.complaint.dateReviewed = profile.dateReviewed;
-      state.complaint._response = profile._response;
+      state.complaint.responseText = profile.responseText;
       state.complaint.supervisorID = profile.supervisorID;
     },
   },

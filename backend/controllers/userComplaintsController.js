@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Complaint = require("../models/userComplaintsModel");
-const { response } = require("express");
+
 
 // --------------------------------------------------------------------
 //  N E W   C O M P L A I N T
@@ -72,7 +72,7 @@ const updateComplaint = asyncHandler(async (req, res) => {
     status,
     dateFiled,
     dateReviewed,
-    _response,
+    responseText,
   } = req.body;
 
   const complaint = await Complaint.findById(req.params.id);
@@ -94,7 +94,7 @@ const updateComplaint = asyncHandler(async (req, res) => {
       complaintText,
       dateFiled,
       dateReviewed,
-      _response,
+      responseText,
     },
     {
       new: true,

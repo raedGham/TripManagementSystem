@@ -1,92 +1,128 @@
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { registerResponse } from "../../services/responseService";
+import { registerResponse } from "../../../services/responseService";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import ResponseForm from "./ResponseForm";
 
+
 import {
-  getResponse,
+  getComplaint,
   selectIsLoading,
-} from "../../redux/features/response/complaintSlice";
+  selectComplaint,  
+} from "../../../redux/features/complaint/complaintSlice";
 
 const initialState = {
   userID: "",
   status: "",
-  complainText: "",
   category: "",
   dateFiled: "",
-  supervisorID: "",
-  dateReviewed: "",
-  _response: "",
+  responseText: "",
+  dateReviewed: Date.now(),
 };
 
 const AddResponse = () => {
   const [formData, setFormData] = useState(initialState);
   const [isResponseLoading, setIsResponseLoading] = useState(false);
 
-  const { category, status, responseText, dateFiled } = formData;
+  const { category, status, responseText, dateFiled, userID } = formData;
 
   const navigate = useNavigate();
   const { id } = useParams();
-
-  // Use the selector you exported from the slice
+  const dispatch = useDispatch();
 
   const isLoadingResponse = useSelector(selectIsLoading);
+  const complaint = useSelector(selectComplaint); // fetched complaint
 
-  console.log("userid:", userID);
+  // --------------------------
+  // FETCH COMPLAINT BY ID
+  // --------------------------
+  useEffect(() => {
+    dispatch(getComplaint(id));
+  }, [id, dispatch]);
 
+  // --------------------------
+  // WHEN COMPLAINT IS LOADED → FILL FORM WITH ITS DATA
+  // --------------------------
+  useEffect(() => {
+    if (complaint) {
+      setFormData({
+        userID: complaint.userID,
+        status: complaint.status || "",
+        category: complaint.category || "",
+        dateFiled: complaint.dateFiled
+          ? complaint.dateFiled.split("T")[0]
+          : "",
+        responseText: "",
+      });
+    }
+  }, [complaint]);
+
+  // --------------------------
+  // HANDLE INPUT FIELDS
+  // --------------------------
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // --------------------------
+  // SUBMIT RESPONSE
+  // --------------------------
   const addResponse = async (e) => {
     e.preventDefault();
 
-    // validation
     if (!dateFiled || !status || !category || !responseText) {
       return toast.error("Missing Fields");
     }
 
     const responseData = {
+      complaintID: id,
       userID,
       category,
       status,
       responseText,
       dateFiled,
+      status,
+
     };
 
     console.log("ResponseData:", responseData);
 
     setIsResponseLoading(true);
-    // attempts to save the new trip
+
     try {
-      const data = await registerResponse(responseData);
+      await registerResponse(responseData);
       toast.success("Response Added Successfully");
       navigate(-1);
-      setIsResponseLoading(false);
     } catch (error) {
-      setIsResponseLoading(false);
-      console.log(error.message);
-      toast.error(error.message);
+      toast.error(error.message || "Failed to add response");
     }
+
+    setIsResponseLoading(false);
   };
 
-  return (
-    <ResponseForm
-      status={status}
-      responseText={responseText}
-      category={category}
-      dateFiled={dateFiled}
-      handleInputChange={handleInputChange}
-      addResponse={addResponse}
-      formTitle={"Add Response"}
-      isLoading={isResponseLoading}
-      isLoadingResponse={isLoadingResponse}
-    />
+  // --------------------------
+  // DISPLAY
+  // --------------------------
+  return (   
+   
+   
+      <ResponseForm
+        complaint = {complaint}
+        status = {status}        
+        responseText={responseText}
+        dateReviewed={dateFiled}
+        handleInputChange={handleInputChange}
+        addResponse={addResponse}
+        formTitle={"Add Response"}
+        isLoading={isResponseLoading}
+        isLoadingResponse={isLoadingResponse}
+      />
+    
+    
   );
 };
 
 export default AddResponse;
+

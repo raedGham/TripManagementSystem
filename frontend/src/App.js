@@ -28,7 +28,7 @@ import ChangePass from "./pages/auth/changepass";
 import ComplaintsList from "./pages/Complaints/ComplaintsList";
 import AddComplaint from "./pages/Complaints/AddComplaint";
 import AdminComplaintList from "./pages/admin/complaintResponse/AdminComplaintsList";
-//import AddResponse from "./pages/admin/complaintResponse/AddResponse";
+import AddResponse from "./pages/admin/complaintResponse/AddResponse";
 function App() {
   return (
     <BrowserRouter>
@@ -62,10 +62,11 @@ function App() {
             path="/admin/complaints"
             element={<AdminComplaintList />}
           ></Route>
-          {/* <Route
-            path="/admin/complaints/response/:id"
-            element={<AddResponse />}
-          ></Route> */}
+             <Route
+            path="/admin/complaints/respond/:id"
+            element={<AddResponse  />}
+          ></Route>
+          
           <Route path="/destination" element={<Destination />}></Route>
           <Route path="/details/:id" element={<TripDetails />}></Route>
           <Route path="/trip/images/:tripId" element={<TripImages />}></Route>
