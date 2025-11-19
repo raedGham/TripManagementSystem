@@ -5,11 +5,10 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import ResponseForm from "./ResponseForm";
 
-
 import {
   getComplaint,
   selectIsLoading,
-  selectComplaint,  
+  selectComplaint,
 } from "../../../redux/features/complaint/complaintSlice";
 
 const initialState = {
@@ -25,7 +24,8 @@ const AddResponse = () => {
   const [formData, setFormData] = useState(initialState);
   const [isResponseLoading, setIsResponseLoading] = useState(false);
 
-  const { category, status, responseText, dateFiled, userID } = formData;
+  const { category, status, responseText, dateFiled, userID, dateReviewed } =
+    formData;
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -47,12 +47,10 @@ const AddResponse = () => {
   useEffect(() => {
     if (complaint) {
       setFormData({
-        userID: complaint.userID,
+        userID: complaint.userID._id,
         status: complaint.status || "",
         category: complaint.category || "",
-        dateFiled: complaint.dateFiled
-          ? complaint.dateFiled.split("T")[0]
-          : "",
+        dateFiled: complaint.dateFiled ? complaint.dateFiled.split("T")[0] : "",
         responseText: "",
       });
     }
@@ -69,10 +67,10 @@ const AddResponse = () => {
   // --------------------------
   // SUBMIT RESPONSE
   // --------------------------
-  const addResponse = async (e) => {
+  const addRes = async (e) => {
     e.preventDefault();
 
-    if (!dateFiled || !status || !category || !responseText) {
+    if (!dateReviewed || !status || !category || !responseText) {
       return toast.error("Missing Fields");
     }
 
@@ -82,9 +80,8 @@ const AddResponse = () => {
       category,
       status,
       responseText,
-      dateFiled,
+      dateReviewed,
       status,
-
     };
 
     console.log("ResponseData:", responseData);
@@ -92,7 +89,7 @@ const AddResponse = () => {
     setIsResponseLoading(true);
 
     try {
-      await registerResponse(responseData);
+      await registerResponse(id, responseData);
       toast.success("Response Added Successfully");
       navigate(-1);
     } catch (error) {
@@ -105,24 +102,19 @@ const AddResponse = () => {
   // --------------------------
   // DISPLAY
   // --------------------------
-  return (   
-   
-   
-      <ResponseForm
-        complaint = {complaint}
-        status = {status}        
-        responseText={responseText}
-        dateReviewed={dateFiled}
-        handleInputChange={handleInputChange}
-        addResponse={addResponse}
-        formTitle={"Add Response"}
-        isLoading={isResponseLoading}
-        isLoadingResponse={isLoadingResponse}
-      />
-    
-    
+  return (
+    <ResponseForm
+      complaint={complaint}
+      status={status}
+      responseText={responseText}
+      dateReviewed={dateReviewed}
+      handleInputChange={handleInputChange}
+      addRes={addRes}
+      formTitle={"Add Response"}
+      isLoading={isResponseLoading}
+      isLoadingResponse={isLoadingResponse}
+    />
   );
 };
 
 export default AddResponse;
-

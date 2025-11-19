@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Complaint = require("../models/userComplaintsModel");
 
-
 // --------------------------------------------------------------------
 //  N E W   C O M P L A I N T
 // --------------------------------------------------------------------
@@ -65,6 +64,7 @@ const getComplaint = asyncHandler(async (req, res) => {
 //  U P D A T E   C O M P L A I N T
 // --------------------------------------------------------------------
 const updateComplaint = asyncHandler(async (req, res) => {
+  console.log("UPDATE COMPLAINT CONTROLLER");
   const {
     userID,
     supervisorID,
@@ -89,10 +89,7 @@ const updateComplaint = asyncHandler(async (req, res) => {
     {
       userID,
       supervisorID,
-      category,
       status,
-      complaintText,
-      dateFiled,
       dateReviewed,
       responseText,
     },

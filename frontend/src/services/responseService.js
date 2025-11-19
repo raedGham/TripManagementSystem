@@ -2,8 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API_URL = `${BACKEND_URL}/api/response`;
-
+const API_URL = `${BACKEND_URL}/api/complaint`;
 
 //----------------------------------------------------
 //    G E T  A L L   C O M P L A I N T S
@@ -36,15 +35,14 @@ const deleteResponse = async (id) => {
 export const registerResponse = async (id, responseData) => {
   try {
     const formData = new FormData();
-    formData.append("userID", responseData.userID);
     formData.append("status", responseData.status);
     formData.append("responseText", responseData.responseText);
-    formData.append("category", responseData.category);
-    formData.append("dateFiled", responseData.dateFiled);
-    formData.append("dateReviewed", responseData.dateReviewd);
-    formData.append("responseText", responseData.response);
+    formData.append("dateReviewed", responseData.dateReviewed);
+    console.log(responseData.dateReviewed);
+    console.log("id:", id);
 
-    const response = await axios.put(`${API_URL}/${id}`, formData, {
+    console.log(`${API_URL}/${id}`);
+    const response = await axios.patch(`${API_URL}/${id}`, formData, {
       withCredentials: true,
     });
 
@@ -66,7 +64,6 @@ const responseService = {
   getResponses,
   getResponse,
   deleteResponse,
-
 };
 
 export default responseService;

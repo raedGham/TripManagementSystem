@@ -22,14 +22,13 @@ function ComplaintsList() {
     (state) => state.complaint
   );
   // Filter
- console.log(userID)
+  console.log(userID);
 
   const userComplaints = complaints.filter(
     (complaint) => complaint.userID?._id.toString() === userID?.toString()
   );
-  console.log(userID)
+  console.log(userID);
   console.log("userComplaints:", userComplaints);
-
 
   useEffect(() => {
     dispatch(fetchComplaints());
@@ -129,6 +128,7 @@ function ComplaintsList() {
                   complaintText,
                   dateFiled,
                   dateReviewed,
+                  responseText,
                 } = complaint;
 
                 return (
@@ -171,6 +171,21 @@ function ComplaintsList() {
                         <p1> Complaint</p1>
                         <br />
                         {complaintText}
+                      </td>
+                    </tr>
+
+                    {/* Row 3: response */}
+                    <tr
+                      key={`${_id}-complaint`}
+                      className="bg-gray-50 dark:bg-gray-900 border-b dark:border-gray-700"
+                    >
+                      <td
+                        colSpan={5}
+                        className="px-6 py-3 text-gray-700 dark:text-gray-300 italic"
+                      >
+                        <p1> Supervisor Response</p1>
+                        <br />
+                        {responseText}
                       </td>
                     </tr>
                   </>
