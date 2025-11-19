@@ -9,6 +9,8 @@ import { BACKEND_URL } from "../../../services/tripService";
 import DetailActivities from "../TripDetails/DetailActivities";
 import DetailTransportation from "../TripDetails/DetailTransportation";
 import { selectIsLoggedIn } from "../../../redux/features/auth/authSlice";
+import Feedback from "../Feedback";
+
 //import RateTrip from "./RateTrip";
 
 function TripDetails() {
@@ -113,14 +115,17 @@ function TripDetails() {
       {/* Transportation Section */}
       <DetailTransportation tripTranses={tripTranses} />
       {isLoggedIn && (
-        <div>
-          <Link
-            to={`/reservation/${trip._id}`}
-            className="mt-1 ml-12 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
-          >
-            Reserve Trip
-          </Link>
-        </div>
+        <>
+          <div>
+            <Link
+              to={`/reservation/${trip._id}`}
+              className="mt-1 ml-12 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
+            >
+              Reserve Trip
+            </Link>
+          </div>
+          <Feedback />
+        </>
       )}
     </div>
   );
