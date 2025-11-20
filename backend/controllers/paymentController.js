@@ -6,23 +6,16 @@ const { response } = require("express");
 //  N E W   P A Y M E N T
 // --------------------------------------------------------------------
 const newPayment = asyncHandler(async (req, res) => {
+  const { paymentDate, amount, paymentMethod, reservationID } = req.body;
 
-  
-  const {
-    paymentDate,
-    amount,
-    paymentMethod,  
-    reservationID,
-  } = req.body;
-  
-  console.log("NEW PAYMENT CONTROLLER")
-  console.log("reservationID", reservationID)
-  console.log("paymentDate", paymentDate)
-  console.log("paymentMethod", paymentMethod)
-  console.log("amount", amount)
+  console.log("NEW PAYMENT CONTROLLER");
+  console.log("reservationID", reservationID);
+  console.log("paymentDate", paymentDate);
+  console.log("paymentMethod", paymentMethod);
+  console.log("amount", amount);
 
   // validation
-  if (!paymentDate || !amount || !paymentMethod || !reservationID ) {
+  if (!paymentDate || !amount || !paymentMethod || !reservationID) {
     res.status(400);
     throw new Error("Please fill all Required Fields");
   }
@@ -36,13 +29,7 @@ const newPayment = asyncHandler(async (req, res) => {
   });
 
   if (payment) {
-    const {
-      _id,
-      paymentDate,
-      amount,
-      paymentMethod,
-      reservationID,
-    } = payment;
+    const { _id, paymentDate, amount, paymentMethod, reservationID } = payment;
     res.status(201).json({
       _id,
       paymentDate,
@@ -61,12 +48,18 @@ const newPayment = asyncHandler(async (req, res) => {
 // --------------------------------------------------------------------
 const getPayments = asyncHandler(async (req, res) => {
   const payments = await Payment.find().populate({
-        path: "reservationID",
-        populate: {
-          path: "tripID",
-          model: "Trip"
-        }
-      });
+    path: "reservationID",
+    populate: [
+      {
+        path: "tripID",
+        model: "Trip",
+      },
+      {
+        path: "userID",
+        model: "User",
+      },
+    ],
+  });
   res.status(200).json(payments);
 });
 
@@ -86,12 +79,7 @@ const getPayment = asyncHandler(async (req, res) => {
 //  U P D A T E   P A Y M E N T
 // --------------------------------------------------------------------
 const updatePayment = asyncHandler(async (req, res) => {
-  const {
-      paymentDate,
-      amount,
-      paymentMethod,
-      reservationID,
-  } = req.body;
+  const { paymentDate, amount, paymentMethod, reservationID } = req.body;
 
   const payment = await Payment.findById(req.params.id);
 

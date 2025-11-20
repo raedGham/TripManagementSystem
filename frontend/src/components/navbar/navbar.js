@@ -79,7 +79,7 @@ export default function Navbar() {
 
           {/* Admin Dropdown */}
           {console.log(type)}
-          {type==="superuser" && (
+          {type === "superuser" && (
             <li className="relative" ref={adminRef}>
               <button
                 onClick={() => {
@@ -121,12 +121,21 @@ export default function Navbar() {
                     </Link>
                   </li>
 
-                     <li>
+                  <li>
                     <Link
                       to="/admin/adminReservationList"
-                      className="block px-4 py-2 hover:bg-gray-100"                      
+                      className="block px-4 py-2 hover:bg-gray-100"
                     >
                       Reservations List
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      to="/admin/adminPaymentList"
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      Payments List
                     </Link>
                   </li>
                 </ul>

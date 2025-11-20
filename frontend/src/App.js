@@ -30,6 +30,7 @@ import AddComplaint from "./pages/Complaints/AddComplaint";
 import AdminComplaintList from "./pages/admin/complaintResponse/AdminComplaintsList";
 import AddResponse from "./pages/admin/complaintResponse/AddResponse";
 import AdminReservationList from "./pages/admin/adminReservationList/AdminReservationList";
+import AdminPaymentList from "./pages/admin/adminPaymentsList/AdminPaymentList";
 
 function App() {
   return (
@@ -44,8 +45,14 @@ function App() {
           <Route path="/admin/trips/new" element={<AddTrip />}></Route>
           <Route path="/admin/trips/:id" element={<EditTrip />}></Route>
           <Route path="/admin/trips" element={<TripsList />}></Route>
-          
-          <Route path="/admin/adminReservationList" element={<AdminReservationList/>}></Route>
+          <Route
+            path="/admin/adminReservationList"
+            element={<AdminReservationList />}
+          ></Route>
+          <Route
+            path="/admin/adminPaymentList"
+            element={<AdminPaymentList />}
+          ></Route>
           <Route
             path="/admin/trips/trip-info/:id"
             element={<TripInfo />}
@@ -66,11 +73,10 @@ function App() {
             path="/admin/complaints"
             element={<AdminComplaintList />}
           ></Route>
-             <Route
+          <Route
             path="/admin/complaints/respond/:id"
-            element={<AddResponse  />}
+            element={<AddResponse />}
           ></Route>
-          
           <Route path="/destination" element={<Destination />}></Route>
           <Route path="/details/:id" element={<TripDetails />}></Route>
           <Route path="/trip/images/:tripId" element={<TripImages />}></Route>

@@ -93,8 +93,12 @@ function ComplaintsList() {
                       <td className="px-3 py-2">{userID.name}</td>
                       <td className="px-3 py-2">{category}</td>
                       <td className="px-3 py-2">{status}</td>
-                      <td className="px-3 py-2">{dateFiled}</td>
-                      <td className="px-3 py-2">{dateReviewed}</td>
+                      <td className="px-3 py-2">
+                        {new Date(dateFiled).toLocaleDateString("en-GB")}
+                      </td>
+                      <td className="px-3 py-2">
+                        {new Date(dateReviewed).toLocaleDateString("en-GB")}
+                      </td>
                       <td className="px-6 py-4 flex space-x-3">
                         <Link
                           to={`/admin/complaints/respond/${_id}`}

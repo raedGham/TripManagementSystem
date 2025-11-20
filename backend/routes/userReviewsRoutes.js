@@ -1,19 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
-const upload = multer(); // For parsing multipart/form-data
 const {
-  newReview,
-  getReviews,
-  getReview,
-  deleteReview,
-  updateReview,
+  createReview,
+  getReviewsByTrip,
 } = require("../controllers/userReviewsController");
+const protect = require("../middleware/authMiddleware");
 
-router.post("/new", newReview);
-router.get("/", getReviews);
-router.get("/:id", getReview);
-router.delete("/:id", deleteReview);
-router.patch("/:id", upload.none(), updateReview);
+router.post("/", createReview); // submit review
+router.get("/:tripID", getReviewsByTrip); // fetch trip reviews
 
 module.exports = router;

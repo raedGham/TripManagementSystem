@@ -44,7 +44,10 @@ const newReservation = asyncHandler(async (req, res) => {
 //  G E T A L L   R E S E R V A T I O N S
 // --------------------------------------------------------------------
 const getReservations = asyncHandler(async (req, res) => {
-  const reservations = await Reservation.find().populate("tripID");
+  const reservations = await Reservation.find()
+    .populate("tripID")
+    .populate("userID");
+
   res.status(200).json(reservations);
 });
 
@@ -52,7 +55,9 @@ const getReservations = asyncHandler(async (req, res) => {
 //  G E T  S I N G L E   R E S E R V A T I O N
 // --------------------------------------------------------------------
 const getReservation = asyncHandler(async (req, res) => {
-  const reservation = await Reservation.findById(req.params.id).populate("tripID");
+  const reservation = await Reservation.findById(req.params.id).populate(
+    "tripID"
+  );
   if (!reservation) {
     response.status(400);
     throw new Error("Invalid reservation");
@@ -110,8 +115,7 @@ const deleteReservation = asyncHandler(async (req, res) => {
   res.status(200).json(reservation);
 });
 
-
-const updateResStatus =asyncHandler(async (req, res) => {
+const updateResStatus = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
@@ -122,7 +126,8 @@ const updateResStatus =asyncHandler(async (req, res) => {
       { new: true }
     );
 
-    if (!updated) return res.status(404).json({ message: "Reservation not found" });
+    if (!updated)
+      return res.status(404).json({ message: "Reservation not found" });
 
     res.json(updated);
   } catch (err) {

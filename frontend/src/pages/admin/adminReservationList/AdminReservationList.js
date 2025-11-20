@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectUserID,
+  selectName,
   selectIsLoggedIn,
 } from "../../../redux/features/auth/authSlice";
 import { fetchReservs } from "../../../redux/features/reservation/ReservationSlice";
 
 function AdminReservationList() {
   const dispatch = useDispatch();
-  const userID = useSelector(selectUserID);
+
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
@@ -16,7 +16,6 @@ function AdminReservationList() {
   }, [dispatch]);
 
   const { reserves } = useSelector((state) => state.reservation);
- 
 
   return (
     <div className="">
@@ -32,9 +31,7 @@ function AdminReservationList() {
             {!reserves && <p>Loading...</p>}
 
             {reserves.length === 0 ? (
-              <p className="text-gray-400 mt-2">
-                -- No Reservations Yet ....
-              </p>
+              <p className="text-gray-400 mt-2">-- No Reservations Yet ....</p>
             ) : (
               <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-200 mt-2">
                 <thead className="text-[11px] uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-200">
@@ -48,8 +45,7 @@ function AdminReservationList() {
                     <th className="px-6 py-3">Cost /Person</th>
                     <th className="px-6 py-3">No of People</th>
                     <th className="px-6 py-3">Total Cost</th>
-                    <th className="px-6 py-3">Reserv Status</th>                    
-                    <th className="p-[80px] py-3">Action</th>
+                    <th className="px-6 py-3">Reserv Status</th>
                   </tr>
                 </thead>
 
@@ -57,6 +53,7 @@ function AdminReservationList() {
                   {reserves.map((Reserv, index) => {
                     const {
                       _id,
+                      userID,
                       tripID,
                       numberOfPeople,
                       status,
@@ -71,17 +68,26 @@ function AdminReservationList() {
                         <td className="px-3 py-2">{index + 1}</td>
                         <td className="px-3 py-2">{userID.name}</td>
                         <td className="px-3 py-2">{tripID.title}</td>
-                        <td className="px-3 py-2">{reservationDate}</td>
-                        <td className="px-3 py-2">{tripID.startDate}</td>
-                        <td className="px-3 py-2">{tripID.endDate}</td>
+                        <td className="px-3 py-2">
+                          {new Date(reservationDate).toLocaleDateString(
+                            "en-GB"
+                          )}
+                        </td>
+                        <td className="px-3 py-2">
+                          {new Date(tripID.startDate).toLocaleDateString(
+                            "en-GB"
+                          )}
+                        </td>
+                        <td className="px-3 py-2">
+                          {new Date(tripID.endDate).toLocaleDateString("en-GB")}
+                        </td>
                         <td className="px-3 py-2">{tripID.pricePerPerson}</td>
                         <td className="px-3 py-2">{numberOfPeople}</td>
                         <td className="px-3 py-2">
                           {tripID.pricePerPerson * numberOfPeople}
                         </td>
-                        <td className="px-3 py-2">{status}</td>                                              
-                     </tr>
-
+                        <td className="px-3 py-2">{status}</td>
+                      </tr>
                     );
                   })}
                 </tbody>

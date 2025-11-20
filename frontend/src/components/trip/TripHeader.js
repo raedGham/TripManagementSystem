@@ -40,10 +40,12 @@ function TripHeader({ tripID }) {
                   {demographic}
                 </p>
                 <p>
-                  <span className="text-gray-400">Start Date:</span> {startDate}
+                  <span className="text-gray-400">Start Date:</span>{" "}
+                  {new Date(startDate).toLocaleDateString("en-GB")}
                 </p>
                 <p>
-                  <span className="text-gray-400">End Date:</span> {endDate}
+                  <span className="text-gray-400">End Date:</span>{" "}
+                  {new Date(endDate).toLocaleDateString("en-GB")}
                 </p>
                 <p>
                   <span className="text-gray-400">Price / Person:</span>{" "}
@@ -56,7 +58,7 @@ function TripHeader({ tripID }) {
               </div>
 
               {/* Third column: thumbnail */}
-              <div className="flex justify-center items-center">                
+              <div className="flex justify-center items-center">
                 <img
                   src={`${BACKEND_URL}/${thumbnail}`}
                   alt="Thumbnail"

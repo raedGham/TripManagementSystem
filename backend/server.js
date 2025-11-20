@@ -7,14 +7,14 @@ const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/errorMiddleware");
 const path = require("path");
 const userRoutes = require("./routes/userRoutes");
-const userFavoritesRoute = require("./routes/userFavoritesRoutes");
 const userComplaintsRoutes = require("./routes/userComplaintsRoutes");
 const tripRoutes = require("./routes/tripRoutes");
 const transportationRoutes = require("./routes/transportationRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const activitiesRoutes = require("./routes/activitiesRoutes");
-
+const userReviewRoutes = require("./routes/userReviewsRoutes");
+const userFavoritesRoute = require("./routes/userFavoritesRoutes");
 const crypto = require("crypto");
 const fs = require("fs");
 
@@ -40,6 +40,7 @@ app.use("/api/transportation", transportationRoutes);
 app.use("/api/reservation", reservationRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/activities", activitiesRoutes);
+app.use("/api/reviews", userReviewRoutes);
 
 const PORT = process.env.PORT || 5000;
 

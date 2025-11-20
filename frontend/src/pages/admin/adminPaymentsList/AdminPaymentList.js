@@ -1,26 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BACKEND_URL } from "../../services/tripService";
-import {
-  selectUserID,
-  selectIsLoggedIn,
-} from "../../redux/features/auth/authSlice";
 
-import { fetchPayments } from "../../redux/features/payment/paymentSlice";
+import { selectIsLoggedIn } from "../../../redux/features/auth/authSlice";
+
+import { fetchPayments } from "../../../redux/features/payment/paymentSlice";
 
 function PaymentsList() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
-  const currUserID = useSelector(selectUserID);
 
   useEffect(() => {
     dispatch(fetchPayments());
   }, [dispatch]);
 
   const { payments } = useSelector((state) => state.payment);
-  const userPayments = payments.filter(
-    (r) => r.reservationID.userID?._id === currUserID
-  );
 
   console.log(payments);
   return (
@@ -29,14 +22,14 @@ function PaymentsList() {
         <div className="w-full rounded-lg shadow p-14 mt-7">
           <div className="flex">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-2 mr-4 pt-2">
-              My Payments
+              Payments List
             </h1>
           </div>
 
           <div className="overflow-x-auto">
-            {!userPayments && <p>Loading...</p>}
+            {!payments && <p>Loading...</p>}
 
-            {userPayments?.length === 0 ? (
+            {payments?.length === 0 ? (
               <p className="text-gray-400 mt-2">
                 -- You didn't pay anything yet ....
               </p>
@@ -45,17 +38,17 @@ function PaymentsList() {
                 <thead className="text-[11px] uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-200">
                   <tr>
                     <th className="px-6 py-3">S/N</th>
+                    <th className="px-6 py-3">User Name</th>
                     <th className="px-6 py-3">Trip Title</th>
                     <th className="px-6 py-3">Reservation Date</th>
                     <th className="px-6 py-3">Payment Date</th>
                     <th className="px-6 py-3">Amount Paid</th>
                     <th className="px-6 py-3">Payment Method</th>
-                    <th className="px-6 py-3">Thumbnail</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  {userPayments?.map((payment, index) => {
+                  {payments?.map((payment, index) => {
                     const {
                       _id,
                       reservationID,
@@ -67,7 +60,8 @@ function PaymentsList() {
                     // Safely extract nested data
                     const trip = reservationID?.tripID;
                     const title = trip?.title;
-                    const thumbnail = trip?.thumbnail;
+                    const userID = reservationID?.userID;
+                    const username = userID?.name;
                     const reservationDate = reservationID?.reservationDate;
 
                     return (
@@ -76,6 +70,7 @@ function PaymentsList() {
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
                       >
                         <td className="px-3 py-2">{index + 1}</td>
+                        <td className="px-3 py-2">{username}</td>
                         <td className="px-3 py-2">{title}</td>
                         <td className="px-3 py-2">
                           {new Date(reservationDate).toLocaleDateString(
@@ -87,16 +82,6 @@ function PaymentsList() {
                         </td>
                         <td className="px-3 py-2">{amount}</td>
                         <td className="px-3 py-2">{paymentMethod}</td>
-
-                        <td className="px-3 py-2">
-                          <div className="rounded shadow-sm p-0 relative">
-                            <img
-                              src={`${BACKEND_URL}/${thumbnail}`}
-                              alt={thumbnail || "Trip Image"}
-                              className="w-auto h-32 object-cover rounded"
-                            />
-                          </div>
-                        </td>
                       </tr>
                     );
                   })}

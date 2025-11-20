@@ -18,7 +18,7 @@ function UserReservationList() {
   }, [dispatch]);
 
   const { reserves } = useSelector((state) => state.reservation);
-  const userReserves = reserves.filter((r) => r.userID === userID);
+  const userReserves = reserves.filter((r) => r.userID._id === userID);
 
   return (
     <div className="">
@@ -72,9 +72,19 @@ function UserReservationList() {
                       >
                         <td className="px-3 py-2">{index + 1}</td>
                         <td className="px-3 py-2">{tripID.title}</td>
-                        <td className="px-3 py-2">{reservationDate}</td>
-                        <td className="px-3 py-2">{tripID.startDate}</td>
-                        <td className="px-3 py-2">{tripID.endDate}</td>
+                        <td className="px-3 py-2">
+                          {new Date(reservationDate).toLocaleDateString(
+                            "en-GB"
+                          )}
+                        </td>
+                        <td className="px-3 py-2">
+                          {new Date(tripID.startDate).toLocaleDateString(
+                            "en-GB"
+                          )}
+                        </td>
+                        <td className="px-3 py-2">
+                          {new Date(tripID.endDate).toLocaleDateString("en-GB")}
+                        </td>
                         <td className="px-3 py-2">{tripID.pricePerPerson}</td>
                         <td className="px-3 py-2">{numberOfPeople}</td>
                         <td className="px-3 py-2">
@@ -92,20 +102,25 @@ function UserReservationList() {
                           <div className="rounded shadow-sm p-0 relative"></div>
                         </td>
                         <td>
-
-                        <Link
-                          to={status === "completed" ? "#" : `/payment/new/${_id}`}
-                          onClick={(e) => status === "completed" && e.preventDefault()}
-                          className={`mt-1 ml-12 px-12 py-2 rounded-lg transition duration-200 shadow
+                          <Link
+                            to={
+                              status === "completed"
+                                ? "#"
+                                : `/payment/new/${_id}`
+                            }
+                            onClick={(e) =>
+                              status === "completed" && e.preventDefault()
+                            }
+                            className={`mt-1 ml-12 px-12 py-2 rounded-lg transition duration-200 shadow
                             ${
                               status === "completed"
                                 ? "bg-gray-400 cursor-not-allowed text-gray-700"
                                 : "bg-[#701414] text-white dark:hover:bg-[#9c4343]"
                             }
                           `}
-                        >
-                          Pay
-                        </Link>
+                          >
+                            Pay
+                          </Link>
                         </td>
                       </tr>
                     );

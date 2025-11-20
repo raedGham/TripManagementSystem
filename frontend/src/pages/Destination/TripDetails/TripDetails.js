@@ -10,13 +10,14 @@ import DetailActivities from "../TripDetails/DetailActivities";
 import DetailTransportation from "../TripDetails/DetailTransportation";
 import { selectIsLoggedIn } from "../../../redux/features/auth/authSlice";
 import Feedback from "../Feedback";
-
+import { selectUserID } from "../../../redux/features/auth/authSlice";
 //import RateTrip from "./RateTrip";
 
 function TripDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userID = useSelector((state) => state.auth.userID);
   const { trip, isLoading, isError, message } = useSelector(
     (state) => state.trip
   );
@@ -124,7 +125,7 @@ function TripDetails() {
               Reserve Trip
             </Link>
           </div>
-          <Feedback />
+          <Feedback tripID={trip._id} userID={userID} />
         </>
       )}
     </div>

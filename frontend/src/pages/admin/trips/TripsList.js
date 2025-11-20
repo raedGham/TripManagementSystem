@@ -168,8 +168,13 @@ const TripsList = () => {
                     <td className="px-3 py-2">{title}</td>
                     <td className="px-3 py-2">{destination}</td>
                     <td className="px-3 py-2">{demographic}</td>
-                    <td className="px-3 py-2">{startDate}</td>
-                    <td className="px-3 py-2">{endDate}</td>
+                    <td className="px-3 py-2">
+                      {" "}
+                      {new Date(startDate).toLocaleDateString("en-GB")}
+                    </td>
+                    <td className="px-3 py-2">
+                      {new Date(endDate).toLocaleDateString("en-GB")}
+                    </td>
                     <td className="px-3 py-2">{pricePerPerson}</td>
                     <td className="px-3 py-2">{organizerID.name}</td>
 

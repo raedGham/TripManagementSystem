@@ -168,8 +168,12 @@ const ActivitiesList = () => {
                       <td className="px-3 py-2">{index + 1}</td>
                       <td className="px-3 py-2">{name}</td>
                       <td className="px-3 py-2">{description}</td>
-                      <td className="px-3 py-2">{startDate}</td>
-                      <td className="px-3 py-2">{finishDate}</td>
+                      <td className="px-3 py-2">
+                        {new Date(startDate).toLocaleDateString("en-GB")}
+                      </td>
+                      <td className="px-3 py-2">
+                        {new Date(finishDate).toLocaleDateString("en-GB")}
+                      </td>
                       <td className="px-3 py-2">{capacity}</td>
                       <td className="px-3 py-2">{costPerPerson}</td>
 
