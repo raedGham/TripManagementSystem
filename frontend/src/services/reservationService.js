@@ -46,8 +46,10 @@ const getReservs = async () => {
 //    G E T  S I N G L E   R E S E R V A T I O N
 //----------------------------------------------------
 export const getReserv = async (id) => {
+  console.log("GET SINGLE RESERV")
   console.log(`${API_URL}/${id}`);
   const reponse = await axios.get(API_URL + "/" + id);
+  console.log("RESRVATION SERVICE GETRESERV:", reponse)
   return reponse.data;
 };
 
@@ -89,12 +91,20 @@ export const updateReserv = async (id, reservData) => {
   }
 };
 
+
+export const updateStatus = async (id, status) => {
+  const res = await axios.patch(API_URL + "/status/" + id, { status });
+  return res.data;
+};
+
+
 const reservService = {
   registerReserv,
   getReservs,
   getReserv,
   deleteReserv,
   updateReserv,
+  updateStatus,
 };
 
 export default reservService;

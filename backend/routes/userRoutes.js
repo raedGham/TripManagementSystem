@@ -8,6 +8,7 @@ const {
   getUsers,
   loginStatus,
   updateUser,
+  updateType,
   changePassword,
   forgotPassword,
 } = require("../controllers/userController"); // ctrl + spacebar
@@ -24,5 +25,6 @@ router.patch("/updateuser", protect, updateUser);
 router.patch("/changepass", protect, changePassword);
 router.post("/forgotpassword", forgotPassword);
 router.delete("/:id", deleteUser);
+router.patch("/:id/type", updateType);
 
 module.exports = router;

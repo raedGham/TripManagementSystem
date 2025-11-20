@@ -301,6 +301,34 @@ const forgotPassword = asyncHandler(async (req, res) => {
   }
 });
 
+
+// --------------------------------------------------------------------
+// U P D A T E  U S E R  T Y P E  
+// --------------------------------------------------------------------
+
+const updateType = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { type } = req.body;
+
+    if (!["normal", "superuser", "organizer"].includes(type)) {
+      return res.status(400).json({ message: "Invalid user type" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { type },
+      { new: true }
+    );
+
+    if (!updatedUser) return res.status(404).json({ message: "User not found" });
+
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = {
   registerUser,
   loginUser,
@@ -310,6 +338,7 @@ module.exports = {
   getUsers,
   loginStatus,
   updateUser,
+  updateType,
   changePassword,
   forgotPassword,
 };

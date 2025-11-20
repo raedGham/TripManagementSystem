@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { validateEmail } from "../../services/authService";
 import { registerUser } from "../../services/authService";
 import { useDispatch } from "react-redux";
-import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authSlice";
+import { SET_LOGIN, SET_NAME, SET_EMAIL, SET_ID, SET_TYPE } from "../../redux/features/auth/authSlice";
 import Loader from "../../components/loader/Loader";
 import logo from "../../assets/Logo.png";
 
@@ -54,8 +54,11 @@ function Register() {
     try {
       const data = await registerUser(userData);
       // console.log(data)
-      await dispatch(SET_LOGIN(true));
-      await dispatch(SET_NAME(data.name));
+         await dispatch(SET_LOGIN(true));
+         await dispatch(SET_NAME(data.name));
+         await dispatch(SET_EMAIL(data.email));
+         await dispatch(SET_ID(data._id));
+         await dispatch(SET_TYPE(data.type));
       navigate("/main");
       setIsLoading(false);
     } catch (error) {

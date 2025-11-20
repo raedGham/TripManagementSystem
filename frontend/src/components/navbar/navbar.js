@@ -6,6 +6,7 @@ import {
   selectName,
   selectEmail,
   selectIsLoggedIn,
+  selectType,
 } from "../../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,6 +18,7 @@ export default function Navbar() {
 
   const name = useSelector(selectName);
   const email = useSelector(selectEmail);
+  const type = useSelector(selectType);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const adminRef = useRef(null);
@@ -76,7 +78,8 @@ export default function Navbar() {
           </li>
 
           {/* Admin Dropdown */}
-          {isLoggedIn && (
+          {console.log(type)}
+          {type==="superuser" && (
             <li className="relative" ref={adminRef}>
               <button
                 onClick={() => {

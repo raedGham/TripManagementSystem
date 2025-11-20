@@ -166,3 +166,13 @@ export const ChangePassword = async (userData) => {
   );
   return reponse.data;
 };
+
+
+
+//----------------------------------------------------
+//    U P D A T E   U S E R   T Y PE 
+//----------------------------------------------------
+export const updateUserType = async (id, type) => {
+  const res = await axios.patch(`${BACKEND_URL}/api/users/${id}/type`, { type }, { withCredentials: true });
+  return res.data;
+};

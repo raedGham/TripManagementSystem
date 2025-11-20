@@ -6,13 +6,20 @@ const { response } = require("express");
 //  N E W   P A Y M E N T
 // --------------------------------------------------------------------
 const newPayment = asyncHandler(async (req, res) => {
-  const {reservationID}  = req.params
+
   
   const {
     paymentDate,
     amount,
     paymentMethod,  
+    reservationID,
   } = req.body;
+  
+  console.log("NEW PAYMENT CONTROLLER")
+  console.log("reservationID", reservationID)
+  console.log("paymentDate", paymentDate)
+  console.log("paymentMethod", paymentMethod)
+  console.log("amount", amount)
 
   // validation
   if (!paymentDate || !amount || !paymentMethod || !reservationID ) {
@@ -53,7 +60,13 @@ const newPayment = asyncHandler(async (req, res) => {
 //  G E T A L L   P A Y M E N T S
 // --------------------------------------------------------------------
 const getPayments = asyncHandler(async (req, res) => {
-  const payments = await Payment.find().sort("startDate");
+  const payments = await Payment.find().populate({
+        path: "reservationID",
+        populate: {
+          path: "tripID",
+          model: "Trip"
+        }
+      });
   res.status(200).json(payments);
 });
 

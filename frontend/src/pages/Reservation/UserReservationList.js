@@ -92,12 +92,20 @@ function UserReservationList() {
                           <div className="rounded shadow-sm p-0 relative"></div>
                         </td>
                         <td>
-                          <Link
-                            to={`/payment/new/${_id}`}
-                            className="mt-1 ml-12 px-12 py-2   bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
-                          >
-                            Pay
-                          </Link>
+
+                        <Link
+                          to={status === "completed" ? "#" : `/payment/new/${_id}`}
+                          onClick={(e) => status === "completed" && e.preventDefault()}
+                          className={`mt-1 ml-12 px-12 py-2 rounded-lg transition duration-200 shadow
+                            ${
+                              status === "completed"
+                                ? "bg-gray-400 cursor-not-allowed text-gray-700"
+                                : "bg-[#701414] text-white dark:hover:bg-[#9c4343]"
+                            }
+                          `}
+                        >
+                          Pay
+                        </Link>
                         </td>
                       </tr>
                     );

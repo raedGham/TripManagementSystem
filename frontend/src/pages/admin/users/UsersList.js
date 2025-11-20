@@ -7,6 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Search from "../../../components/search/Search";
+import { updateUserType } from "../../../services/authService";
+import {toast} from "react-toastify";
+
 import {
   FILTER_USERS,
   selectFilteredUsers,
@@ -88,6 +91,18 @@ const UsersList = () => {
     dispatch(FILTER_USERS({ users, search }));
   }, [users, search, dispatch]);
 
+
+const handleChangeType = async (userId, newType) => {
+    try {
+      const updated = await updateUserType(userId, newType);
+      dispatch(fetchUsers());
+       toast.success(`Updated user type to ${updated.type}`);
+      // Optionally update local state or refetch users
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div className="w-full rounded-lg shadow  mt-12 p-6">
       <div className="flex">
@@ -143,15 +158,35 @@ const UsersList = () => {
                     <td className="px-3 py-2">{index + 1}</td>
                     <td className="px-3 py-2">{name}</td>
                     <td className="px-3 py-2">{email}</td>
-                    <td className="px-3 py-2">{type}</td>
                     {name !== "admin" ? (
+                      <>
+                    <td>
+                      <select
+                        value={type}
+                        onChange={(e) => handleChangeType(_id, e.target.value)}
+                          className="
+                                        px-2 py-1 
+                                        rounded-lg 
+                                        border border-gray-300 
+                                        dark:border-gray-600 
+                                        bg-white dark:bg-gray-700 
+                                        text-gray-900 dark:text-gray-200 
+                                        focus:outline-none 
+                                        focus:ring-2 focus:ring-blue-500 
+                                        focus:border-blue-500
+                                      "
+                      >
+                        <option value="normal">Normal</option>
+                        <option value="superuser">Superuser</option>
+                        <option value="organizer">Organizer</option>
+                      </select>
+                    </td>
+
+
+                    
+                   
                       <td className="px-6 py-4 flex space-x-3">
-                        <Link to={`/users/${_id}`}>
-                          <FaEdit
-                            size={20}
-                            className="text-green-600 hover:text-green-800"
-                          />
-                        </Link>
+                      
                         <button onClick={() => confirmDelete(_id)}>
                           <FaTrashAlt
                             size={18}
@@ -159,6 +194,7 @@ const UsersList = () => {
                           />
                         </button>
                       </td>
+                      </>
                     ) : (
                       <td></td>
                     )}

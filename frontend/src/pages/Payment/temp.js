@@ -1,26 +1,38 @@
-import logo from "../../assets/Logo.png";
-import { selectName, selectUser } from "../../redux/features/auth/authSlice";
-import { useSelector } from "react-redux";
-import { getTrip } from "../../redux/features/trips/tripSlice";
-import { useEffect } from "react";
+    <PaymentForm
+      paymentDate={paymentDate}
+      amount={amount}
+      paymentMethod={paymentMethod}
+      reserv={reserv}
+      handleInputChange={handleInputChange}
+      addPaym={addPaym}
+      formTitle={"Add Payment"}
+      isLoading={isPaymentLoading}
+      isLoadingReserv={isLoadingReserv}
+    />
 
-function PaymentForm({
-  paymentDate,
-  amount,
-  paymentMethod,
-  reserv,
-  handleInputChange,
-  addPaym,
-  formTitle,
-}) {
 
-  const namewithquotes = localStorage.getItem("name");
+      // to calculate total price
+  useEffect(() => {
+    
+    if (reserv) {
+      const total = reserv.tripID.pricePerPerson * reserv.numberOfPeople || 0;
+      console.log("Calculated total:", total);
+
+      setFormData((prev) => ({
+        ...prev,
+        amount: total,
+      }));
+    }
+  }, [reserv]);
+
+
+
+   const namewithquotes = localStorage.getItem("name");
   const name = namewithquotes.replace(/"/g, "");
   const emailWithQuotes = localStorage.getItem("email");
   const email = emailWithQuotes.replace(/"/g, "");
- 
 
-  return (
+
       <section className="">
       <div className="flex flex-col items-center justify-center px-6 md:h-screen lg:py-0">
         <a
@@ -174,7 +186,3 @@ function PaymentForm({
         </div>
       </div>
     </section>
-  );
-}
-
-export default PaymentForm;

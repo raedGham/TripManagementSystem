@@ -9,10 +9,11 @@ const API_URL = `${BACKEND_URL}/api/payment`;
 //----------------------------------------------------
 export const registerPayment = async (paymentData) => {
   try {
+    console.log("SERVICE paymentData:", paymentData)
     const formData = new FormData();
     formData.append("paymentDate", paymentData.paymentDate);
     formData.append("amount", paymentData.amount);
-    formData.append("payementMethod", paymentData.payementMethod);
+    formData.append("paymentMethod", paymentData.paymentMethod);
     formData.append("reservationID", paymentData.reservationID);
 
     const response = await axios.post(

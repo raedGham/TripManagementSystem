@@ -9,9 +9,9 @@ const paymentSchema = mongoose.Schema(
 
     },    
 
-    numberOfPeople: {
+    amount: {
       type: Number,
-      default: 1,
+      required: [true, "Please enter amount"],
     },
 
     paymentMethod: {

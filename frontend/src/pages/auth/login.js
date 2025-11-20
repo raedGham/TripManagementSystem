@@ -9,6 +9,7 @@ import {
   SET_NAME,
   SET_EMAIL,
   SET_ID,
+  SET_TYPE,
 } from "../../redux/features/auth/authSlice";
 import logo from "../../assets/Logo.png";
 
@@ -56,6 +57,7 @@ function Login() {
       await dispatch(SET_NAME(data.name));
       await dispatch(SET_EMAIL(data.email));
       await dispatch(SET_ID(data._id));
+       await dispatch(SET_TYPE(data.type));
       navigate("/destinations");
       setIsLoading(false);
     } catch (error) {

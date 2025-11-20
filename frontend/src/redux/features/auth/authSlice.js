@@ -132,6 +132,10 @@ const authSlice = createSlice({
     SET_ID(state, action) {
       state.userID = action.payload;
     },
+    SET_TYPE(state, action) {
+      state.type = action.payload;  
+    },
+
     SAVE_USER(state, action) {
       const profile = action.payload;
       state.user.name = profile.name;
@@ -227,12 +231,13 @@ const authSlice = createSlice({
   },
 });
 
-export const { SET_LOGIN, SET_NAME, SAVE_USER, SET_EMAIL, SET_ID } =
+export const { SET_LOGIN, SET_NAME, SAVE_USER, SET_EMAIL, SET_ID, SET_TYPE } =
   authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectName = (state) => state.auth.name;
 export const selectEmail = (state) => state.auth.email;
 export const selectUserID = (state) => state.auth.userID;
+export const selectType = (state) => state.auth.type;
 
 export default authSlice.reducer;

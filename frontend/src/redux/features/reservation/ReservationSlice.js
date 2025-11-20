@@ -52,11 +52,12 @@ export const deleteReserv = createAsyncThunk(
 );
 
 // get a single reservation
-export const getReserv = createAsyncThunk(
+export const getReservation = createAsyncThunk(
   "reservation/getReserv",
+  
   async (reservationID, thunkAPI) => {
     try {
-      console.log("IN SLICE");
+      console.log("THUNK CALLED with:", reservationID);  
       return await reservService.getReserv(reservationID);
     } catch (error) {
       const message =
@@ -130,12 +131,12 @@ const reservationSlice = createSlice({
       })
 
       // getreserv  in progress case
-      .addCase(getReserv.pending, (state) => {
+      .addCase(getReservation.pending, (state) => {
         state.isLoading = true;
         console.log("IN SLICE PENDING");
       })
       // get reserv sucessfull  case
-      .addCase(getReserv.fulfilled, (state, action) => {
+      .addCase(getReservation.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
@@ -143,7 +144,7 @@ const reservationSlice = createSlice({
         console.log("IN SLICE FULFIL");
       })
       //  error getting reserv case
-      .addCase(getReserv.rejected, (state, action) => {
+      .addCase(getReservation.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
