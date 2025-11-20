@@ -99,7 +99,7 @@ export default function Navbar() {
                       className="block px-4 py-2 hover:bg-gray-100"
                       onClick={() => setOpenAdmin(false)}
                     >
-                      Users
+                      Manage Users
                     </Link>
                   </li>
                   <li>
@@ -108,7 +108,7 @@ export default function Navbar() {
                       className="block px-4 py-2 hover:bg-gray-100"
                       onClick={() => setOpenAdmin(false)}
                     >
-                      Trips
+                      Add Trips
                     </Link>
                   </li>
                   <li>
@@ -118,6 +118,15 @@ export default function Navbar() {
                       onClick={() => setOpenAdmin(false)}
                     >
                       Complaint Reponses
+                    </Link>
+                  </li>
+
+                     <li>
+                    <Link
+                      to="/admin/adminReservationList"
+                      className="block px-4 py-2 hover:bg-gray-100"                      
+                    >
+                      Reservations List
                     </Link>
                   </li>
                 </ul>

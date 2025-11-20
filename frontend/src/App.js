@@ -29,6 +29,8 @@ import ComplaintsList from "./pages/Complaints/ComplaintsList";
 import AddComplaint from "./pages/Complaints/AddComplaint";
 import AdminComplaintList from "./pages/admin/complaintResponse/AdminComplaintsList";
 import AddResponse from "./pages/admin/complaintResponse/AddResponse";
+import AdminReservationList from "./pages/admin/adminReservationList/AdminReservationList";
+
 function App() {
   return (
     <BrowserRouter>
@@ -42,6 +44,8 @@ function App() {
           <Route path="/admin/trips/new" element={<AddTrip />}></Route>
           <Route path="/admin/trips/:id" element={<EditTrip />}></Route>
           <Route path="/admin/trips" element={<TripsList />}></Route>
+          
+          <Route path="/admin/adminReservationList" element={<AdminReservationList/>}></Route>
           <Route
             path="/admin/trips/trip-info/:id"
             element={<TripInfo />}
