@@ -69,7 +69,7 @@ const getReservation = asyncHandler(async (req, res) => {
 //  U P D A T E   R E S E R V A T I O N
 // --------------------------------------------------------------------
 const updateReservation = asyncHandler(async (req, res) => {
-  const { numberOfPeople, status, tripID, userID } = req.body;
+  const { reservationDate, numberOfPeople, status, tripID, userID } = req.body;
 
   const reservation = await Reservation.findById(req.params.id);
 
@@ -114,6 +114,10 @@ const deleteReservation = asyncHandler(async (req, res) => {
   }
   res.status(200).json(reservation);
 });
+
+// --------------------------------------------------------------------
+//  U P D A T E    R E S E R V A T I O N  S T A T U S
+// --------------------------------------------------------------------
 
 const updateResStatus = asyncHandler(async (req, res) => {
   try {
