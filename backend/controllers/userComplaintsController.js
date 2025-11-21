@@ -66,13 +66,13 @@ const getComplaint = asyncHandler(async (req, res) => {
 const updateComplaint = asyncHandler(async (req, res) => {
   console.log("UPDATE COMPLAINT CONTROLLER");
   const {
-    userID,
     supervisorID,
     category,
     status,
     dateFiled,
+    complaintText,
     dateReviewed,
-    responseText,
+   
   } = req.body;
 
   const complaint = await Complaint.findById(req.params.id);
@@ -87,11 +87,11 @@ const updateComplaint = asyncHandler(async (req, res) => {
   const updatedComplaint = await Complaint.findByIdAndUpdate(
     { _id: req.params.id },
     {
-      userID,
+      
       supervisorID,
       status,
       dateReviewed,
-      responseText,
+      complaintText,
     },
     {
       new: true,

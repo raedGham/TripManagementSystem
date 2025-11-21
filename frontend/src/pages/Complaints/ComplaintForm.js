@@ -125,7 +125,7 @@ function ComplaintForm({
                     htmlFor="complaintText"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Status
+                    Complaint Text
                   </label>
                   <textarea
                     value={complaintText}

@@ -64,14 +64,7 @@ const deleteComplaint = async (id) => {
 
 export const updateComplaint = async (id, complaintData) => {
   try {
-    const formData = new FormData();
-    formData.append("userID", complaintData.userID);
-    formData.append("status", complaintData.status);
-    formData.append("complaintText", complaintData.complaintText);
-    formData.append("category", complaintData.category);
-    formData.append("dateFiled", complaintData.dateFiled);
-
-    const response = await axios.put(`${API_URL}/${id}`, formData, {
+   const response = await axios.patch(`${API_URL}/${id}`, complaintData, {
       withCredentials: true,
     });
 

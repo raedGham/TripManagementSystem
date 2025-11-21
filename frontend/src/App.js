@@ -27,6 +27,7 @@ import UserReservationList from "./pages/Reservation/UserReservationList";
 import ChangePass from "./pages/auth/changepass";
 import ComplaintsList from "./pages/Complaints/ComplaintsList";
 import AddComplaint from "./pages/Complaints/AddComplaint";
+import EditComplaint from "./pages/Complaints/EditComplaint";
 import AdminComplaintList from "./pages/admin/complaintResponse/AdminComplaintsList";
 import AddResponse from "./pages/admin/complaintResponse/AddResponse";
 import AdminReservationList from "./pages/admin/adminReservationList/AdminReservationList";
@@ -97,6 +98,10 @@ function App() {
           <Route
             path="/complaint/new/:userID"
             element={<AddComplaint />}
+          ></Route>
+             <Route
+            path="/complaint/:id"
+            element={<EditComplaint />}
           ></Route>
           ;
         </Routes>

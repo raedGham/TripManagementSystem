@@ -10,7 +10,7 @@ const initialState = {
   message: "",
 };
 
-// GET ALL PAYMENTS
+// GET ALL COMPLAINTS
 export const fetchComplaints = createAsyncThunk(
   "Complaints/getAll",
   async (_, thunkAPI) => {
@@ -29,7 +29,7 @@ export const fetchComplaints = createAsyncThunk(
   }
 );
 
-// DELETE A PAYMENT
+// DELETE A COMPLAINT
 
 export const deleteComplaint = createAsyncThunk(
   "Complaints/delete",
@@ -50,7 +50,7 @@ export const deleteComplaint = createAsyncThunk(
   }
 );
 
-// get a single complaintation
+// get a single complaint
 export const getComplaint = createAsyncThunk(
   "Complaints/getComplaint",
   async (id, thunkAPI) => {
@@ -69,12 +69,13 @@ export const getComplaint = createAsyncThunk(
   }
 );
 
-// UPDATE A PAYMENT
+// UPDATE A COMPLAINT
 
 export const updateComplaint = createAsyncThunk(
   "Complaints/updateComplaint",
   async ({ id, formData }, thunkAPI) => {
     try {
+  
       return await complaintService.updateComplaint(id, formData);
     } catch (error) {
       const message =

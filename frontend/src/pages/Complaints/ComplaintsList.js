@@ -149,7 +149,7 @@ function ComplaintsList() {
                         {new Date(dateReviewed).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4 flex space-x-3">
-                        <Link to={`/complaints/${_id}`}>
+                        <Link to={`/complaint/${_id}`}>
                           <FaEdit
                             size={20}
                             className="text-green-600 hover:text-green-800"
@@ -181,7 +181,7 @@ function ComplaintsList() {
 
                     {/* Row 3: response */}
                     <tr
-                      key={`${_id}-complaint`}
+                      key={`${_id}-complaint1`}
                       className="bg-gray-50 dark:bg-gray-900 border-b dark:border-gray-700"
                     >
                       <td
