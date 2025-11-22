@@ -42,7 +42,8 @@ function Feedback({ tripID, userID }) {
       <RatingFeedback onSubmit={handleReview} />
 
       {/* Reviews */}
-      <div className="w-full max-w-2xl bg-gray-800 p-6 rounded-lg space-y-4">
+
+      <div className="w-full max-w-3xl bg-gray-800/60 p-6 rounded-lg space-y-4">
         <h2 className="text-xl font-semibold text-gray-200">Reviews</h2>
 
         {reviews.length === 0 && (

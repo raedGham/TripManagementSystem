@@ -13,15 +13,13 @@ function PaymentForm({
   addPaym,
   formTitle,
 }) {
-
   const namewithquotes = localStorage.getItem("name");
   const name = namewithquotes.replace(/"/g, "");
   const emailWithQuotes = localStorage.getItem("email");
   const email = emailWithQuotes.replace(/"/g, "");
- 
 
   return (
-      <section className="">
+    <section className="">
       <div className="flex flex-col items-center justify-center px-6 md:h-screen lg:py-0">
         <a
           href="#"
@@ -75,7 +73,7 @@ function PaymentForm({
                   <span className="font-semibold text-indigo-700 dark:text-indigo-300">
                     Reservation Date:
                   </span>{" "}
-                  {reserv.reservationDate}
+                  {new Date(reserv.reservationDate).toLocaleDateString("en-GB")}
                 </p>
               </div>
               <div>

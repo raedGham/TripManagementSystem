@@ -8,7 +8,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Search from "../../../components/search/Search";
 import { updateUserType } from "../../../services/authService";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 import {
   FILTER_USERS,
@@ -31,7 +31,7 @@ const UsersList = () => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ">
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 text-center">
               <h1 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                 Delete User
@@ -91,12 +91,11 @@ const UsersList = () => {
     dispatch(FILTER_USERS({ users, search }));
   }, [users, search, dispatch]);
 
-
-const handleChangeType = async (userId, newType) => {
+  const handleChangeType = async (userId, newType) => {
     try {
       const updated = await updateUserType(userId, newType);
       dispatch(fetchUsers());
-       toast.success(`Updated user type to ${updated.type}`);
+      toast.success(`Updated user type to ${updated.type}`);
       // Optionally update local state or refetch users
     } catch (error) {
       toast.error(error.message);
@@ -104,7 +103,7 @@ const handleChangeType = async (userId, newType) => {
   };
 
   return (
-    <div className="w-full rounded-lg shadow  mt-12 p-6">
+    <div className="w-full rounded-lg shadow  mt-12 ml-8 p-6">
       <div className="flex">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-2 mr-4 pt-2">
           Users List
@@ -160,11 +159,13 @@ const handleChangeType = async (userId, newType) => {
                     <td className="px-3 py-2">{email}</td>
                     {name !== "admin" ? (
                       <>
-                    <td>
-                      <select
-                        value={type}
-                        onChange={(e) => handleChangeType(_id, e.target.value)}
-                          className="
+                        <td>
+                          <select
+                            value={type}
+                            onChange={(e) =>
+                              handleChangeType(_id, e.target.value)
+                            }
+                            className="
                                         px-2 py-1 
                                         rounded-lg 
                                         border border-gray-300 
@@ -175,25 +176,21 @@ const handleChangeType = async (userId, newType) => {
                                         focus:ring-2 focus:ring-blue-500 
                                         focus:border-blue-500
                                       "
-                      >
-                        <option value="normal">Normal</option>
-                        <option value="superuser">Superuser</option>
-                        <option value="organizer">Organizer</option>
-                      </select>
-                    </td>
+                          >
+                            <option value="normal">Normal</option>
+                            <option value="superuser">Superuser</option>
+                            <option value="organizer">Organizer</option>
+                          </select>
+                        </td>
 
-
-                    
-                   
-                      <td className="px-6 py-4 flex space-x-3">
-                      
-                        <button onClick={() => confirmDelete(_id)}>
-                          <FaTrashAlt
-                            size={18}
-                            className="text-red-600 hover:text-red-800"
-                          />
-                        </button>
-                      </td>
+                        <td className="px-6 py-4 flex space-x-3">
+                          <button onClick={() => confirmDelete(_id)}>
+                            <FaTrashAlt
+                              size={18}
+                              className="text-red-600 hover:text-red-800"
+                            />
+                          </button>
+                        </td>
                       </>
                     ) : (
                       <td></td>

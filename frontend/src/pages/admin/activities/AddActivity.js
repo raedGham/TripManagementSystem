@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate , useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { registerActivity } from "../../../services/activityService";
 import { toast } from "react-toastify";
@@ -18,18 +18,11 @@ const initialState = {
 };
 
 const AddActivity = () => {
-  const {tripID}= useParams();
+  const { tripID } = useParams();
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    name,
-    description,
-    startDate,
-    finishDate,
-    capacity,
-    costPerPerson,   
-    
-  } = formData;
+  const { name, description, startDate, finishDate, capacity, costPerPerson } =
+    formData;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,19 +53,18 @@ const AddActivity = () => {
       startDate,
       finishDate,
       capacity,
-      costPerPerson,   
-      tripID,   
+      costPerPerson,
+      tripID,
     };
 
-    console.log(activitiyData)
- 
+    console.log(activitiyData);
 
     setIsLoading(true);
     // attemps to save the new activitiy
     try {
       const data = await registerActivity(activitiyData);
       toast.success("Activity Added Sucessfully");
-      navigate(`admin/activitiy/${tripID}`);
+      navigate(-1);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

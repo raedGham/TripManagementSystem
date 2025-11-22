@@ -12,7 +12,7 @@ export default function RatingFeedback({ onSubmit }) {
   };
 
   return (
-    <div className="w-full max-w-md bg-gray-800 p-6 rounded-xl shadow-lg space-y-4 text-gray-200">
+    <div className="w-full max-w-md bg-gray-800/60 p-6 rounded-xl shadow-lg space-y-4 text-gray-200">
       <h2 className="text-xl font-semibold">Leave Your Review</h2>
 
       {/* ⭐ Rating */}

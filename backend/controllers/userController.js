@@ -111,8 +111,8 @@ const loginUser = asyncHandler(async (req, res) => {
     const { _id, name, email, type } = user;
     res.status(200).json({ _id, name, email, type, token });
   } else {
-    res.status(400);
-    throw new Error("Invalid Email or Password");
+    res.status(400).json({ message: "Invalid Email or Password" });
+    // throw new Error("Invalid Email or Password");
   }
 });
 
@@ -234,7 +234,10 @@ const changePassword = asyncHandler(async (req, res) => {
     throw new Error("Please Add old and new password");
   }
   // check if old password is correct (= pass in db)
-  const passwordIsCorrect = await bcrypt.compare(currentPassword, user.password);
+  const passwordIsCorrect = await bcrypt.compare(
+    currentPassword,
+    user.password
+  );
 
   // save new Password to database
   if (user && passwordIsCorrect) {
@@ -242,7 +245,7 @@ const changePassword = asyncHandler(async (req, res) => {
     await user.save();
     res.status(200).send("Password changed sucessfully");
   } else {
-    return res.status(400).json({ message: "Current Password is incorrect" });    
+    return res.status(400).json({ message: "Current Password is incorrect" });
   }
 });
 
@@ -301,9 +304,8 @@ const forgotPassword = asyncHandler(async (req, res) => {
   }
 });
 
-
 // --------------------------------------------------------------------
-// U P D A T E  U S E R  T Y P E  
+// U P D A T E  U S E R  T Y P E
 // --------------------------------------------------------------------
 
 const updateType = asyncHandler(async (req, res) => {
@@ -321,7 +323,8 @@ const updateType = asyncHandler(async (req, res) => {
       { new: true }
     );
 
-    if (!updatedUser) return res.status(404).json({ message: "User not found" });
+    if (!updatedUser)
+      return res.status(404).json({ message: "User not found" });
 
     res.json(updatedUser);
   } catch (err) {

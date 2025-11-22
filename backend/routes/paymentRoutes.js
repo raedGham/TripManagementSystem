@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const protect = require("../middleware/authMiddleware");
 const upload = multer(); // For parsing multipart/form-data
 const {
   newPayment,
@@ -10,10 +11,10 @@ const {
   updatePayment,
 } = require("../controllers/paymentController");
 
-router.post("/new", upload.none(), newPayment);
+router.post("/new", protect, upload.none(), newPayment);
 router.get("/", getPayments);
 router.get("/:id", getPayment);
-router.delete("/:id", deletePayment);
-router.patch("/:id", upload.none(), updatePayment);
+router.delete("/:id", protect, deletePayment);
+router.patch("/:id", protect, upload.none(), updatePayment);
 
 module.exports = router;

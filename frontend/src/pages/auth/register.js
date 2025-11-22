@@ -4,7 +4,13 @@ import { toast } from "react-toastify";
 import { validateEmail } from "../../services/authService";
 import { registerUser } from "../../services/authService";
 import { useDispatch } from "react-redux";
-import { SET_LOGIN, SET_NAME, SET_EMAIL, SET_ID, SET_TYPE } from "../../redux/features/auth/authSlice";
+import {
+  SET_LOGIN,
+  SET_NAME,
+  SET_EMAIL,
+  SET_ID,
+  SET_TYPE,
+} from "../../redux/features/auth/authSlice";
 import Loader from "../../components/loader/Loader";
 import logo from "../../assets/Logo.png";
 
@@ -54,11 +60,11 @@ function Register() {
     try {
       const data = await registerUser(userData);
       // console.log(data)
-         await dispatch(SET_LOGIN(true));
-         await dispatch(SET_NAME(data.name));
-         await dispatch(SET_EMAIL(data.email));
-         await dispatch(SET_ID(data._id));
-         await dispatch(SET_TYPE(data.type));
+      await dispatch(SET_LOGIN(true));
+      await dispatch(SET_NAME(data.name));
+      await dispatch(SET_EMAIL(data.email));
+      await dispatch(SET_ID(data._id));
+      await dispatch(SET_TYPE(data.type));
       navigate("/main");
       setIsLoading(false);
     } catch (error) {
@@ -81,7 +87,7 @@ function Register() {
           />
           Travel Lebanon
         </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full bg-white/60 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800/60 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create a new Account

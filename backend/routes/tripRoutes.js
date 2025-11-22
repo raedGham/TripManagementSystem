@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../middleware/uploadTripImages");
 const uploadThumb = require("../middleware/uploadThumbnail");
+const protect = require("../middleware/authMiddleware");
 
 const {
   newTrip,
@@ -16,14 +17,14 @@ const {
 
 //image Routes
 
-router.post("/images/:id", upload.array("images", 10), addImages);
+router.post("/images/:id", protect, upload.array("images", 10), addImages);
 router.get("/images/:id", getImages);
-router.delete("/:tripId/images/:imageId", delImage);
+router.delete("/:tripId/images/:imageId", protect, delImage);
 
-router.post("/new", uploadThumb.single("thumbnail"), newTrip);
+router.post("/new", protect, uploadThumb.single("thumbnail"), newTrip);
 router.get("/", getTrips);
 router.get("/:id", getTrip);
-router.delete("/:id", deleteTrip);
-router.patch("/:id", upload.none(), updateTrip);
+router.delete("/:id", protect, deleteTrip);
+router.patch("/:id", protect, upload.none(), updateTrip);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const protect = require("../middleware/authMiddleware");
 const upload = multer(); // For parsing multipart/form-data
 const {
   newComplaint,
@@ -10,10 +11,10 @@ const {
   updateComplaint,
 } = require("../controllers/userComplaintsController");
 
-router.post("/new", upload.none(), newComplaint);
+router.post("/new", protect, upload.none(), newComplaint);
 router.get("/", getComplaints);
 router.get("/:id", getComplaint);
-router.delete("/:id", deleteComplaint);
-router.patch("/:id", upload.none(), updateComplaint);
+router.delete("/:id", protect, deleteComplaint);
+router.patch("/:id", protect, upload.none(), updateComplaint);
 
 module.exports = router;

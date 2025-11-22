@@ -75,7 +75,7 @@ function ComplaintsList() {
   };
   return (
     <div className="">
-      <div className="w-full rounded-lg shadow  p-14">
+      <div className="w-full rounded-lg shadow  p-14 ml-8">
         <div className="flex">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-2 mr-4 pt-2">
             User Complaints

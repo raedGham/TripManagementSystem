@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const protect = require("../middleware/authMiddleware");
 const upload = multer(); // For parsing multipart/form-data
 const {
   newFavorite,
@@ -10,10 +11,10 @@ const {
   updateFavorite,
 } = require("../controllers/userFavoritesController");
 
-router.post("/new", newFavorite);
+router.post("/new", protect, newFavorite);
 router.get("/", getFavorites);
 router.get("/:id", getFavorite);
-router.delete("/:id", deleteFavorite);
-router.patch("/:id", upload.none(), updateFavorite);
+router.delete("/:id", protect, deleteFavorite);
+router.patch("/:id", protect, upload.none(), updateFavorite);
 
 module.exports = router;

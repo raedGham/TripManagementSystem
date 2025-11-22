@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate , useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { registerTrans } from "../../../services/transService";
 import { toast } from "react-toastify";
@@ -20,7 +20,7 @@ const initialState = {
 };
 
 const AddTrans = () => {
-  const {tripID } = useParams()
+  const { tripID } = useParams();
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -31,7 +31,6 @@ const AddTrans = () => {
     departureDate,
     duration,
     costPerTrip,
-    
   } = formData;
 
   const dispatch = useDispatch();
@@ -74,7 +73,7 @@ const AddTrans = () => {
     try {
       const data = await registerTrans(transData);
       toast.success("Trans Added Sucessfully");
-      navigate(`admin/trans/${tripID}`);
+      navigate(-1);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

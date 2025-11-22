@@ -34,7 +34,7 @@ function TripDetails() {
   useEffect(() => {
     dispatch(fetchTranses());
     dispatch(fetchActivities());
-  }, [dispatch]);
+  }, [dispatch, trip]);
 
   if (isLoading) {
     return (

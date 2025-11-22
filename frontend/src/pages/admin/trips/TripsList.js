@@ -93,7 +93,7 @@ const TripsList = () => {
   }, [trips, search, dispatch]);
 
   return (
-    <div className="w-full rounded-lg shadow  mt-12 p-6">
+    <div className="w-full rounded-lg shadow  mt-12 ml-8 p-6">
       <div className="flex">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-2 mr-4 pt-2">
           Trips List
@@ -162,7 +162,7 @@ const TripsList = () => {
                 return (
                   <tr
                     key={_id}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+                    className="bg-white border-b dark:bg-gray-800/60 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
                   >
                     <td className="px-3 py-2">{index + 1}</td>
                     <td className="px-3 py-2">{title}</td>

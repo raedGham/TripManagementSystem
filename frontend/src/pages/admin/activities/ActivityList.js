@@ -163,7 +163,7 @@ const ActivitiesList = () => {
                   return (
                     <tr
                       key={_id}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      className="bg-white border-b dark:bg-gray-800/60 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       <td className="px-3 py-2">{index + 1}</td>
                       <td className="px-3 py-2">{name}</td>
