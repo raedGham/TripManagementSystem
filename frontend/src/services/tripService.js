@@ -19,7 +19,7 @@ export const registerTrip = async (tripData) => {
     formData.append("organizerID", tripData.organizerID);
     if (tripData.thumbnail) formData.append("thumbnail", tripData.thumbnail);
 
-       for (let [key, value] of formData.entries()) {
+    for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
 
@@ -83,7 +83,7 @@ export const updateTrip = async (id, tripData) => {
     formData.append("pricePerPerson", tripData.pricePerPerson);
     formData.append("organiserID", tripData.organiserID);
     if (tripData.thumbnail) formData.append("thumbnail", tripData.thumbnail);
-    const response = await axios.put(`${API_URL}/${id}`, formData, {
+    const response = await axios.patch(`${API_URL}/${id}`, formData, {
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data",

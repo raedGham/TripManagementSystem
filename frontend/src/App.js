@@ -32,6 +32,7 @@ import AdminComplaintList from "./pages/admin/complaintResponse/AdminComplaintsL
 import AddResponse from "./pages/admin/complaintResponse/AddResponse";
 import AdminReservationList from "./pages/admin/adminReservationList/AdminReservationList";
 import AdminPaymentList from "./pages/admin/adminPaymentsList/AdminPaymentList";
+import EditActivity from "./pages/admin/activities/EditActivity";
 
 function App() {
   return (
@@ -63,6 +64,10 @@ function App() {
           <Route
             path="/admin/activity/new/:tripID"
             element={<AddActivity />}
+          ></Route>
+          <Route
+            path="/admin/activity/edit/:id"
+            element={<EditActivity />}
           ></Route>
           <Route
             path="/admin/activity/:tripID"
@@ -99,11 +104,7 @@ function App() {
             path="/complaint/new/:userID"
             element={<AddComplaint />}
           ></Route>
-             <Route
-            path="/complaint/:id"
-            element={<EditComplaint />}
-          ></Route>
-          ;
+          <Route path="/complaint/:id" element={<EditComplaint />}></Route>;
         </Routes>
       </Layout>
       <ToastContainer />

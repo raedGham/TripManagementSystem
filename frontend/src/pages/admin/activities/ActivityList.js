@@ -178,7 +178,7 @@ const ActivitiesList = () => {
                       <td className="px-3 py-2">{costPerPerson}</td>
 
                       <td className="px-6 py-4 flex space-x-3">
-                        <Link to={`/activities/${_id}`}>
+                        <Link to={`/admin/activity/edit/${_id}`}>
                           <FaEdit
                             size={20}
                             className="text-green-600 hover:text-green-800"

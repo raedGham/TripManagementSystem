@@ -8,7 +8,6 @@ const API_URL = `${BACKEND_URL}/api/activities`;
 //  C R E A T E    N E W   A C T I V I T Y
 //----------------------------------------------------
 export const registerActivity = async (activityData) => {
- 
   try {
     const formData = new FormData();
     formData.append("name", activityData.name);
@@ -41,7 +40,7 @@ export const registerActivity = async (activityData) => {
 //    G E T  A L L   A C T I V I T I E S
 //----------------------------------------------------
 const getActivities = async () => {
-  const reponse = await axios.get(API_URL);  
+  const reponse = await axios.get(API_URL);
   return reponse.data;
 };
 
@@ -76,7 +75,7 @@ export const updateActivity = async (id, activityData) => {
     formData.append("costPerPerson", activityData.costPerPerson);
     formData.append("tripID", activityData.tripID);
 
-    const response = await axios.put(`${API_URL}/${id}`, formData, {
+    const response = await axios.patch(`${API_URL}/${id}`, formData, {
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data",

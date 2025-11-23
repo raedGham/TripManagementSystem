@@ -107,13 +107,18 @@ const EditTrip = () => {
     }
   };
 
+  const formatDate = (date) => {
+    if (!date) return "";
+    return new Date(date).toISOString().split("T")[0];
+  };
+
   return (
     <TripForm
       title={title}
       destination={destination}
       demographic={demographic}
-      startDate={startDate}
-      endDate={endDate}
+      startDate={formatDate(startDate)}
+      endDate={formatDate(endDate)}
       pricePerPerson={pricePerPerson}
       organizerID={organizerID}
       handleInputChange={handleInputChange}
