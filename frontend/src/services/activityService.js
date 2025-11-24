@@ -66,6 +66,7 @@ const deleteActivity = async (id) => {
 
 export const updateActivity = async (id, activityData) => {
   try {
+    console.log(activityData);
     const formData = new FormData();
     formData.append("name", activityData.name);
     formData.append("description", activityData.description);

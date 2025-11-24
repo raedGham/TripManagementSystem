@@ -17,6 +17,6 @@ router.get("/", getReservations);
 router.get("/:id", getReservation);
 router.delete("/:id", protect, deleteReservation);
 router.patch("/:id", protect, upload.none(), updateReservation);
-router.patch("/status/:id", protect, upload.none(), updateResStatus);
+router.patch("/status/:id", upload.none(), updateResStatus);
 
 module.exports = router;

@@ -58,6 +58,9 @@ const EditActivity = () => {
       case "costPerPerson":
         setCostPerPerson(value);
         break;
+      case "capacity":
+        setCapacity(value);
+        break;
     }
   };
 
@@ -84,11 +87,11 @@ const EditActivity = () => {
       capacity,
       costPerPerson,
     };
-
+    console.log(activitiyData);
     setIsLoading(true);
     // attemps to save the new activitiy
     try {
-      const data = await updateActivity(activitiyData);
+      const data = await updateActivity(id, activitiyData);
       toast.success("Activity Added Sucessfully");
       navigate(-1);
       setIsLoading(false);

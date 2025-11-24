@@ -11,10 +11,10 @@ const {
   updatePayment,
 } = require("../controllers/paymentController");
 
-router.post("/new", protect, upload.none(), newPayment);
+router.post("/new", upload.none(), newPayment);
 router.get("/", getPayments);
 router.get("/:id", getPayment);
 router.delete("/:id", protect, deletePayment);
-router.patch("/:id", protect, upload.none(), updatePayment);
+router.patch("/:id", upload.none(), updatePayment);
 
 module.exports = router;

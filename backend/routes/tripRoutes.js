@@ -25,6 +25,6 @@ router.post("/new", protect, uploadThumb.single("thumbnail"), newTrip);
 router.get("/", getTrips);
 router.get("/:id", getTrip);
 router.delete("/:id", protect, deleteTrip);
-router.patch("/:id", protect, upload.none(), updateTrip);
+router.patch("/:id", upload.none(), updateTrip);
 
 module.exports = router;

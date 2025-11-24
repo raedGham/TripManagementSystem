@@ -94,23 +94,17 @@ const getActivity = asyncHandler(async (req, res) => {
 //  U P D A T E   A C T I V I T Y
 // --------------------------------------------------------------------
 const updateActivity = asyncHandler(async (req, res) => {
-  const {
-    name,
-    description,
-    startDate,
-    finishDate,
-    capacity,
-    tripID,
-    costPerPerson,
-  } = req.body;
-
+  const { name, description, startDate, finishDate, capacity, costPerPerson } =
+    req.body;
+  console.log("--------------------");
+  console.log(name, description, startDate);
   const activity = await Activity.findById(req.params.id);
 
   if (!activity) {
     response.status(400);
     throw new Error("Invalid activity");
   } else {
-    console.log("Activity:", activity);
+    //  console.log("Activity:", activity);
   }
   // update activity
   const updatedActivity = await Activity.findByIdAndUpdate(
@@ -121,7 +115,7 @@ const updateActivity = asyncHandler(async (req, res) => {
       startDate,
       finishDate,
       capacity,
-      tripID,
+
       costPerPerson,
     },
     {
