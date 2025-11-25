@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Trip = require("../models/tripModel");
 const TripImage = require("../models/tripImagesModel");
+const Reservation = require("../models/reservationModel");
 const { response } = require("express");
 const path = require("path");
 const fs = require("fs");
@@ -108,7 +109,7 @@ const updateTrip = asyncHandler(async (req, res) => {
     response.status(400);
     throw new Error("Invalid trip");
   } else {
-    console.log("Trip:", trip);
+    //  console.log("Trip:", trip);
   }
   // update trip
   const updatedTrip = await Trip.findByIdAndUpdate(
@@ -218,11 +219,30 @@ const delImage = asyncHandler(async (req, res) => {
   }
 });
 
+// --------------------------------------------------------------------
+//  C H E C K   R E S E R V A T I O N
+// --------------------------------------------------------------------
+const checkReservation = async (req, res) => {
+  try {
+    const { tripID, userID } = req.params;
+    console.log("-------------------------------");
+    console.log("tripID", tripID);
+    console.log("userID", userID);
+    const exists = await Reservation.findOne({ tripID, userID });
+
+    return res.json({ reserved: !!exists });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   newTrip,
   getTrips,
   deleteTrip,
   updateTrip,
+  checkReservation,
   getTrip,
   addImages,
   getImages,

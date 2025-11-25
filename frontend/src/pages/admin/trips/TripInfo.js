@@ -18,7 +18,7 @@ const TripInfo = () => {
   const { id } = useParams(); // /trip/:id
   const dispatch = useDispatch();
 
-//  const trip = useSelector(selectTrip);
+  //  const trip = useSelector(selectTrip);
   const images = useSelector(selectTripImages);
   const isLoadingImages = useSelector(selectTripImagesLoading);
 
@@ -47,14 +47,11 @@ const TripInfo = () => {
     }
   };
 
-
   return (
     <>
-      <TripHeader  tripID = {id}/>
+      <TripHeader tripID={id} />
       {/* ------------- images----------------- */}
       <div className="p-6 max-w-5xl mx-auto">
-      
-
         {/* Add Images Button */}
         <button
           onClick={openFilePicker}

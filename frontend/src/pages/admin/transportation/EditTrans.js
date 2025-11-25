@@ -61,7 +61,7 @@ const AddTrans = () => {
         setDepartureDate(value);
         break;
       case "duration":
-        setDuraion(value);
+        setDuration(value);
         break;
       case "costPerTrip":
         setCostPerTrip(value);
@@ -69,7 +69,7 @@ const AddTrans = () => {
     }
   };
 
-  const addTrans = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // validation
@@ -93,12 +93,12 @@ const AddTrans = () => {
       departureDate,
       duration,
       costPerTrip,
-      tripID,
     };
+
     setIsLoading(true);
     // attemps to save the new trans
     try {
-      const data = await registerTrans(transData);
+      const data = await updateTrans(id, transData);
       toast.success("Trans Added Sucessfully");
       navigate(-1);
       setIsLoading(false);
@@ -108,19 +108,22 @@ const AddTrans = () => {
     }
   };
 
+  const formatDate = (date) => {
+    if (!date) return "";
+    return new Date(date).toISOString().split("T")[0];
+  };
   return (
     <TransForm
       type={type}
       arrivalLocation={arrivalLocation}
       departureLocation={departureLocation}
-      arrivalDate={arrivalDate}
-      departureDate={departureDate}
+      arrivalDate={formatDate(arrivalDate)}
+      departureDate={formatDate(departureDate)}
       duration={duration}
       costPerTrip={costPerTrip}
-      tripID={tripID}
       handleInputChange={handleInputChange}
-      addTrans={addTrans}
-      formTitle={"Add Trans"}
+      addTrans={handleSubmit}
+      formTitle={"Edit Trans"}
     />
   );
 };

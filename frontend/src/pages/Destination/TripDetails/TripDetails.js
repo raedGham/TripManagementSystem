@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -10,14 +10,18 @@ import DetailActivities from "../TripDetails/DetailActivities";
 import DetailTransportation from "../TripDetails/DetailTransportation";
 import { selectIsLoggedIn } from "../../../redux/features/auth/authSlice";
 import Feedback from "../Feedback";
+import axios from "axios";
 import { selectUserID } from "../../../redux/features/auth/authSlice";
+
 //import RateTrip from "./RateTrip";
 
 function TripDetails() {
+  const [reserved, setReserved] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const userID = useSelector((state) => state.auth.userID);
+  const userID = useSelector(selectUserID);
+
   const { trip, isLoading, isError, message } = useSelector(
     (state) => state.trip
   );
@@ -35,6 +39,20 @@ function TripDetails() {
     dispatch(fetchTranses());
     dispatch(fetchActivities());
   }, [dispatch, trip]);
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      console.log("id", id);
+      console.log("userID", userID);
+
+      const res = await axios.get(
+        `${BACKEND_URL}/api/trips/check/${id}/${userID}`
+      );
+      setReserved(res.data.reserved);
+    };
+
+    fetchStatus();
+  }, [id, userID]);
 
   if (isLoading) {
     return (
@@ -119,10 +137,17 @@ function TripDetails() {
         <>
           <div>
             <Link
-              to={`/reservation/${trip._id}`}
-              className="mt-1 ml-12 px-4 py-2 bg-[#701414] text-white font-normal rounded-lg dark:hover:bg-[#9c4343] transition duration-200 shadow"
+              to={reserved ? "#" : `/reservation/${trip._id}`}
+              onClick={(e) => reserved && e.preventDefault()}
+              className={`mt-1 ml-12 px-4 py-2 text-white font-normal rounded-lg shadow transition duration-200
+              ${
+                reserved
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#701414] dark:hover:bg-[#9c4343]"
+              }
+                                                           `}
             >
-              Reserve Trip
+              {reserved ? "Already Reserved" : "Reserve Trip"}
             </Link>
           </div>
           <Feedback tripID={trip._id} userID={userID} />

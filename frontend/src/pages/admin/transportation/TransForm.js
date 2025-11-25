@@ -9,11 +9,9 @@ function TransForm({
   departureDate,
   duration,
   costPerTrip,
-  tripID,
   handleInputChange,
   addTrans,
   formTitle,
-  users,
 }) {
   return (
     <section className="">
@@ -43,29 +41,28 @@ function TransForm({
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
               onSubmit={addTrans}
             >
-        {/* type dropdown */}
-      <div>
-        <label
-          htmlFor="type"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Type
-        </label>
-        <select
-          id="type"
-          name="type"
-          value={type}
-          onChange={handleInputChange}
-          required
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="">Select Type</option>
-          <option value="car">Car</option>
-          <option value="fairy">Fairy</option>
-          <option value="train">Train</option>
-        </select>
-      </div>
-
+              {/* type dropdown */}
+              <div>
+                <label
+                  htmlFor="type"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Type
+                </label>
+                <select
+                  id="type"
+                  name="type"
+                  value={type}
+                  onChange={handleInputChange}
+                  required
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="">Select Type</option>
+                  <option value="car">Car</option>
+                  <option value="fairy">Fairy</option>
+                  <option value="train">Train</option>
+                </select>
+              </div>
 
               <div>
                 <label
@@ -159,7 +156,6 @@ function TransForm({
                 />
               </div>
 
-              
               <div>
                 <label
                   htmlFor="costPerTrip"
@@ -178,10 +174,7 @@ function TransForm({
                 />
               </div>
 
-
-              <div>
-               
-              </div>
+              <div></div>
 
               <div className="md:col-span-2">
                 <button

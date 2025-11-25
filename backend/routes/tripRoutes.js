@@ -13,6 +13,7 @@ const {
   addImages,
   getImages,
   delImage,
+  checkReservation,
 } = require("../controllers/tripController");
 
 //image Routes
@@ -21,6 +22,8 @@ router.post("/images/:id", protect, upload.array("images", 10), addImages);
 router.get("/images/:id", getImages);
 router.delete("/:tripId/images/:imageId", protect, delImage);
 
+// TRIP ROUTES
+router.get("/check/:tripID/:userID", checkReservation);
 router.post("/new", protect, uploadThumb.single("thumbnail"), newTrip);
 router.get("/", getTrips);
 router.get("/:id", getTrip);

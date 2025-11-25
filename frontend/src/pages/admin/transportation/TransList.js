@@ -190,7 +190,7 @@ const TransesList = () => {
                             className="text-purple-600 hover:text-purple-800"
                           />
                         </Link>
-                        <Link to={`/transes/${_id}`}>
+                        <Link to={`/admin/trans/edit/${_id}`}>
                           <FaEdit
                             size={20}
                             className="text-green-600 hover:text-green-800"

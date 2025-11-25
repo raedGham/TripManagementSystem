@@ -13,6 +13,7 @@ import EditTrip from "./pages/admin/trips/EditTrip";
 import TripInfo from "./pages/admin/trips/TripInfo";
 import AddTrans from "./pages/admin/transportation/AddTrans";
 import TransList from "./pages/admin/transportation/TransList";
+import EditTrans from "./pages/admin/transportation/EditTrans";
 import AddActivity from "./pages/admin/activities/AddActivity";
 import ActivityList from "./pages/admin/activities/ActivityList";
 import UsersList from "./pages/admin/users/UsersList";
@@ -61,6 +62,7 @@ function App() {
           ></Route>
           <Route path="/admin/trans/new/:tripID" element={<AddTrans />}></Route>
           <Route path="/admin/trans/:tripID" element={<TransList />}></Route>
+          <Route path="/admin/trans/edit/:id" element={<EditTrans />}></Route>
           <Route
             path="/admin/activity/new/:tripID"
             element={<AddActivity />}

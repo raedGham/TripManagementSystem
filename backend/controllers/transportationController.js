@@ -6,7 +6,7 @@ const { response } = require("express");
 //  N E W   T R A N S P O R T A T I O N
 // --------------------------------------------------------------------
 const newTransportation = asyncHandler(async (req, res) => {
-  console.log("req.body:",req.body.departureDate)
+  console.log("req.body:", req.body.departureDate);
   const {
     type,
     arrivalLocation,
@@ -79,7 +79,7 @@ const newTransportation = asyncHandler(async (req, res) => {
 // --------------------------------------------------------------------
 const getTransportations = asyncHandler(async (req, res) => {
   const transportations = await Transportation.find().sort("startDate");
-  console.log(transportations)
+  console.log(transportations);
   res.status(200).json(transportations);
 });
 
@@ -107,7 +107,6 @@ const updateTransportation = asyncHandler(async (req, res) => {
     departureDate,
     duration,
     costPerTrip,
-    tripID,
   } = req.body;
 
   const transportation = await Transportation.findById(req.params.id);
@@ -129,7 +128,6 @@ const updateTransportation = asyncHandler(async (req, res) => {
       departureDate,
       duration,
       costPerTrip,
-      tripID,
     },
     {
       new: true,

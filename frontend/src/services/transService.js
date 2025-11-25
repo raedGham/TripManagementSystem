@@ -42,7 +42,7 @@ export const registerTrans = async (transData) => {
 //----------------------------------------------------
 const getTranses = async () => {
   const reponse = await axios.get(API_URL);
-  console.log(reponse.data)
+  console.log(reponse.data);
   return reponse.data;
 };
 
@@ -67,17 +67,18 @@ const deleteTrans = async (id) => {
 //----------------------------------------------------
 
 export const updateTrans = async (id, transData) => {
+  console.log("transData", transData);
   try {
     const formData = new FormData();
-    formData.append("title", transData.title);
-    formData.append("destination", transData.destination);
-    formData.append("demographic", transData.demographic);
-    formData.append("startDate", transData.startDate);
-    formData.append("endDate", transData.endDate);
-    formData.append("pricePerPerson", transData.pricePerPerson);
-    formData.append("organiserID", transData.organiserID);
+    formData.append("type", transData.type);
+    formData.append("arrivalLocation", transData.arrivalLocation);
+    formData.append("departureLocation", transData.departureLocation);
+    formData.append("arrivalDate", transData.arrivalDate);
+    formData.append("departureDate", transData.departureDate);
+    formData.append("duration", transData.duration);
+    formData.append("costPerTrip", transData.costPerTrip);
 
-    const response = await axios.put(`${API_URL}/${id}`, formData, {
+    const response = await axios.patch(`${API_URL}/${id}`, formData, {
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data",

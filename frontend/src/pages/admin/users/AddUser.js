@@ -55,7 +55,7 @@ function AddUser() {
       const data = await registerUser(userData);
       // console.log(data)
 
-      navigate("/main");
+      navigate(-1);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
